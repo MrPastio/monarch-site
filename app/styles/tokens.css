@@ -1,0 +1,185 @@
+/*
+ * Monarch Site v3 — design tokens.
+ * Single source of truth. No raw hex, radius, shadow or duration
+ * may appear anywhere else in the codebase.
+ *
+ * Light is the primary theme; dark follows the system and can be
+ * forced with [data-theme]. Product windows stay dark in both themes
+ * because the application itself is dark.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* --- Surfaces (light) --- */
+  --canvas: #f7f4ee;
+  --canvas-sunk: #efeae1;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --hairline: #e3ddd2;
+  --hairline-strong: #cfc7b8;
+
+  /* --- Ink --- */
+  --ink: #16130f;
+  --ink-secondary: #5c554b;
+  --ink-tertiary: #6f675b;
+  --ink-on-accent: #16130f;
+  --ink-inverse: #f6f3ed;
+
+  /* --- Accent: one colour, two roles --- */
+  --accent: #f3a23b; /* fills only — never text on canvas */
+  --accent-strong: #e08c1f; /* fill hover */
+  --accent-ink: #8a4f06; /* accent-coloured TEXT (AA on canvas) */
+  --accent-wash: #fdf1df; /* tinted background */
+  --accent-edge: #f0cf9d;
+
+  /* --- Semantic (used sparingly, never decoratively) --- */
+  --positive-ink: #2f6a46;
+  --positive-wash: #e8f3ec;
+  --caution-ink: #8a5a09;
+  --caution-wash: #fbf0dc;
+  --critical-ink: #9a3327;
+  --critical-wash: #f9eae8;
+
+  /* --- Product window (dark in both themes) --- */
+  --win-canvas: #0d1015;
+  --win-surface: #161b23;
+  --win-surface-raised: #1e242e;
+  --win-hairline: #2a323e;
+  --win-ink: #f2f4f7;
+  --win-ink-secondary: #a3adbb;
+  --win-ink-tertiary: #6d7887;
+
+  /* --- Radius --- */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --r-pill: 999px;
+
+  /* --- Elevation: soft, warm, never glow --- */
+  --shadow-1: 0 1px 2px rgba(31, 24, 12, 0.05), 0 2px 8px rgba(31, 24, 12, 0.04);
+  --shadow-2: 0 2px 4px rgba(31, 24, 12, 0.05), 0 12px 28px rgba(31, 24, 12, 0.07);
+  --shadow-3: 0 4px 8px rgba(31, 24, 12, 0.06), 0 28px 64px rgba(31, 24, 12, 0.11);
+  --shadow-accent: 0 2px 6px rgba(160, 96, 10, 0.16), 0 14px 32px rgba(160, 96, 10, 0.14);
+
+  /* --- Type --- */
+  --font-sans: "Onest Variable", Onest, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.25rem, 0.3vw + 1.2rem, 1.4rem);
+  --text-2xl: clamp(1.6rem, 1vw + 1.35rem, 2.1rem);
+  --text-3xl: clamp(2.1rem, 2.2vw + 1.55rem, 3.1rem);
+  --text-4xl: clamp(2.6rem, 4.4vw + 1.5rem, 4.6rem);
+
+  --lh-tight: 1.06;
+  --lh-snug: 1.22;
+  --lh-normal: 1.55;
+  --tracking-tight: -0.035em;
+  --tracking-tighter: -0.05em;
+  --tracking-wide: 0.08em;
+
+  /* --- Space: 8px rhythm --- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+  --section-y: clamp(72px, 9vw, 152px);
+
+  /* --- Layout --- */
+  --shell: 1200px;
+  --shell-wide: 1360px;
+  --gutter: clamp(20px, 5vw, 56px);
+  --header-h: 68px;
+
+  /* --- Motion: weight, direction, continuity --- */
+  --dur-micro: 120ms;
+  --dur-control: 200ms;
+  --dur-panel: 320ms;
+  --dur-hero: 520ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --canvas: #0d1015;
+    --canvas-sunk: #090c10;
+    --surface: #161b23;
+    --surface-raised: #1e242e;
+    --hairline: #28303b;
+    --hairline-strong: #3a4250;
+
+    --ink: #f2f4f7;
+    --ink-secondary: #a3adbb;
+    --ink-tertiary: #7b8695;
+    --ink-on-accent: #16130f;
+    --ink-inverse: #16130f;
+
+    --accent: #f3a23b;
+    --accent-strong: #ffb44f;
+    --accent-ink: #f0ab54;
+    --accent-wash: #241a0d;
+    --accent-edge: #4a3518;
+
+    --positive-ink: #74c795;
+    --positive-wash: #16241b;
+    --caution-ink: #e0b263;
+    --caution-wash: #26200f;
+    --critical-ink: #e88a80;
+    --critical-wash: #2a1715;
+
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 28px rgba(0, 0, 0, 0.42);
+    --shadow-3: 0 4px 8px rgba(0, 0, 0, 0.45), 0 28px 64px rgba(0, 0, 0, 0.55);
+    --shadow-accent: 0 2px 6px rgba(0, 0, 0, 0.5), 0 14px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #0d1015;
+  --canvas-sunk: #090c10;
+  --surface: #161b23;
+  --surface-raised: #1e242e;
+  --hairline: #28303b;
+  --hairline-strong: #3a4250;
+
+  --ink: #f2f4f7;
+  --ink-secondary: #a3adbb;
+  --ink-tertiary: #7b8695;
+  --ink-on-accent: #16130f;
+  --ink-inverse: #16130f;
+
+  --accent: #f3a23b;
+  --accent-strong: #ffb44f;
+  --accent-ink: #f0ab54;
+  --accent-wash: #241a0d;
+  --accent-edge: #4a3518;
+
+  --positive-ink: #74c795;
+  --positive-wash: #16241b;
+  --caution-ink: #e0b263;
+  --caution-wash: #26200f;
+  --critical-ink: #e88a80;
+  --critical-wash: #2a1715;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 28px rgba(0, 0, 0, 0.42);
+  --shadow-3: 0 4px 8px rgba(0, 0, 0, 0.45), 0 28px 64px rgba(0, 0, 0, 0.55);
+  --shadow-accent: 0 2px 6px rgba(0, 0, 0, 0.5), 0 14px 32px rgba(0, 0, 0, 0.45);
+}

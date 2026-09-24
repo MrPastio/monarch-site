@@ -8,14 +8,7 @@ import { getGsap, prefersReducedMotion } from "@/components/motion/gsap";
 import { MonarchMark } from "@/components/brand/monarch-mark";
 import styles from "./guard.module.css";
 
-const EVENTS = [
-  { time: "02:14", text: "Автозагрузка: без изменений", tone: "ok" },
-  { time: "02:16", text: "Новый файл в «Загрузках» проверен", tone: "ok" },
-  { time: "02:21", text: "Сетевое подключение: известный процесс", tone: "ok" },
-  { time: "02:30", text: "Попытка изменить задачу планировщика", tone: "warn" },
-] as const;
-
-export function Guard({ copy }: { copy: Dict["guard"] }) {
+export function Guard({ copy, events }: { copy: Dict["guard"]; events: Dict["ui"]["events"] }) {
   const artRef = useRef<HTMLDivElement>(null);
   const [closed, setClosed] = useState(false);
   const [mode, setMode] = useState("guard");
@@ -87,7 +80,7 @@ export function Guard({ copy }: { copy: Dict["guard"] }) {
           </div>
           <p className={styles.eventsLabel}>{copy.labels.events}</p>
           <ul className={styles.events}>
-            {EVENTS.map((event, index) => (
+            {events.map((event, index) => (
               <li key={event.time} data-tone={event.tone} style={{ "--i": index } as React.CSSProperties}>
                 <time>{event.time}</time>
                 {event.text}

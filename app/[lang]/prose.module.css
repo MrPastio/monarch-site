@@ -1,0 +1,257 @@
+/* Shared layouts for the inner pages. */
+.section {
+  padding: var(--s-9) 0;
+  border-bottom: 1px solid var(--glass-line);
+}
+
+.h2 {
+  max-width: 20em;
+  font-size: var(--text-3xl);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.h3 {
+  font-size: var(--text-2xl);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.text {
+  max-width: 62ch;
+  margin-top: var(--s-4);
+  color: var(--ink-2);
+}
+
+.bigText {
+  font-size: var(--text-xl);
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.block {
+  margin-top: var(--s-7);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--s-8);
+  align-items: start;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-8);
+}
+
+.cta {
+  margin-top: var(--s-5);
+}
+
+.modules {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: var(--s-7);
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-sheet);
+  background: var(--glass-line);
+  overflow: hidden;
+}
+
+.modules li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--s-5);
+  background: var(--canvas);
+  transition: background-color var(--dur-move) var(--ease-physical);
+}
+
+.modules li:hover {
+  background: #101215;
+}
+
+.modules code {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--ink-faint);
+}
+
+.modules h3 {
+  font-size: var(--text-base);
+  font-weight: 650;
+}
+
+.modules p {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-sheet);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.card h3 {
+  font-size: var(--text-lg);
+  font-weight: 650;
+}
+
+.card p {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.card[data-tone="allow"] {
+  border-color: rgba(105, 211, 152, 0.35);
+}
+
+.card[data-tone="allow"] h3 {
+  color: var(--ok);
+}
+
+.card[data-tone="confirm"] {
+  border-color: var(--accent-line);
+}
+
+.card[data-tone="confirm"] h3 {
+  color: var(--accent-ink);
+}
+
+.card[data-tone="deny"] {
+  border-color: var(--danger-line);
+}
+
+.card[data-tone="deny"] h3 {
+  color: #ffb3ab;
+}
+
+.list {
+  display: grid;
+  gap: var(--s-3);
+  margin-top: var(--s-5);
+}
+
+.list li {
+  display: flex;
+  gap: var(--s-3);
+  color: var(--ink-2);
+}
+
+.list li::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 0.6em;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.steps {
+  display: grid;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  counter-reset: s;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--s-3);
+  color: var(--ink-2);
+  counter-increment: s;
+}
+
+.steps li::before {
+  content: counter(s);
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--accent-line);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent-ink);
+}
+
+.docGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-7) var(--s-8);
+}
+
+.brand {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-5);
+  margin-top: var(--s-6);
+}
+
+.brand figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-stage);
+}
+
+.brand img {
+  width: 100%;
+  height: auto;
+}
+
+.brand figcaption {
+  padding: var(--s-3) var(--s-4);
+  border-top: 1px solid var(--glass-line);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.source {
+  margin-top: var(--s-4);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.source a {
+  color: var(--accent-ink);
+}
+
+@media (max-width: 1000px) {
+  .modules {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .split,
+  .twoCol,
+  .docGrid,
+  .brand {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .modules {
+    grid-template-columns: 1fr;
+  }
+}

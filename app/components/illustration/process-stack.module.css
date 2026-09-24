@@ -1,0 +1,134 @@
+.wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--s-7);
+  align-items: center;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--font-sans);
+}
+
+/* Closed: the slabs rest on each other. Open: they separate to their height. */
+.slab {
+  cursor: default;
+  transition: opacity var(--dur-move) var(--ease-physical);
+}
+
+.slabInner,
+.label {
+  transform: translateY(calc(var(--lift) * -0.15));
+  transition: transform 1100ms var(--ease-settle);
+  transition-delay: calc(var(--i) * 70ms);
+}
+
+.wrap[data-open="true"] .slabInner,
+.wrap[data-open="true"] .label {
+  transform: translateY(calc(var(--lift) * -1));
+}
+
+.label {
+  opacity: 0;
+  transition-property: transform, opacity;
+}
+
+.wrap[data-open="true"] .label {
+  opacity: 1;
+}
+
+.slab[data-dim="true"],
+.tower[data-dim="true"] {
+  opacity: 0.35;
+}
+
+.tower {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--ease-physical) 500ms,
+    transform 1000ms var(--ease-settle) 500ms;
+}
+
+.wrap[data-open="true"] .tower {
+  opacity: 1;
+  transform: none;
+}
+
+.wrap[data-open="true"] .tower[data-dim="true"] {
+  opacity: 0.35;
+  transition-delay: 0ms;
+}
+
+.labelTitle {
+  fill: var(--ink);
+  font-size: 22px;
+  font-weight: 650;
+  dominant-baseline: middle;
+}
+
+.legend {
+  display: grid;
+  gap: 4px;
+}
+
+.legend li {
+  padding: var(--s-4) var(--s-5);
+  border: 1px solid transparent;
+  border-radius: 16px;
+  transition:
+    background-color var(--dur-move) var(--ease-physical),
+    border-color var(--dur-move) var(--ease-physical);
+}
+
+.legend li[data-active="true"] {
+  border-color: var(--glass-line);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.legend h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--text-lg);
+  font-weight: 650;
+}
+
+.legend h3::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--ivory);
+}
+
+.legend li[data-id="runtime"] h3::before {
+  background: var(--accent);
+}
+
+.legend li[data-id="oscar"] h3::before {
+  background: var(--orange);
+}
+
+.legend li[data-id="safe"] h3::before {
+  background: #9aa0a8;
+}
+
+.legend li[data-id="security"] h3::before {
+  background: var(--ok);
+}
+
+.legend p {
+  margin-top: 6px;
+  padding-left: 20px;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+@media (max-width: 1000px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+}

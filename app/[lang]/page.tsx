@@ -22,9 +22,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
     <>
       <Hero locale={lang} hero={dict.hero} />
       <Hardware copy={dict.hardware} />
-      <Journey copy={dict.journey} />
-      <Safe copy={dict.safe} />
-      <Guard copy={dict.guard} />
+      <Journey copy={dict.journey} ui={dict.ui} />
+      <Safe copy={dict.safe} agent={dict.ui.agent} />
+      <Guard copy={dict.guard} events={dict.ui.events} />
       <Max copy={dict.max} />
       <Facts copy={dict.facts} locale={localeMeta[lang].intl} />
       <Download copy={dict.download} locale={lang} />

@@ -16,6 +16,14 @@ const config: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    // Addresses from the previous site keep working.
+    return [
+      { source: "/:lang(ru|uk|en|bg)/architecture", destination: "/:lang/how-it-works", permanent: true },
+      { source: "/:lang(ru|uk|en|bg)/control", destination: "/:lang/security", permanent: true },
+      { source: "/:lang(ru|uk|en|bg)/capabilities/:path*", destination: "/:lang/how-it-works", permanent: true },
+    ];
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

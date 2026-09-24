@@ -15,7 +15,7 @@ type StationId = Copy["stations"][number]["id"];
 const POLICY_INDEX = 3;
 const POSES = ["listening", "thinking", "coding", "security", "success", "error"] as const;
 
-export function Journey({ copy }: { copy: Copy }) {
+export function Journey({ copy, ui }: { copy: Copy; ui: Dict["ui"] }) {
   const pinRef = useRef<HTMLDivElement>(null);
   const [scenarioId, setScenarioId] = useState(copy.scenarios[0]!.id);
   const [active, setActive] = useState(0);
@@ -148,7 +148,7 @@ export function Journey({ copy }: { copy: Copy }) {
                   priority={false}
                 />
               ))}
-              <figcaption className={styles.oscarCaption}>Оскар</figcaption>
+              <figcaption className={styles.oscarCaption}>{ui.oscar}</figcaption>
             </figure>
 
             <div className={styles.panelWrap}>
@@ -160,7 +160,7 @@ export function Journey({ copy }: { copy: Copy }) {
                     <p>{station.text}</p>
                   </div>
                 </header>
-                <StationArt id={station.id} scenario={scenario} copy={copy} denied={endedInDeny} />
+                <StationArt id={station.id} scenario={scenario} copy={copy} ui={ui} denied={endedInDeny} />
               </article>
             </div>
           </div>
@@ -187,7 +187,7 @@ export function Journey({ copy }: { copy: Copy }) {
   );
 }
 
-function StationArt({ id, scenario, copy, denied }: { id: StationId; scenario: Scenario; copy: Copy; denied: boolean }) {
+function StationArt({ id, scenario, copy, ui, denied }: { id: StationId; scenario: Scenario; copy: Copy; ui: Dict["ui"]; denied: boolean }) {
   switch (id) {
     case "ask":
       return (
@@ -214,8 +214,8 @@ function StationArt({ id, scenario, copy, denied }: { id: StationId; scenario: S
             ))}
           </div>
           <div className={styles.parseLegend}>
-            <span data-kind="verb">команда</span>
-            <span data-kind="object">цель</span>
+            <span data-kind="verb">{ui.parseVerb}</span>
+            <span data-kind="object">{ui.parseObject}</span>
           </div>
         </div>
       );
@@ -223,11 +223,11 @@ function StationArt({ id, scenario, copy, denied }: { id: StationId; scenario: S
       return (
         <div className={styles.art}>
           <pre className={styles.actionCard}>
-            <span className={styles.codeKey}>действие</span> {scenario.action}
+            <span className={styles.codeKey}>{ui.actionKeys[0]}</span> {scenario.action}
             {"\n"}
-            <span className={styles.codeKey}>источник</span> рабочий стол · твой запрос
+            <span className={styles.codeKey}>{ui.actionKeys[1]}</span> {ui.actionSource}
             {"\n"}
-            <span className={styles.codeKey}>модель</span> предлагает, не исполняет
+            <span className={styles.codeKey}>{ui.actionKeys[2]}</span> {ui.actionModel}
           </pre>
         </div>
       );
@@ -249,8 +249,8 @@ function StationArt({ id, scenario, copy, denied }: { id: StationId; scenario: S
           </p>
           {scenario.verdict === "confirm" && (
             <div className={styles.consent}>
-              <span>Разрешить поиск в интернете один раз?</span>
-              <span className={styles.consentYes}>Разрешить</span>
+              <span>{ui.consentAsk}</span>
+              <span className={styles.consentYes}>{ui.consentYes}</span>
             </div>
           )}
           {denied && <p className={styles.deniedNote}>{scenario.receipt}</p>}
@@ -260,7 +260,7 @@ function StationArt({ id, scenario, copy, denied }: { id: StationId; scenario: S
       return (
         <div className={styles.art}>
           <div className={styles.progress}>
-            {["Проверить одобрение", "Выполнить", "Записать событие"].map((step, index) => (
+            {ui.kernelSteps.map((step, index) => (
               <div key={step} className={styles.progressStep} style={{ "--i": index } as React.CSSProperties}>
                 <span className={styles.check} aria-hidden>
                   <svg width="12" height="12" viewBox="0 0 12 12">
@@ -294,19 +294,19 @@ function StationArt({ id, scenario, copy, denied }: { id: StationId; scenario: S
             <p className={styles.receiptHead}>{copy.receiptLabel}</p>
             <dl>
               <div>
-                <dt>Запрос</dt>
+                <dt>{ui.receiptKeys[0]}</dt>
                 <dd>{scenario.prompt}</dd>
               </div>
               <div>
-                <dt>Действие</dt>
+                <dt>{ui.receiptKeys[1]}</dt>
                 <dd>{scenario.action}</dd>
               </div>
               <div>
-                <dt>Решение</dt>
+                <dt>{ui.receiptKeys[2]}</dt>
                 <dd>{copy.lanes[scenario.verdict as "allow" | "confirm" | "deny"]}</dd>
               </div>
               <div>
-                <dt>Проверка</dt>
+                <dt>{ui.receiptKeys[3]}</dt>
                 <dd>{scenario.check}</dd>
               </div>
             </dl>

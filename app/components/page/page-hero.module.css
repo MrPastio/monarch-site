@@ -1,0 +1,61 @@
+.hero {
+  position: relative;
+  padding: calc(var(--header-h) + clamp(64px, 9vw, 140px)) 0 clamp(48px, 6vw, 96px);
+  background:
+    radial-gradient(70% 80% at 80% 0%, rgba(255, 190, 90, 0.08), transparent 60%),
+    linear-gradient(180deg, var(--void), var(--canvas));
+  border-bottom: 1px solid var(--glass-line);
+  overflow: hidden;
+}
+
+.inner {
+  display: grid;
+  gap: var(--s-7);
+  align-items: center;
+}
+
+.inner[data-has-art="true"] {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.copy > * {
+  animation: arrive 800ms var(--ease-settle) both;
+}
+
+.copy > :nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.copy > :nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.title {
+  font-size: clamp(2.6rem, 4.6vw + 0.6rem, 5.4rem);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.art {
+  animation: arrive 900ms var(--ease-settle) 200ms both;
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@media (max-width: 900px) {
+  .inner[data-has-art="true"] {
+    grid-template-columns: 1fr;
+  }
+}

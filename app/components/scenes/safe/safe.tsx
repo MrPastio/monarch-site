@@ -11,7 +11,7 @@ import styles from "./safe.module.css";
 const BOLTS = Array.from({ length: 16 }, (_, i) => (i / 16) * Math.PI * 2);
 const BLOCKS = Array.from({ length: 24 }, (_, i) => i);
 
-export function Safe({ copy }: { copy: Dict["safe"] }) {
+export function Safe({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
   const artRef = useRef<HTMLDivElement>(null);
   const [locked, setLocked] = useState(false);
 
@@ -81,7 +81,7 @@ export function Safe({ copy }: { copy: Dict["safe"] }) {
               <rect x="-44" y="-17" width="88" height="34" rx="17" className={styles.agentChip} />
               <path d="M-32 -7 l10 16 l3 -7 l7 -3 Z" fill="#f7f5ef" />
               <text x="-12" y="5" className={styles.agentText}>
-                агент
+                {agent}
               </text>
             </g>
             <g className={styles.blocked}>

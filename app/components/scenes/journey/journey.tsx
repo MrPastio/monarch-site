@@ -162,6 +162,16 @@ export function Journey({ copy, ui }: { copy: Copy; ui: Dict["ui"] }) {
                 </header>
                 <StationArt id={station.id} scenario={scenario} copy={copy} ui={ui} denied={endedInDeny} />
               </article>
+              {!pinned && (
+                <div className={styles.stepper}>
+                  <button type="button" className="btn btn-glass" onClick={() => go(Math.max(0, shown - 1))} disabled={shown === 0}>
+                    ← {ui.back}
+                  </button>
+                  <button type="button" className="btn btn-primary" onClick={() => go(Math.min(lastReachable, shown + 1))} disabled={shown >= lastReachable}>
+                    {ui.next} →
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

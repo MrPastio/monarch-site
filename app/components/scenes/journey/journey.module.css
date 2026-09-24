@@ -844,3 +844,15 @@
     animation: none;
   }
 }
+
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+.stepper :global(.btn)[disabled] {
+  opacity: 0.35;
+  pointer-events: none;
+}

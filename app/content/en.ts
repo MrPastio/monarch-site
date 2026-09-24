@@ -321,6 +321,7 @@ export const en: Dict = {
       { time: "02:30", text: "Attempt to change a scheduled task", tone: "warn" },
     ],
     back: "Back",
+    next: "Next",
     notFoundTitle: "This page doesn’t exist.",
     notFoundText: "The address may have changed. Go home or open the list of versions.",
     toHome: "Home",

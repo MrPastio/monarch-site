@@ -185,3 +185,16 @@
     padding: var(--s-5);
   }
 }
+
+@media (max-width: 700px) {
+  /* The board keeps its detail on phones: shown larger, cropped at the edges. */
+  .stage {
+    overflow: hidden;
+  }
+
+  .stage > svg {
+    width: 175%;
+    max-width: none;
+    margin-left: -30%;
+  }
+}

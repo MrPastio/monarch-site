@@ -31,6 +31,9 @@ if (scrollY.startsWith("sel:")) {
   await page.evaluate(async (y) => { for (let i = 1; i <= 12; i++) { window.scrollTo(0, (y * i) / 12); await new Promise((r) => setTimeout(r, 60)); } }, Number(scrollY));
 }
 await page.waitForTimeout(Number(wait));
+if (flags.includes("--clean")) {
+  await page.evaluate(() => document.querySelectorAll("nextjs-portal").forEach((node) => node.remove()));
+}
 if (flags.includes("--full")) await page.screenshot({ path: out, fullPage: true });
 else await page.screenshot({ path: out });
 const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

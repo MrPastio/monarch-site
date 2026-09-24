@@ -1,7 +1,17 @@
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/scenes/hero/hero";
+import { Hardware } from "@/components/scenes/hardware/hardware";
+import { Journey } from "@/components/scenes/journey/journey";
+import { Safe } from "@/components/scenes/safe/safe";
+import { Guard } from "@/components/scenes/guard/guard";
+import { Max } from "@/components/scenes/max/max";
+import { Facts } from "@/components/scenes/facts/facts";
+import { Download } from "@/components/scenes/download/download";
+import { Faq } from "@/components/scenes/faq/faq";
 import { getDict } from "@/content/dictionary";
-import { isLocale } from "@/lib/i18n";
+import { isLocale, localeMeta } from "@/lib/i18n";
+
+export const revalidate = 900;
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -11,7 +21,14 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Hero locale={lang} hero={dict.hero} />
-      <section style={{ height: "120vh" }} aria-hidden />
+      <Hardware copy={dict.hardware} />
+      <Journey copy={dict.journey} />
+      <Safe copy={dict.safe} />
+      <Guard copy={dict.guard} />
+      <Max copy={dict.max} />
+      <Facts copy={dict.facts} locale={localeMeta[lang].intl} />
+      <Download copy={dict.download} locale={lang} />
+      <Faq copy={dict.faq} />
     </>
   );
 }

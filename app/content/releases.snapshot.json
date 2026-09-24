@@ -1,0 +1,125 @@
+{
+  "capturedAt": "2026-09-25",
+  "releases": [
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.5.0.exe",
+        "sha256": "4d113be01f6cc5f1b480753616d77b2e8203ddae9f455caa2b9a28ed0c755d87",
+        "size": 727372610,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.5.0/Monarch-Setup-0.2.5.0.exe"
+      },
+      "publishedAt": "2026-08-25T12:05:30Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.5.0",
+      "tag": "v0.2.5.0",
+      "version": "0.2.5.0"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.4.1.exe",
+        "sha256": "5b73f2ebf7387a08967bf05741ccb65917fb6cf0451d748917c4130117fb04a9",
+        "size": 703569487,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.4.1/Monarch-Setup-0.2.4.1.exe"
+      },
+      "publishedAt": "2026-08-12T13:04:24Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.4.1",
+      "tag": "v0.2.4.1",
+      "version": "0.2.4.1"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.4.0.exe",
+        "sha256": "c7c639a245a3e7575bda64b60f8272ce0cf2c201add5cd29873762b2ed645ca2",
+        "size": 703632832,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.4.0/Monarch-Setup-0.2.4.0.exe"
+      },
+      "publishedAt": "2026-07-30T01:20:02Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.4.0",
+      "tag": "v0.2.4.0",
+      "version": "0.2.4.0"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.3.8.exe",
+        "sha256": "c98bdbb40fc479cd1c7a6fa483c145a530030113a7435fb37db37538809f13bd",
+        "size": 706556422,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.3.8/Monarch-Setup-0.2.3.8.exe"
+      },
+      "publishedAt": "2026-07-24T17:26:19Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.3.8",
+      "tag": "v0.2.3.8",
+      "version": "0.2.3.8"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.3.7.exe",
+        "sha256": "a72f3ffdb79acdc3134ebae9db43f31cd277e68372a51ae58d70a03c89ff6f99",
+        "size": 732496402,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.3.7/Monarch-Setup-0.2.3.7.exe"
+      },
+      "publishedAt": "2026-07-23T20:01:50Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.3.7",
+      "tag": "v0.2.3.7",
+      "version": "0.2.3.7"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.3.6.exe",
+        "sha256": "a406043f5f2e04774317e657810b3efcd09f0fa1357076ab32aff88865f74743",
+        "size": 731473191,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.3.6/Monarch-Setup-0.2.3.6.exe"
+      },
+      "publishedAt": "2026-07-23T16:51:54Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.3.6",
+      "tag": "v0.2.3.6",
+      "version": "0.2.3.6"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.3.5.exe",
+        "sha256": "511317e1e4edc5fff14b85a999f467a68e04d086b434755dc6fc0f7d3973b4d3",
+        "size": 731416567,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.3.5/Monarch-Setup-0.2.3.5.exe"
+      },
+      "publishedAt": "2026-07-23T15:32:28Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.3.5",
+      "tag": "v0.2.3.5",
+      "version": "0.2.3.5"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.3.4.exe",
+        "sha256": "f3f3017e83d58e5ad24d5a69b16eb8bc3dc9707d9a448c022588e02bea3d81b5",
+        "size": 731437538,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.3.4/Monarch-Setup-0.2.3.4.exe"
+      },
+      "publishedAt": "2026-07-23T01:27:16Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.3.4",
+      "tag": "v0.2.3.4",
+      "version": "0.2.3.4"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.3.3.exe",
+        "sha256": "447668485d25ca0eb997aa4cd86b4885f38a5de2e0849c0d0690c5d6e2a65c2f",
+        "size": 731455400,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.3.3/Monarch-Setup-0.2.3.3.exe"
+      },
+      "publishedAt": "2026-07-23T00:25:44Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.3.3",
+      "tag": "v0.2.3.3",
+      "version": "0.2.3.3"
+    },
+    {
+      "asset": {
+        "fileName": "Monarch-Setup-0.2.3.2.exe",
+        "sha256": "5fd33caa089550425d244606d5364b3175a5404dbbaaed9c923cf85fd509c1f3",
+        "size": 731425537,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.2.3.2/Monarch-Setup-0.2.3.2.exe"
+      },
+      "publishedAt": "2026-07-22T23:14:33Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.2.3.2",
+      "tag": "v0.2.3.2",
+      "version": "0.2.3.2"
+    }
+  ]
+}

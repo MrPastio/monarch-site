@@ -5,15 +5,12 @@
  * file properties. 727 372 610 bytes → "693,7 МБ", matching the release notes.
  */
 export function formatBytes(bytes: number, locale = "ru-RU"): string {
+  const latin = locale.startsWith("en");
   const megabytes = bytes / 1024 / 1024;
   if (megabytes >= 1024) {
-    return `${(megabytes / 1024).toLocaleString(locale, {
-      maximumFractionDigits: 2,
-    })} ГБ`;
+    return `${(megabytes / 1024).toLocaleString(locale, { maximumFractionDigits: 2 })} ${latin ? "GB" : "ГБ"}`;
   }
-  return `${megabytes.toLocaleString(locale, {
-    maximumFractionDigits: 1,
-  })} МБ`;
+  return `${megabytes.toLocaleString(locale, { maximumFractionDigits: 1 })} ${latin ? "MB" : "МБ"}`;
 }
 
 export function formatDate(iso: string, locale = "ru-RU"): string {
@@ -23,11 +20,6 @@ export function formatDate(iso: string, locale = "ru-RU"): string {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "UTC",
   });
-}
-
-/** 0.2.5.0 → 0.2.5 — the site shows three segments, never the build tail. */
-export function displayVersion(version: string): string {
-  const parts = version.split(".");
-  return parts.length > 3 ? parts.slice(0, 3).join(".") : version;
 }

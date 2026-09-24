@@ -221,13 +221,13 @@ async function getSignedRelease(
 ): Promise<ReleaseManifest | null> {
   const [manifestResponse, signatureResponse] = await Promise.all([
     fetch(manifestUrl, {
-      cache: "no-store",
+      next: { revalidate: 900 },
       headers: { accept: "application/json" },
       redirect: "follow",
       signal: AbortSignal.timeout(RELEASE_FETCH_TIMEOUT_MS),
     }),
     fetch(signatureUrl, {
-      cache: "no-store",
+      next: { revalidate: 900 },
       headers: { accept: "text/plain, application/octet-stream" },
       redirect: "follow",
       signal: AbortSignal.timeout(RELEASE_FETCH_TIMEOUT_MS),
@@ -441,7 +441,7 @@ function directManifestForRelease(release: GitHubRelease): ReleaseManifest | nul
 async function getLatestGitHubRelease(): Promise<ReleaseState | null> {
   try {
     const response = await fetch(releaseConfig.releasesApiUrl, {
-      cache: "no-store",
+      next: { revalidate: 900 },
       signal: AbortSignal.timeout(RELEASE_FETCH_TIMEOUT_MS),
       headers: {
         accept: "application/vnd.github+json",
@@ -501,7 +501,7 @@ function signedAssetsForRelease(
 export async function getReleaseHistory(): Promise<ReleaseHistoryEntry[]> {
   try {
     const response = await fetch(releaseConfig.releasesApiUrl, {
-      cache: "no-store",
+      next: { revalidate: 900 },
       signal: AbortSignal.timeout(RELEASE_FETCH_TIMEOUT_MS),
       headers: {
         accept: "application/vnd.github+json",

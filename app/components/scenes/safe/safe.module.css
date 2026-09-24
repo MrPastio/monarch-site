@@ -1,0 +1,261 @@
+.section {
+  padding: var(--section-y) 0;
+  background:
+    radial-gradient(60% 50% at 75% 45%, rgba(255, 190, 90, 0.05), transparent 70%),
+    var(--canvas);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: var(--s-7);
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+}
+
+.points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-5) var(--s-6);
+}
+
+.point dt {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent-ink);
+}
+
+.point dd {
+  margin-top: var(--s-2);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.art {
+  position: relative;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--font-sans);
+}
+
+.wall {
+  fill: none;
+  stroke: rgba(255, 107, 97, 0.45);
+  stroke-width: 2;
+  stroke-dasharray: 2 9;
+  stroke-linecap: round;
+}
+
+/* Agent approaches from the lower left, meets the wall, is pushed back. */
+.agent {
+  transform: translate(60px, 520px);
+  opacity: 0;
+}
+
+.agentChip {
+  fill: #1a1c20;
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+.agentText {
+  fill: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.art[data-locked="true"] .agent {
+  opacity: 1;
+  animation: agent-bump 1600ms var(--ease-physical) 900ms both;
+}
+
+@keyframes agent-bump {
+  0% {
+    transform: translate(40px, 560px);
+    opacity: 0;
+  }
+  45% {
+    transform: translate(196px, 470px);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(172px, 488px);
+  }
+  100% {
+    transform: translate(150px, 500px);
+    opacity: 1;
+  }
+}
+
+.blocked {
+  transform: translate(150px, 548px);
+  opacity: 0;
+}
+
+.blocked rect {
+  fill: rgba(255, 107, 97, 0.12);
+  stroke: rgba(255, 107, 97, 0.5);
+}
+
+.blocked text {
+  fill: #ffb3ab;
+  font-size: 13px;
+  font-weight: 650;
+  text-anchor: middle;
+}
+
+.art[data-locked="true"] .blocked {
+  animation: fade-up 500ms var(--ease-settle) 1700ms both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate(150px, 560px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(150px, 548px);
+  }
+}
+
+.bolt {
+  fill: #9aa0a8;
+  stroke: rgba(0, 0, 0, 0.4);
+  transform: translateX(18px);
+  transition: transform 700ms var(--ease-settle);
+}
+
+.art[data-locked="true"] .bolt {
+  transform: none;
+}
+
+.wheel {
+  transform: translate(380px, 300px) rotate(-60deg);
+  transition: transform 1200ms var(--ease-settle) 250ms;
+}
+
+.art[data-locked="true"] .wheel {
+  transform: translate(380px, 300px) rotate(30deg);
+}
+
+.wheel g g path {
+  transform: none;
+}
+
+/* The file moves toward the door and dissolves into sealed blocks. */
+.file {
+  transform: translate(20px, 60px);
+  transition:
+    transform 900ms var(--ease-settle),
+    opacity 400ms var(--ease-physical) 500ms;
+}
+
+.fileName {
+  fill: #1b1a17;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.art[data-locked="true"] .file {
+  transform: translate(70px, 80px) scale(0.9);
+  opacity: 0;
+}
+
+.blocks {
+  transform: translate(20px, 260px);
+}
+
+.block {
+  fill: #1c1f24;
+  stroke: rgba(255, 194, 71, 0.35);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 400ms var(--ease-physical),
+    transform 600ms var(--ease-settle);
+  transition-delay: calc(700ms + var(--i) * 28ms);
+}
+
+.art[data-locked="true"] .block {
+  opacity: 1;
+  transform: none;
+}
+
+.pinLabel {
+  fill: var(--ink-3);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.pinDot {
+  fill: rgba(255, 255, 255, 0.14);
+  transition: fill 200ms var(--ease-physical);
+  transition-delay: calc(1300ms + var(--i) * 90ms);
+}
+
+.art[data-locked="true"] .pinDot {
+  fill: var(--accent);
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-6);
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--glass-line);
+}
+
+.wallText {
+  display: flex;
+  gap: var(--s-3);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wallText svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--accent);
+}
+
+.limit {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+@media (max-width: 900px) {
+  .grid,
+  .footer {
+    grid-template-columns: 1fr;
+  }
+
+  .points {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art[data-locked="true"] .agent {
+    animation: none;
+    transform: translate(150px, 500px);
+  }
+
+  .art[data-locked="true"] .blocked {
+    animation: none;
+    opacity: 1;
+  }
+}

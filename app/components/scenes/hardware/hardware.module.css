@@ -1,0 +1,187 @@
+.section {
+  position: relative;
+  padding: var(--section-y) 0;
+  background:
+    radial-gradient(80% 50% at 50% 55%, rgba(255, 180, 60, 0.05), transparent 70%),
+    var(--canvas);
+}
+
+.stage {
+  margin-top: var(--s-6);
+}
+
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: var(--s-7);
+  align-items: start;
+  margin-top: var(--s-6);
+}
+
+.picker {
+  padding: var(--s-6);
+  border-radius: var(--r-sheet);
+}
+
+.pickerLabel {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.segments {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: var(--s-3);
+  padding: 4px;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.segment {
+  position: relative;
+  z-index: 1;
+  height: 40px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: color var(--dur-move) var(--ease-physical);
+}
+
+.segment[aria-checked="true"] {
+  color: var(--on-accent);
+}
+
+/* The thumb slides between options — it never jumps. */
+.thumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--count));
+  border-radius: var(--r-pill);
+  background: var(--accent-fill);
+  box-shadow: 0 6px 18px rgba(255, 150, 20, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateX(calc(var(--index) * 100%));
+  transition: transform var(--dur-panel) var(--ease-settle);
+}
+
+.models {
+  display: grid;
+  gap: 2px;
+  margin-top: var(--s-5);
+}
+
+.model {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  grid-template-areas:
+    "dot name fit"
+    "dot note fit";
+  column-gap: var(--s-3);
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: background-color var(--dur-move) var(--ease-physical), opacity var(--dur-move) var(--ease-physical);
+}
+
+.model[data-chosen="true"] {
+  background: var(--accent-soft);
+}
+
+.model[data-fits="false"] {
+  opacity: 0.5;
+}
+
+.modelDot {
+  grid-area: dot;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  transition: background-color var(--dur-move) var(--ease-physical);
+}
+
+.model[data-fits="true"] .modelDot {
+  background: var(--ok);
+}
+
+.model[data-chosen="true"] .modelDot {
+  background: var(--accent);
+}
+
+.modelName {
+  grid-area: name;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 650;
+}
+
+.modelName em {
+  padding: 1px 7px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-pill);
+  font-size: var(--text-2xs);
+  font-style: normal;
+  font-weight: 650;
+  color: var(--accent-ink);
+}
+
+.modelNote {
+  grid-area: note;
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.modelFit {
+  grid-area: fit;
+  font-size: var(--text-xs);
+  color: var(--ink-2);
+  text-align: right;
+}
+
+.hint {
+  margin-top: var(--s-4);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+.notes {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.notes li {
+  padding-left: var(--s-5);
+  border-left: 1px solid var(--glass-line-strong);
+}
+
+.notes h3 {
+  font-size: var(--text-lg);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.notes p {
+  margin-top: var(--s-2);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+@media (max-width: 900px) {
+  .lower {
+    grid-template-columns: 1fr;
+  }
+
+  .picker {
+    padding: var(--s-5);
+  }
+}

@@ -20,8 +20,15 @@ page.on("console", (message) => {
 });
 page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
 await page.goto(url, { waitUntil: "networkidle" });
-if (Number(scrollY)) {
-  await page.evaluate((y) => window.scrollTo(0, y), Number(scrollY));
+if (scrollY.startsWith("sel:")) {
+  const [sel, off = "0"] = scrollY.slice(4).split("@");
+  await page.evaluate(async ([s, o]) => {
+    const el = document.querySelector(s);
+    const y = el.getBoundingClientRect().top + window.scrollY + Number(o);
+    for (let i = 1; i <= 12; i++) { window.scrollTo(0, (y * i) / 12); await new Promise((r) => setTimeout(r, 60)); }
+  }, [sel, off]);
+} else if (Number(scrollY)) {
+  await page.evaluate(async (y) => { for (let i = 1; i <= 12; i++) { window.scrollTo(0, (y * i) / 12); await new Promise((r) => setTimeout(r, 60)); } }, Number(scrollY));
 }
 await page.waitForTimeout(Number(wait));
 if (flags.includes("--full")) await page.screenshot({ path: out, fullPage: true });

@@ -1,20 +1,24 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
-import { notFound } from "next/navigation";
-import { getCopy } from "../content";
-import { isLocale, locales } from "../content/types";
-import "../globals.css";
+import "@fontsource-variable/onest/index.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "../styles/base.css";
 
-/**
- * Sets data-theme before first paint so a dark-system visitor never sees a
- * light flash. The site defaults to the system theme; an explicit choice is
- * remembered per browser and may legitimately be absent.
- */
-const themeBootstrap = `try{var t=localStorage.getItem("monarch-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+import type { Metadata, Viewport } from "next";
+import { notFound } from "next/navigation";
+import { SiteFooter } from "@/components/chrome/site-footer";
+import { SiteHeader } from "@/components/chrome/site-header";
+import { getDict, translatedLocales } from "@/content/dictionary";
+import { isLocale, locales, localeMeta } from "@/lib/i18n";
+import { siteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
+
+export const viewport: Viewport = {
+  themeColor: "#08090a",
+  colorScheme: "dark",
+};
 
 export async function generateMetadata({
   params,
@@ -23,38 +27,46 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
-  const copy = getCopy(lang);
+  const dict = getDict(lang);
   return {
-    title: copy.meta.title,
-    description: copy.meta.description,
+    metadataBase: new URL(siteUrl),
+    title: { default: dict.meta.title, template: `%s — Monarch` },
+    description: dict.meta.description,
     alternates: {
       canonical: `/${lang}`,
-      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+      languages: Object.fromEntries(locales.map((code) => [code, `/${code}`])),
     },
     openGraph: {
-      title: copy.meta.title,
-      description: copy.meta.description,
       type: "website",
       siteName: "Monarch",
+      locale: localeMeta[lang].og,
+      title: dict.meta.title,
+      description: dict.meta.description,
     },
+    icons: { icon: "/icon.svg" },
   };
 }
 
-export default async function LangLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
+  const dict = getDict(lang);
 
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang} data-locale={lang}>
       <body>
-        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
-        {children}
+        <a className="skip-link" href="#main">
+          {dict.chrome.skip}
+        </a>
+        <SiteHeader locale={lang} chrome={dict.chrome} translated={translatedLocales} />
+        <main id="main">{children}</main>
+        <SiteFooter locale={lang} footer={dict.footer} />
       </body>
     </html>
   );

@@ -1,0 +1,12 @@
+.mark {
+  flex: none;
+  overflow: visible;
+}
+
+.wordmark {
+  display: inline-block;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: url("/brand/wordmark.png") center / contain no-repeat;
+  mask: url("/brand/wordmark.png") center / contain no-repeat;
+}

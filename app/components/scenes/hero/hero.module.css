@@ -1,0 +1,239 @@
+.hero {
+  position: relative;
+  height: 240vh;
+  background: var(--void);
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 70% at 70% 118%, rgba(255, 190, 90, 0.07), transparent 60%),
+    linear-gradient(180deg, #060607 0%, #08090a 55%, #0b0c0e 100%);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.poster {
+  position: absolute;
+  right: 6%;
+  top: 50%;
+  width: min(46vw, 70vh);
+  height: auto;
+  transform: translateY(-50%);
+  opacity: 0.92;
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding-top: var(--header-h);
+  pointer-events: none;
+}
+
+.copy > * {
+  max-width: min(640px, 50%);
+  pointer-events: auto;
+}
+
+.copy :global(.kicker) {
+  animation: arrive 700ms var(--ease-settle) 150ms both;
+}
+
+.title {
+  margin-top: var(--s-5);
+  font-size: clamp(2.8rem, 4.5vw + 0.2rem, 5.6rem);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  max-width: min(860px, 60%) !important;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.lineInner {
+  display: inline-block;
+  animation: rise 1000ms var(--ease-settle) both;
+  animation-delay: calc(260ms + var(--line) * 110ms);
+}
+
+.lede {
+  margin-top: var(--s-5);
+  animation: arrive 800ms var(--ease-settle) 620ms both;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+  animation: arrive 800ms var(--ease-settle) 740ms both;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-7);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--glass-line);
+  animation: arrive 800ms var(--ease-settle) 860ms both;
+}
+
+.fact dt {
+  font-size: var(--text-sm);
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.fact dd {
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--ink-3);
+}
+
+.cue {
+  position: absolute;
+  left: 50%;
+  pointer-events: none;
+  bottom: 28px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transform: translateX(-50%);
+  font-size: var(--text-2xs);
+  font-weight: 650;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  animation: arrive 700ms var(--ease-settle) 1600ms both;
+}
+
+.cue i {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(180deg, var(--ink-3), transparent);
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--canvas);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero {
+    height: auto;
+  }
+
+  .stage {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .canvas {
+    position: relative;
+    inset: auto;
+    height: 52svh;
+    min-height: 320px;
+    margin-top: var(--header-h);
+  }
+
+  .copy {
+    height: auto;
+    padding-top: 0;
+    padding-bottom: var(--s-8);
+    justify-content: flex-start;
+  }
+
+  .copy > *,
+  .title {
+    max-width: 100% !important;
+  }
+
+  .title {
+    margin-top: var(--s-3);
+  }
+
+  .poster {
+    right: 50%;
+    width: min(70vw, 44svh);
+    transform: translate(50%, -50%);
+  }
+
+  .facts {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+  }
+
+  .fact {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+  }
+
+  .cue {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    height: auto;
+  }
+
+  .stage {
+    position: relative;
+  }
+}

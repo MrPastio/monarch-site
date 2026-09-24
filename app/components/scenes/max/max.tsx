@@ -6,6 +6,7 @@ import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
 import { MonarchMark } from "@/components/brand/monarch-mark";
+import { asset } from "@/lib/asset";
 import styles from "./max.module.css";
 
 const PROVIDERS = [
@@ -98,7 +99,7 @@ export function Max({ copy }: { copy: Dict["max"] }) {
                 data-live={ready && index === selected}
                 onClick={() => setProvider(item.id)}
               >
-                <Image src={`/providers/${item.id}.svg`} alt="" width={22} height={22} unoptimized />
+                <Image src={asset(`/providers/${item.id}.svg`)} alt="" width={22} height={22} unoptimized />
                 <span>{item.name}</span>
               </button>
             ))}

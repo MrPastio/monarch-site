@@ -18,6 +18,9 @@ const errors = [];
 page.on("console", (message) => {
   if (message.type() === "error" || message.type() === "warning") errors.push(`${message.type()}: ${message.text()}`);
 });
+page.on("response", (response) => {
+  if (response.status() >= 400) errors.push(`http ${response.status()}: ${response.url()}`);
+});
 page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
 await page.goto(url, { waitUntil: "networkidle" });
 if (scrollY.startsWith("sel:")) {

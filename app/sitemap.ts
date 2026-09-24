@@ -3,6 +3,8 @@ import { locales } from "@/lib/i18n";
 import { siteUrl } from "@/lib/site";
 import { productUpdates } from "@/content/release-notes";
 
+export const dynamic = "force-static";
+
 const pages = ["", "download", "updates", "how-it-works", "security", "principles", "documentation"];
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -1,4 +1,5 @@
 import { crestCrown, crestShield, crestTrunk, crestViewBox, crestAspect } from "./crest-paths";
+import { asset } from "@/lib/asset";
 import styles from "./monarch-mark.module.css";
 
 /**
@@ -45,7 +46,7 @@ export function MonarchWordmark({ height = 14, className }: { height?: number; c
   return (
     <span
       className={[styles.wordmark, className].filter(Boolean).join(" ")}
-      style={{ height, width: Math.round((height * 937) / 104) }}
+      style={{ height, width: Math.round((height * 937) / 104), "--wordmark": `url("${asset("/brand/wordmark.webp")}")` } as React.CSSProperties}
       aria-hidden
     />
   );

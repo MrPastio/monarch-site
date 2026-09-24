@@ -6,6 +6,7 @@ import type { Dict } from "@/content/dictionary";
 import { getGsap, prefersReducedMotion } from "@/components/motion/gsap";
 import { localePath, type Locale } from "@/lib/i18n";
 import type { CrestHandle } from "./crest-renderer";
+import { asset } from "@/lib/asset";
 import styles from "./hero.module.css";
 
 type Mode = "loading" | "live" | "poster";
@@ -116,7 +117,7 @@ export function Hero({ locale, hero }: { locale: Locale; hero: Dict["hero"] }) {
         >
           {mode === "poster" && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img className={styles.poster} src="/brand/logo-dark.webp" alt="" width={960} height={960} />
+            <img className={styles.poster} src={asset("/brand/logo-dark.webp")} alt="" width={960} height={960} />
           )}
         </div>
 

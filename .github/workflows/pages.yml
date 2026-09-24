@@ -1,0 +1,54 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [site-v4-night]
+  schedule:
+    # Rebuild daily so the version archive picks up new releases.
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      STATIC_EXPORT: "1"
+      NEXT_PUBLIC_BASE_PATH: /monarch-site
+      NEXT_PUBLIC_SITE_URL: https://mrpastio.github.io/monarch-site
+      NEXT_TELEMETRY_DISABLED: "1"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      # Server-only parts have no place in a static site.
+      - run: rm -f proxy.ts && rm -rf app/api
+      - run: npx next build
+      - run: node scripts/export-extras.mjs
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

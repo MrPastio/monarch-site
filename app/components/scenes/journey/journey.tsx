@@ -6,6 +6,7 @@ import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
 import { getGsap, prefersReducedMotion } from "@/components/motion/gsap";
+import { asset } from "@/lib/asset";
 import styles from "./journey.module.css";
 
 type Copy = Dict["journey"];
@@ -138,7 +139,7 @@ export function Journey({ copy, ui }: { copy: Copy; ui: Dict["ui"] }) {
               {POSES.map((name) => (
                 <Image
                   key={name}
-                  src={`/mascot/oscar-${name}.webp`}
+                  src={asset(`/mascot/oscar-${name}.webp`)}
                   alt=""
                   width={384}
                   height={384}

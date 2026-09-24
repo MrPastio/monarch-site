@@ -331,3 +331,15 @@
     margin-inline: auto;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .appWindow {
+    height: 44px;
+    opacity: 0.35;
+  }
+
+  .closedLabel,
+  .art .events li {
+    opacity: 1 !important;
+  }
+}

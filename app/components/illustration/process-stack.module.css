@@ -132,3 +132,16 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .slabInner,
+  .label {
+    transform: translateY(calc(var(--lift) * -1));
+    opacity: 1;
+  }
+
+  .tower {
+    opacity: 1;
+    transform: none;
+  }
+}

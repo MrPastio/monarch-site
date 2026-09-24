@@ -31,11 +31,6 @@ export function SiteHeader({
   }, []);
 
   useEffect(() => {
-    setMenuOpen(false);
-    setLangOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!langOpen && !menuOpen) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -108,6 +103,7 @@ export function SiteHeader({
                   key={code}
                   role="menuitem"
                   href={localePath(code, rest)}
+                  onClick={() => setLangOpen(false)}
                   hrefLang={code}
                   className={styles.langItem}
                   aria-current={code === locale ? "true" : undefined}
@@ -143,6 +139,7 @@ export function SiteHeader({
               key={item.href}
               href={localePath(locale, item.href)}
               className={styles.sheetLink}
+              onClick={() => setMenuOpen(false)}
               style={{ "--i": index } as React.CSSProperties}
               aria-current={current(item.href) ? "page" : undefined}
             >

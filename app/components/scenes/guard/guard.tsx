@@ -20,10 +20,7 @@ export function Guard({ copy, events }: { copy: Dict["guard"]; events: Dict["ui"
   useEffect(() => {
     const art = artRef.current;
     if (!art) return;
-    if (prefersReducedMotion()) {
-      setClosed(true);
-      return;
-    }
+    if (prefersReducedMotion()) return; // CSS shows the closed state
     const { ScrollTrigger } = getGsap();
     const trigger = ScrollTrigger.create({
       trigger: art,

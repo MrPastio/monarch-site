@@ -78,6 +78,32 @@ export const claims = {
     maturity: "stable",
     limit: "Скорость ответа зависит от выбранной модели и твоего железа.",
   },
+  consentEgress: {
+    id: "consentEgress",
+    ru: "Интернет-поиск, облачные сервисы и MAX работают только после отдельного согласия.",
+    evidence: "docs/architecture/MAX_PROVIDER_CONNECTIONS_2026-09-07.md",
+    maturity: "stable",
+    limit: "Проверка обновлений выходит в сеть без отдельного согласия.",
+  },
+  noTrackers: {
+    id: "noTrackers",
+    ru: "В приложении нет трекеров и сторонней аналитики.",
+    evidence: "src (поиск по analytics/telemetry SDK: нет вхождений)",
+    maturity: "stable",
+  },
+  safeIsolation: {
+    id: "safeIsolation",
+    ru: "Сейф — отдельный процесс без сети; агент к нему не допускается.",
+    evidence: "docs/safe/SECURITY_MODEL.md",
+    maturity: "stable",
+    limit: "Не защищает от вредоносного кода под той же учётной записью, пока Сейф открыт.",
+  },
+  maxInDevelopment: {
+    id: "maxInDevelopment",
+    ru: "MAX с 12 провайдерами разрабатывается для версии 0.3 и ещё не опубликован.",
+    evidence: "docs/release/MONARCH_0.3.0_CUMULATIVE_CHANGELOG.md",
+    maturity: "alpha",
+  },
   astraV3: {
     id: "astraV3",
     ru: "Astra V3 переводит агентность на типизированные возможности с явной проверкой прав.",

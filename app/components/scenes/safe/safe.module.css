@@ -259,3 +259,32 @@
     opacity: 1;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .bolt,
+  .block {
+    transform: none;
+    opacity: 1;
+  }
+
+  .wheel {
+    transform: translate(380px, 300px) rotate(30deg);
+  }
+
+  .file {
+    opacity: 0;
+  }
+
+  .pinDot {
+    fill: var(--accent);
+  }
+
+  .agent {
+    opacity: 1;
+    transform: translate(150px, 500px);
+  }
+
+  .blocked {
+    opacity: 1;
+  }
+}

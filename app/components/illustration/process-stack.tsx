@@ -29,10 +29,7 @@ export function ProcessStack({ layers }: { layers: readonly Layer[] }) {
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    if (prefersReducedMotion()) {
-      setOpen(true);
-      return;
-    }
+    if (prefersReducedMotion()) return; // CSS shows the stack open
     const { ScrollTrigger } = getGsap();
     const trigger = ScrollTrigger.create({ trigger: node, start: "top 70%", once: true, onEnter: () => setOpen(true) });
     return () => trigger.kill();
@@ -45,7 +42,6 @@ export function ProcessStack({ layers }: { layers: readonly Layer[] }) {
     <div ref={ref} className={styles.wrap} data-open={open}>
       <svg viewBox="-460 -150 1100 640" className={styles.svg} role="img" aria-label={layers.map((layer) => layer.title).join(", ")}>
         {stack.map((layer, index) => {
-          const z = (stack.length - 1 - index) * GAP;
           const colors = tint[layer.id]!;
           const label = project(0, SLAB.d, SLAB.h);
           return (

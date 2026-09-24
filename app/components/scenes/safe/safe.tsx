@@ -20,10 +20,7 @@ export function Safe({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
   useEffect(() => {
     const art = artRef.current;
     if (!art) return;
-    if (prefersReducedMotion()) {
-      setLocked(true);
-      return;
-    }
+    if (prefersReducedMotion()) return; // CSS shows the locked state
     const { ScrollTrigger } = getGsap();
     const trigger = ScrollTrigger.create({
       trigger: art,

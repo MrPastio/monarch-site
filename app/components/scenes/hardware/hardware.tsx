@@ -25,10 +25,7 @@ export function Hardware({ copy }: { copy: Dict["hardware"] }) {
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    if (prefersReducedMotion()) {
-      setDrawn(true);
-      return;
-    }
+    if (prefersReducedMotion()) return; // CSS shows the traces drawn
     const { gsap, ScrollTrigger } = getGsap();
     const parts = ORDER.map((name) => stage.querySelector(`[data-part="${name}"]`)).filter(Boolean);
     const context = gsap.context(() => {

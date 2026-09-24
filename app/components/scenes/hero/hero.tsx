@@ -35,13 +35,12 @@ export function Hero({ locale, hero }: { locale: Locale; hero: Dict["hero"] }) {
     let cancelled = false;
     const reduced = prefersReducedMotion();
 
-    if (!supportsWebGL()) {
-      setMode("poster");
-      return;
-    }
-
     const wide = () => window.matchMedia("(min-width: 900px)").matches;
     const load = async () => {
+      if (!supportsWebGL()) {
+        setMode("poster");
+        return;
+      }
       try {
         const { mountCrest } = await import("./crest-renderer");
         if (cancelled) return;

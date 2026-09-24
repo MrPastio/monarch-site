@@ -42,13 +42,13 @@ export async function generateMetadata({
       locale: localeMeta[lang].og,
       title: dict.meta.title,
       description: dict.meta.description,
-      images: [{ url: `/og/${lang}.png`, width: 1200, height: 630, alt: dict.meta.title }],
+      images: [{ url: `/og/${lang}.jpg`, width: 1200, height: 630, alt: dict.meta.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.meta.title,
       description: dict.meta.description,
-      images: [`/og/${lang}.png`],
+      images: [`/og/${lang}.jpg`],
     },
     icons: { icon: "/icon.svg" },
   };

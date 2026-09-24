@@ -20,6 +20,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next|models|mascot|providers|brand|posters|og|favicon.ico|icon.svg|apple-icon.png|robots.txt|sitemap.xml|.*\\.[a-z0-9]{2,5}$).*)",
+    "/((?!api|_next|mascot|providers|brand|posters|og|favicon.ico|icon.svg|apple-icon.png|robots.txt|sitemap.xml|.*\\.[a-z0-9]{2,5}$).*)",
   ],
 };

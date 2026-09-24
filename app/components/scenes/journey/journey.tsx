@@ -138,10 +138,10 @@ export function Journey({ copy, ui }: { copy: Copy; ui: Dict["ui"] }) {
               {POSES.map((name) => (
                 <Image
                   key={name}
-                  src={`/mascot/oscar-${name}.png`}
+                  src={`/mascot/oscar-${name}.webp`}
                   alt=""
-                  width={512}
-                  height={512}
+                  width={384}
+                  height={384}
                   sizes="260px"
                   className={styles.pose}
                   data-on={name === pose}

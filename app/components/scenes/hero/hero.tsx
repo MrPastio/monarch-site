@@ -116,7 +116,7 @@ export function Hero({ locale, hero }: { locale: Locale; hero: Dict["hero"] }) {
         >
           {mode === "poster" && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img className={styles.poster} src="/brand/logo-dark.png" alt="" width={1254} height={1254} />
+            <img className={styles.poster} src="/brand/logo-dark.webp" alt="" width={960} height={960} />
           )}
         </div>
 

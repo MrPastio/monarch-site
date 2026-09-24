@@ -70,11 +70,11 @@ export default async function PrinciplesPage({ params }: { params: Promise<{ lan
           </p>
           <div className={styles.brand}>
             <figure data-reveal>
-              <Image src="/brand/logo-dark.png" alt={copy.brandDark} width={1254} height={1254} sizes="(max-width: 800px) 100vw, 50vw" />
+              <Image src="/brand/logo-dark.webp" alt={copy.brandDark} width={960} height={960} sizes="(max-width: 800px) 100vw, 50vw" />
               <figcaption>{copy.brandDark}</figcaption>
             </figure>
             <figure data-reveal>
-              <Image src="/brand/logo-light.png" alt={copy.brandLight} width={1254} height={1254} sizes="(max-width: 800px) 100vw, 50vw" />
+              <Image src="/brand/logo-light.webp" alt={copy.brandLight} width={960} height={960} sizes="(max-width: 800px) 100vw, 50vw" />
               <figcaption>{copy.brandLight}</figcaption>
             </figure>
           </div>

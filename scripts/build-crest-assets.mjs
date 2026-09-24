@@ -73,11 +73,18 @@ function simplifyRing(ring) {
  * them with a few dozen jittery points. Fit the circle and emit it exactly.
  */
 function fitCircle(ring) {
-  const cx = ring.reduce((sum, [x]) => sum + x, 0) / ring.length;
-  const cy = ring.reduce((sum, [, y]) => sum + y, 0) / ring.length;
+  // Centre from the bounding box: trace points are unevenly spaced, so a
+  // plain centroid drifts toward the dense side.
+  const xs = ring.map(([x]) => x);
+  const ys = ring.map(([, y]) => y);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
   const radii = ring.map(([x, y]) => Math.hypot(x - cx, y - cy));
-  const r = radii.reduce((sum, value) => sum + value, 0) / radii.length;
-  const round = radii.every((value) => Math.abs(value - r) < 1.8) && r < 40;
+  const sorted = [...radii].sort((a, b) => a - b);
+  const r = sorted[Math.floor(sorted.length / 2)];
+  // Robust to a stray trace point: judge by the mean deviation from the median radius.
+  const meanDeviation = radii.reduce((sum, value) => sum + Math.abs(value - r), 0) / radii.length;
+  const round = ring.length >= 12 && meanDeviation < 1.5 && r > 6 && r < 40;
   if (!round) return null;
   return Array.from({ length: 72 }, (_, i) => {
     const angle = (i / 72) * Math.PI * 2;
@@ -85,10 +92,76 @@ function fitCircle(ring) {
   });
 }
 
-const cleanPart = (part) => ({
-  outer: simplifyRing(part.outer),
-  holes: part.holes.map((hole) => fitCircle(hole) ?? simplifyRing(hole)),
-});
+/**
+ * The circuit nodes are rings: a circular hole inside a circular outline.
+ * The trace describes the outer arc with a handful of points, which shows
+ * up as facets in close-ups. For every circular hole, find the run of outer
+ * points that sit on a common radius around its centre and replace the run
+ * with a dense exact arc.
+ */
+function circleOf(ring) {
+  const xs = ring.map(([x]) => x);
+  const ys = ring.map(([, y]) => y);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  return { cx, cy };
+}
+
+function roundOuterArcs(outer, holes) {
+  let points = outer;
+  for (const hole of holes) {
+    const { cx, cy } = circleOf(hole);
+    const dist = ([x, y]) => Math.hypot(x - cx, y - cy);
+    const holeR = dist(hole[0]);
+    // Outer radius: the most common distance of nearby outline points.
+    const near = points.map(dist).filter((d) => d > holeR + 3 && d < holeR + 24).sort((a, b) => a - b);
+    if (near.length < 4) continue;
+    const ringR = near[Math.floor(near.length / 2)];
+    const onArc = points.map((p) => Math.abs(dist(p) - ringR) < 2.2);
+    // Longest cyclic run of arc points.
+    const n = points.length;
+    let bestStart = -1;
+    let bestLength = 0;
+    for (let start = 0; start < n; start++) {
+      if (!onArc[start] || onArc[(start - 1 + n) % n]) continue;
+      let length = 0;
+      while (length < n && onArc[(start + length) % n]) length++;
+      if (length > bestLength) {
+        bestLength = length;
+        bestStart = start;
+      }
+    }
+    if (bestLength < 3) continue;
+    const first = points[bestStart];
+    const last = points[(bestStart + bestLength - 1) % n];
+    const a0 = Math.atan2(first[1] - cy, first[0] - cx);
+    const a1 = Math.atan2(last[1] - cy, last[0] - cx);
+    // Walk the same way the original run walks.
+    const mid = points[(bestStart + Math.floor(bestLength / 2)) % n];
+    const am = Math.atan2(mid[1] - cy, mid[0] - cx);
+    const norm = (a) => ((a % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    const ccw = norm(am - a0) < norm(a1 - a0);
+    const sweep = ccw ? norm(a1 - a0) : -norm(a0 - a1);
+    const steps = Math.max(8, Math.ceil(Math.abs(sweep) / (Math.PI / 60)));
+    const arc = Array.from({ length: steps + 1 }, (_, i) => {
+      const a = a0 + (sweep * i) / steps;
+      return [Math.round((cx + Math.cos(a) * ringR) * 100) / 100, Math.round((cy + Math.sin(a) * ringR) * 100) / 100];
+    });
+    const rest = [];
+    for (let i = 0; i < n - bestLength; i++) rest.push(points[(bestStart + bestLength + i) % n]);
+    points = [...arc, ...rest];
+  }
+  return points;
+}
+
+const cleanPart = (part) => {
+  const holes = part.holes.map((hole) => fitCircle(hole) ?? simplifyRing(hole));
+  const circular = holes.filter((hole, i) => fitCircle(part.holes[i]) !== null);
+  return {
+    outer: roundOuterArcs(simplifyRing(part.outer), circular),
+    holes,
+  };
+};
 
 const cleaned = {
   size: source.width,

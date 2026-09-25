@@ -1,0 +1,138 @@
+.root {
+  display: grid;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filter {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  font-size: var(--text-sm);
+  font-weight: 560;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    color var(--dur-touch) var(--ease-physical),
+    border-color var(--dur-touch) var(--ease-physical),
+    background-color var(--dur-touch) var(--ease-physical);
+}
+
+.filter:hover {
+  color: var(--ink);
+}
+
+.filter[aria-pressed="true"] {
+  border-color: var(--accent-line);
+  background: #fff6e4;
+  color: var(--ink);
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-sheet);
+  background: var(--glass-line);
+}
+
+.grid li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: var(--s-5);
+  background: var(--surface);
+  transition:
+    opacity var(--dur-move) var(--ease-physical),
+    background-color var(--dur-move) var(--ease-physical);
+}
+
+.grid li[data-on="false"] {
+  opacity: 0.32;
+}
+
+.grid li[data-on="true"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--group, var(--graphite));
+  transform-origin: center;
+  transition: transform var(--dur-move) var(--ease-settle);
+}
+
+.grid li[data-group="agent"] {
+  --group: var(--orange);
+}
+
+.grid li[data-group="data"] {
+  --group: #c98a1b;
+}
+
+.grid li[data-group="guard"] {
+  --group: var(--danger);
+}
+
+.grid li[data-group="link"] {
+  --group: #315eaa;
+}
+
+.grid li[data-group="system"] {
+  --group: var(--ink-3);
+}
+
+.grid code {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--ink-3);
+}
+
+.grid h3 {
+  font-size: var(--text-base);
+  font-weight: 640;
+}
+
+.grid p {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

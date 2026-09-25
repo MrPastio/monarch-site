@@ -1,41 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
-import { getGsap, prefersReducedMotion } from "@/components/motion/gsap";
-import { crestCrown, crestShield, crestTrunk } from "@/components/brand/crest-paths";
+import { useLit } from "@/components/motion/marked";
+import { asset } from "@/lib/asset";
 import styles from "./safe.module.css";
 
-const BOLTS = Array.from({ length: 16 }, (_, i) => (i / 16) * Math.PI * 2);
-const BLOCKS = Array.from({ length: 24 }, (_, i) => i);
+const CELLS = Array.from({ length: 40 }, (_, index) => index);
+const HEX = "3f a9 0c e1 7b 52 d8 16 9e 44 c0 2a f7 6d 81 b3 05 ea 39 7c d2 60 1f 8b a4 57 e9 0b 36 cd 72 98 14 fb 4e a0 6b 2d 93 c8".split(" ");
 
-export function Safe({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
-  const artRef = useRef<HTMLDivElement>(null);
-  const [locked, setLocked] = useState(false);
-
-  // The vault locks once, when it comes into view: the file is sealed into
-  // blocks, bolts slide home, the wheel turns a quarter. Then it stays still.
-  useEffect(() => {
-    const art = artRef.current;
-    if (!art) return;
-    if (prefersReducedMotion()) return; // CSS shows the locked state
-    const { ScrollTrigger } = getGsap();
-    const trigger = ScrollTrigger.create({
-      trigger: art,
-      start: "top 65%",
-      once: true,
-      onEnter: () => setLocked(true),
-    });
-    return () => trigger.kill();
-  }, []);
+/**
+ * Monarch Safe. The scene locks once when seen: the file slides into the
+ * vault and turns into cipher blocks, the PIN fills, the shackle drops, and
+ * Oscar walks up to the wall and is stopped there. "Lock again" replays it.
+ */
+export function Safe({ copy, agent, indexed = true }: { copy: Dict["safe"]; agent: string; indexed?: boolean }) {
+  const [take, setTake] = useState(0);
 
   return (
     <Reveal as="section" className={styles.section} labelledBy="safe-title">
       <div className={`shell ${styles.grid}`}>
         <div className={styles.copy}>
-          <ChapterHead id="safe-title" index={copy.index} kicker={copy.kicker} title={copy.title} lede={copy.lede} />
+          <ChapterHead id="safe-title" index={indexed ? copy.index : undefined} kicker={copy.kicker} title={copy.title} lede={copy.lede} />
           <dl className={styles.points}>
             {copy.points.map((point) => (
               <div key={point.value} className={styles.point} data-reveal>
@@ -46,114 +34,14 @@ export function Safe({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
           </dl>
         </div>
 
-        <div ref={artRef} className={styles.art} data-locked={locked} aria-hidden>
-          <svg viewBox="0 0 640 620" className={styles.svg}>
-            <defs>
-              <radialGradient id="sf-door" cx=".42" cy=".36" r=".75">
-                <stop offset="0" stopColor="#4a4f57" />
-                <stop offset=".55" stopColor="#23262b" />
-                <stop offset="1" stopColor="#111316" />
-              </radialGradient>
-              <linearGradient id="sf-ring" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#6b7078" />
-                <stop offset=".5" stopColor="#23262b" />
-                <stop offset="1" stopColor="#4a4f57" />
-              </linearGradient>
-              <linearGradient id="sf-gold" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#ffe29a" />
-                <stop offset=".5" stopColor="#e1ad33" />
-                <stop offset="1" stopColor="#9c6c16" />
-              </linearGradient>
-              <radialGradient id="sf-light" cx=".5" cy=".5" r=".5">
-                <stop offset="0" stopColor="rgba(255,190,90,.16)" />
-                <stop offset="1" stopColor="rgba(255,190,90,0)" />
-              </radialGradient>
-            </defs>
-
-            <ellipse cx="380" cy="300" rx="290" ry="280" fill="url(#sf-light)" />
-
-            {/* Agent boundary: a wall the agent cannot pass */}
-            <circle cx="380" cy="300" r="236" className={styles.wall} />
-            <g className={styles.agent}>
-              <rect x="-44" y="-17" width="88" height="34" rx="17" className={styles.agentChip} />
-              <path d="M-32 -7 l10 16 l3 -7 l7 -3 Z" fill="#f7f5ef" />
-              <text x="-12" y="5" className={styles.agentText}>
-                {agent}
-              </text>
-            </g>
-            <g className={styles.blocked}>
-              <rect x="-62" y="-15" width="124" height="30" rx="15" />
-              <text y="5">{copy.labels.blocked}</text>
-            </g>
-
-            {/* Vault body */}
-            <circle cx="380" cy="300" r="196" fill="#0b0c0e" stroke="rgba(255,255,255,.08)" />
-            <circle cx="380" cy="300" r="184" fill="url(#sf-ring)" />
-            <circle cx="380" cy="300" r="160" fill="url(#sf-door)" stroke="rgba(255,255,255,.12)" />
-            {BOLTS.map((angle, index) => (
-              <g key={index} transform={`translate(380 300) rotate(${(angle * 180) / Math.PI})`}>
-                <rect x="150" y="-9" width="34" height="18" rx="4" className={styles.bolt} />
-              </g>
-            ))}
-            <circle cx="380" cy="300" r="118" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth="2" />
-            <circle cx="380" cy="300" r="104" fill="none" stroke="rgba(0,0,0,.5)" strokeWidth="6" />
-
-            {/* Wheel */}
-            <g className={styles.wheel}>
-              {[0, 60, 120].map((angle) => (
-                <g key={angle} transform={`rotate(${angle})`}>
-                  <rect x="-96" y="-7" width="192" height="14" rx="7" fill="url(#sf-gold)" />
-                  <circle cx="-96" cy="0" r="13" fill="url(#sf-gold)" />
-                  <circle cx="96" cy="0" r="13" fill="url(#sf-gold)" />
-                </g>
-              ))}
-            </g>
-            <g transform="translate(380 300)">
-              <circle r="46" fill="#15171b" stroke="url(#sf-gold)" strokeWidth="4" />
-              <g transform="translate(-19 -28) scale(0.0685)">
-                <path d={crestCrown} fill="#e1ad33" fillRule="evenodd" />
-                <path d={crestShield} fill="#f3efe6" fillRule="evenodd" />
-                <path d={crestTrunk} fill="#f3efe6" fillRule="evenodd" />
-              </g>
-            </g>
-
-            {/* The file, sealed into blocks as it enters */}
-            <g className={styles.file}>
-              <rect x="0" y="0" width="120" height="150" rx="12" fill="#f3efe6" />
-              <path d="M88 0 v26 a6 6 0 0 0 6 6 h26" fill="#d9d2c3" />
-              <rect x="16" y="52" width="72" height="8" rx="4" fill="#c9c1b0" />
-              <rect x="16" y="70" width="88" height="8" rx="4" fill="#c9c1b0" />
-              <rect x="16" y="88" width="60" height="8" rx="4" fill="#c9c1b0" />
-              <text x="16" y="132" className={styles.fileName}>
-                {copy.labels.file}
-              </text>
-            </g>
-            <g className={styles.blocks}>
-              {BLOCKS.map((index) => (
-                <rect
-                  key={index}
-                  x={(index % 4) * 30}
-                  y={Math.floor(index / 4) * 26}
-                  width="24"
-                  height="20"
-                  rx="4"
-                  className={styles.block}
-                  style={{ "--i": index } as React.CSSProperties}
-                />
-              ))}
-            </g>
-
-            {/* PIN */}
-            <g transform="translate(290 548)" className={styles.pin}>
-              <rect x="-10" y="-22" width="200" height="44" rx="22" fill="#121416" stroke="rgba(255,255,255,.12)" />
-              <text x="14" y="5" className={styles.pinLabel}>
-                {copy.labels.pin}
-              </text>
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <circle key={i} cx={62 + i * 20} cy="0" r="5" className={styles.pinDot} style={{ "--i": i } as React.CSSProperties} />
-              ))}
-            </g>
-          </svg>
+        <div className={styles.side}>
+          <Vault key={take} copy={copy} agent={agent} />
+          <button type="button" className={`btn btn-glass ${styles.replay}`} onClick={() => setTake((value) => value + 1)}>
+            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
+              <path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v2.8h2.8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {copy.labels.replay}
+          </button>
         </div>
       </div>
 
@@ -170,5 +58,64 @@ export function Safe({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
         </div>
       </div>
     </Reveal>
+  );
+}
+
+function Vault({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
+  const { ref, unlit } = useLit<HTMLDivElement>();
+  return (
+    <div ref={ref} className={styles.scene} data-unlit={unlit} aria-hidden>
+      <div className={styles.vault}>
+        <header className={styles.vaultHead}>
+          <span className={styles.lock}>
+            <svg width="22" height="24" viewBox="0 0 22 24">
+              <path className={styles.shackle} d="M6 11V7.5a5 5 0 0 1 10 0V11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              <rect x="3" y="11" width="16" height="11" rx="3" fill="currentColor" />
+              <circle cx="11" cy="16.2" r="1.7" fill="#12110f" />
+            </svg>
+          </span>
+          <span className={styles.vaultName}>{copy.labels.vault}</span>
+          <span className={styles.status}>
+            <span data-state="open">{copy.labels.open}</span>
+            <span data-state="locked">{copy.labels.locked}</span>
+          </span>
+        </header>
+
+        <div className={styles.slot}>
+          <div className={styles.file}>
+            <svg width="26" height="32" viewBox="0 0 26 32">
+              <path d="M3 1h13l8 8v20a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2Z" fill="#f6f2ea" />
+              <path d="M16 1v6a2 2 0 0 0 2 2h6" fill="#d9d2c3" />
+              <rect x="5" y="15" width="12" height="2" rx="1" fill="#c9c1b0" />
+              <rect x="5" y="20" width="15" height="2" rx="1" fill="#c9c1b0" />
+            </svg>
+            <span>{copy.labels.file}</span>
+          </div>
+          <div className={styles.cipher}>
+            {CELLS.map((index) => (
+              <span key={index} style={{ "--i": index } as React.CSSProperties}>
+                {HEX[index]}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <p className={styles.sealed}>{copy.labels.sealed}</p>
+
+        <div className={styles.pin}>
+          <span>{copy.labels.pin}</span>
+          {[0, 1, 2, 3, 4, 5].map((index) => (
+            <i key={index} style={{ "--i": index } as React.CSSProperties} />
+          ))}
+        </div>
+      </div>
+
+      <span className={styles.wall} />
+      <div className={styles.agent}>
+        <span className={styles.agentFace} style={{ backgroundImage: `url("${asset("/mascot/oscar-error.webp")}")` }} />
+        <span>{agent}</span>
+      </div>
+      <p className={styles.blocked}>{copy.labels.blocked}</p>
+    </div>
   );
 }

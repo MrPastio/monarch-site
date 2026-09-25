@@ -255,3 +255,404 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* --- v5.1 inner-page building blocks --- */
+.flow {
+  display: grid;
+  gap: 8px;
+  margin-top: var(--s-6);
+}
+
+.flow li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 12px 16px;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  font-weight: 600;
+}
+
+.flow li + li::before {
+  content: "";
+  position: absolute;
+  left: 30px;
+  top: -9px;
+  width: 2px;
+  height: 9px;
+  background: var(--accent-line);
+}
+
+.flow li span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff1d6;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--accent-ink);
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-6);
+}
+
+.feature .cta {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.modelList {
+  display: grid;
+  margin: var(--s-3) 0 var(--s-4);
+  border-top: 1px solid var(--glass-line);
+}
+
+.modelList li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--s-4);
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--glass-line);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.modelList strong {
+  font-size: var(--text-base);
+  color: var(--ink);
+}
+
+.modelList em {
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  font-size: var(--text-2xs);
+  font-style: normal;
+  font-weight: 650;
+  color: var(--ink-2);
+}
+
+.modelRam {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent-ink);
+}
+
+.memorySplit {
+  display: grid;
+  grid-template-columns: 1fr 2px 1fr;
+  gap: var(--s-4);
+  align-items: stretch;
+  margin-top: var(--s-4);
+}
+
+.memorySplit span {
+  padding: var(--s-4);
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-card);
+  background: var(--surface-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-align: center;
+}
+
+.memorySplit i {
+  border-radius: 1px;
+  background: repeating-linear-gradient(180deg, var(--graphite) 0 6px, transparent 6px 11px);
+}
+
+/* Verdict cards carry their colour as a bar, not a border. */
+.verdictCard {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--s-5) + 6px);
+}
+
+.verdictCard::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--tone, var(--graphite));
+}
+
+.verdictCard[data-tone="allow"] {
+  --tone: var(--ok);
+}
+
+.verdictCard[data-tone="confirm"] {
+  --tone: var(--orange);
+}
+
+.verdictCard[data-tone="deny"] {
+  --tone: var(--danger);
+}
+
+/* Update chain: four links, drawn left to right. */
+.chain {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+}
+
+.chain li {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: var(--s-5);
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+
+.chain li + li::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--s-3) - 1px);
+  top: 50%;
+  width: calc(var(--s-3) + 2px);
+  height: 2px;
+  background: var(--accent-line);
+}
+
+.chain strong {
+  font-weight: 650;
+}
+
+.chain span {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.chainIndex {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--accent-ink);
+}
+
+/* Docs: a sticky table of contents beside the content. */
+.docLayout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--s-8);
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--header-h) + var(--s-5));
+  display: grid;
+  gap: 2px;
+}
+
+.tocTitle {
+  margin-bottom: var(--s-2);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.toc a {
+  padding: 7px 12px;
+  border-left: 2px solid var(--glass-line);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+  transition:
+    color var(--dur-touch) var(--ease-physical),
+    border-color var(--dur-touch) var(--ease-physical);
+}
+
+.toc a:hover {
+  color: var(--ink);
+  border-color: var(--accent-line);
+}
+
+.docSections {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.docSection {
+  padding: var(--s-6);
+}
+
+.docSection .steps li {
+  line-height: 1.6;
+}
+
+/* Principles */
+.principleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+
+.principle {
+  display: grid;
+  grid-template-rows: 150px auto;
+  overflow: hidden;
+  padding: 0;
+}
+
+.principle > div:last-child {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-5);
+}
+
+.principle h3 {
+  font-size: var(--text-lg);
+  font-weight: 650;
+}
+
+.principle p {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.roster {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-5);
+}
+
+.roster li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+
+.roster strong {
+  display: block;
+  font-weight: 650;
+}
+
+.roster span {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.rosterDot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.roster li[data-state="admitted"] .rosterDot {
+  background: var(--orange);
+}
+
+.roster li[data-state="denied"] .rosterDot {
+  background: var(--danger);
+}
+
+.roster li[data-state="denied"] strong {
+  color: var(--ink-3);
+}
+
+@media (max-width: 900px) {
+  .docLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .toc {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tocTitle {
+    width: 100%;
+  }
+
+  .toc a {
+    border: 1px solid var(--glass-line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+  }
+
+  .chain {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chain li:nth-child(3)::before {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .principleGrid,
+  .roster {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .chain {
+    grid-template-columns: 1fr;
+  }
+
+  .chain li + li::before {
+    display: none;
+  }
+
+  .memorySplit {
+    grid-template-columns: 1fr;
+  }
+
+  .memorySplit i {
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--graphite) 0 6px, transparent 6px 11px);
+  }
+}
+
+.hardLimits {
+  margin-top: var(--s-5);
+  padding: var(--s-6);
+  border-radius: var(--r-sheet);
+}
+
+.hardLimits .list li::before {
+  background: var(--danger);
+}
+
+.docHeroCta {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-3);
+  padding: var(--s-6);
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-sheet);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.docHeroCta p {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.docTrouble {
+  margin-top: var(--s-5);
+}

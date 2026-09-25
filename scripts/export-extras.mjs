@@ -19,7 +19,7 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <title>Monarch</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#08090a">
+<meta name="theme-color" content="#faf8f4">
 <link rel="icon" href="${base}/icon.svg">
 <meta http-equiv="refresh" content="0; url=${base}/ru/">
 <script>
@@ -35,7 +35,7 @@ const html = `<!doctype html>
   location.replace("${base}/" + pick + "/");
 })();
 </script>
-<style>html{background:#08090a}</style>
+<style>html{background:#faf8f4}</style>
 </head>
 <body></body>
 </html>

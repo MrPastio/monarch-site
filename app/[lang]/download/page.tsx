@@ -50,11 +50,11 @@ export default async function DownloadPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <PageHero kicker={dict.download.kicker} title={copy.title} lede={copy.lede}>
+      <PageHero kicker={dict.download.kicker} title={copy.title} lede={copy.lede} home={localePath(lang)}>
         {catalog.current?.asset && <ReleaseCard entry={catalog.current} signed={signed} copy={dict.download} locale={lang} />}
       </PageHero>
 
-      <section className={styles.section}>
+      <section className={styles.section} id="verify">
         <div className="shell">
           <h2 className={styles.h2}>{copy.verifyTitle}</h2>
           <ol className={styles.steps}>

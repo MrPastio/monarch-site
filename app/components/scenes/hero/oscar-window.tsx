@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { Dict } from "@/content/dictionary";
 import { MonarchMark } from "@/components/brand/monarch-mark";
 import { prefersReducedMotion } from "@/components/motion/gsap";
@@ -65,6 +65,9 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
   const [stage, setStage] = useState<Stage>("idle");
   const [typed, setTyped] = useState(0);
   const [run, setRun] = useState(0);
+  const composerTextRef = useRef<HTMLSpanElement>(null);
+  const bubbleRef = useRef<HTMLParagraphElement>(null);
+  const fromRect = useRef<DOMRect | null>(null);
 
   const scenario = journey.scenarios.find((item) => item.id === scenarioId)!;
   const denied = scenario.verdict === "deny";
@@ -94,11 +97,32 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
       let clock = 0;
       for (const [nextStage, delay] of script(next)) {
         clock += delay;
-        at(clock, () => setStage(nextStage));
+        at(clock, () => {
+          // The typed words leave the composer and become the message.
+          if (nextStage === "sent") fromRect.current = composerTextRef.current?.getBoundingClientRect() ?? null;
+          setStage(nextStage);
+        });
       }
     },
     [journey.scenarios],
   );
+
+  // Continuity: the sent bubble starts where the typed text was.
+  useLayoutEffect(() => {
+    if (stage !== "sent") return;
+    const bubble = bubbleRef.current;
+    const from = fromRect.current;
+    fromRect.current = null;
+    if (!bubble || !from || prefersReducedMotion()) return;
+    const to = bubble.getBoundingClientRect();
+    bubble.animate(
+      [
+        { transform: `translate(${from.left - to.left}px, ${from.top - to.top}px)`, opacity: 0.5, borderColor: "transparent", backgroundColor: "transparent" },
+        { transform: "none", opacity: 1 },
+      ],
+      { duration: 560, easing: "cubic-bezier(0.16, 1, 0.3, 1)" },
+    );
+  }, [stage]);
 
   // Start once, when the window is actually seen.
   useEffect(() => {
@@ -199,13 +223,15 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
                   </div>
                 )}
 
-                {reached("sent") && <p className={styles.user}>{scenario.prompt}</p>}
+                {reached("sent") && (
+                  <p ref={bubbleRef} className={styles.user}>
+                    {scenario.prompt}
+                  </p>
+                )}
 
                 {reached("thinking") && (
                   <div className={styles.oscarRow}>
-                    <span className={styles.avatar}>
-                      <Image src={asset(`/mascot/oscar-${pose}.webp`)} alt="" width={96} height={96} sizes="40px" />
-                    </span>
+                    <span className={styles.avatar} style={{ backgroundImage: `url("${asset(`/mascot/oscar-${pose}.webp`)}")` }} />
                     <div className={styles.oscarBody}>
                       {!reached("plan") && <p className={styles.thinking}>{copy.thinking}</p>}
 
@@ -273,7 +299,7 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
               </div>
 
               <div className={styles.composer} data-typing={stage === "typing"}>
-                <span className={composerText ? styles.typed : styles.placeholder}>
+                <span ref={composerTextRef} className={composerText ? styles.typed : styles.placeholder}>
                   {composerText || copy.placeholder}
                   {stage === "typing" && <i className={styles.caret} />}
                 </span>
@@ -285,7 +311,6 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
                       <path d="M1.8 7h10.4M7 1.8c1.6 1.5 2.3 3.3 2.3 5.2S8.6 10.7 7 12.2M7 1.8C5.4 3.3 4.7 5.1 4.7 7s.7 3.7 2.3 5.2" fill="none" stroke="currentColor" strokeWidth="1.2" />
                     </svg>
                   </span>
-                  <span className={styles.max}>MAX</span>
                   <span className={styles.send} data-armed={Boolean(composerText)}>
                     <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
                       <path d="M8 13V3m0 0L3.5 7.5M8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />

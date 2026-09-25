@@ -96,7 +96,7 @@ for (const locale of locales) {
   });
 
   test(`${locale}: unreleased work is labelled as such`, () => {
-    const maxKicker = sources[locale].match(/max: \{\s*index: "05",\s*kicker: "([^"]+)"/)?.[1];
+    const maxKicker = sources[locale].match(/max: \{\s*index: "\d\d",\s*kicker: "([^"]+)"/)?.[1];
     assert.ok(maxKicker && /0\.3/.test(maxKicker), `${locale}: MAX must be marked as 0.3 / in development`);
   });
 }

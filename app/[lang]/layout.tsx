@@ -65,7 +65,7 @@ export default async function RootLayout({
   const dict = getDict(lang);
 
   return (
-    <html lang={lang} data-locale={lang}>
+    <html lang={lang} data-locale={lang} data-scroll-behavior="smooth">
       <body>
         <a className="skip-link" href="#main">
           {dict.chrome.skip}

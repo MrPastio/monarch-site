@@ -6,8 +6,11 @@
 .river {
   position: relative;
   display: grid;
-  gap: var(--s-4);
   padding-left: 44px;
+}
+
+.item + .item .foldInner {
+  padding-top: var(--s-4);
 }
 
 .river::before {
@@ -25,10 +28,73 @@
   position: relative;
 }
 
+/* Filtering folds an entry up in place and unfolds it back. */
+.fold {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows var(--dur-panel) var(--ease-settle),
+    opacity var(--dur-move) var(--ease-physical);
+}
+
+.item[data-shown="false"] .fold {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.foldInner {
+  position: relative;
+  min-height: 0;
+}
+
+.item[data-shown="false"] .foldInner {
+  overflow: hidden;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--s-6);
+  padding-left: 44px;
+}
+
+.filterLabel {
+  margin-right: 6px;
+  font-size: var(--text-xs);
+  font-weight: 650;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.filter {
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  font-size: var(--text-sm);
+  font-weight: 560;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    color var(--dur-touch) var(--ease-physical),
+    border-color var(--dur-touch) var(--ease-physical),
+    background-color var(--dur-touch) var(--ease-physical);
+}
+
+.filter[aria-pressed="true"] {
+  border-color: var(--accent-line);
+  background: #fff6e4;
+  color: var(--ink);
+}
+
 .node {
   position: absolute;
   left: -44px;
-  top: 26px;
+  top: calc(26px + var(--node-offset, 0px));
   width: 24px;
   height: 24px;
   border: 2px solid var(--orange);
@@ -152,4 +218,8 @@ a.card:hover {
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--accent-ink);
+}
+
+.item + .item {
+  --node-offset: var(--s-4);
 }

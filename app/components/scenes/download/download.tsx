@@ -9,7 +9,17 @@ import { CrestStage } from "./crest-stage";
 import { NightBand } from "@/components/scenes/night-band";
 import styles from "./download.module.css";
 
-export async function Download({ copy, locale, crestLabel }: { copy: Dict["download"]; locale: Locale; crestLabel: string }) {
+export async function Download({
+  copy,
+  locale,
+  crestLabel,
+  steps,
+}: {
+  copy: Dict["download"];
+  locale: Locale;
+  crestLabel: string;
+  steps: Dict["hero"]["after"]["steps"];
+}) {
   const catalog = await getReleaseCatalog();
   const current = catalog.current;
   const signed =
@@ -34,6 +44,20 @@ export async function Download({ copy, locale, crestLabel }: { copy: Dict["downl
                 </div>
               ))}
             </dl>
+            <div className={styles.next} data-reveal>
+              <p className={styles.nextTitle}>{copy.nextTitle}</p>
+              <ol>
+                {steps.map((step, index) => (
+                  <li key={step.title}>
+                    <span className={styles.nextNum}>{index + 1}</span>
+                    <div>
+                      <strong>{step.title}</strong>
+                      <p>{step.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
             <div className={styles.notes} data-reveal>
               <p>{copy.smartscreen}</p>
               <p>{copy.edge}</p>

@@ -5,7 +5,8 @@ import { getDict } from "@/content/dictionary";
 import { isLocale, localePath } from "@/lib/i18n";
 import { PageHero } from "@/components/page/page-hero";
 import { Reveal } from "@/components/motion/reveal";
-import { ProcessStack } from "@/components/illustration/process-stack";
+import { ArchitectureMap } from "@/components/page/architecture-map";
+import { ModuleGrid } from "@/components/page/module-grid";
 import { PathMap } from "@/components/scenes/path-map/path-map";
 import styles from "../prose.module.css";
 
@@ -21,65 +22,87 @@ export default async function HowPage({ params }: { params: Promise<{ lang: stri
   if (!isLocale(lang)) notFound();
   const dict = getDict(lang);
   const copy = dict.pages.how;
+  const models = dict.hardware.picker.models;
 
   return (
     <>
-      <PageHero kicker={copy.kicker} title={copy.title} lede={copy.lede} />
+      <PageHero kicker={copy.kicker} title={copy.title} lede={copy.lede} home={localePath(lang)} jumps={copy.jumps} jumpsLabel={dict.ui.jumpsLabel} />
 
-      <Reveal as="section" className={styles.section}>
+      <Reveal as="section" className={styles.section} id="processes">
         <div className="shell">
           <h2 className={styles.h2} data-reveal>
             {copy.processTitle}
           </h2>
-          <div className={styles.block}>
-            <ProcessStack layers={copy.processes} />
+          <div className={styles.block} data-reveal>
+            <ArchitectureMap copy={copy} />
           </div>
         </div>
       </Reveal>
 
       <Reveal as="section" className={styles.section}>
         <div className={`shell ${styles.split}`}>
-          <h2 className={styles.h2} data-reveal>
-            {copy.kernelTitle}
-          </h2>
-          <p className={styles.bigText} data-reveal>
-            {copy.kernelText}
-          </p>
+          <div data-reveal>
+            <h2 className={styles.h2}>{copy.kernelTitle}</h2>
+          </div>
+          <div data-reveal>
+            <p className={styles.bigText}>{copy.kernelText}</p>
+            <ol className={styles.flow}>
+              {copy.kernelFlow.map((step, index) => (
+                <li key={step} style={{ "--i": index } as React.CSSProperties}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </Reveal>
 
-      <PathMap copy={dict.journey} verdicts={dict.pages.security.verdicts} />
+      <PathMap copy={dict.journey} verdicts={dict.pages.security.verdicts} indexed={false} />
 
-      <Reveal as="section" className={styles.section}>
+      <Reveal as="section" className={styles.section} id="modules">
         <div className="shell">
           <h2 className={styles.h2} data-reveal>
             {copy.modulesTitle}
           </h2>
-          <ul className={styles.modules}>
-            {copy.modules.map((module, index) => (
-              <li key={module.id} data-reveal style={{ "--i": index } as React.CSSProperties}>
-                <code>{module.id}</code>
-                <h3>{module.name}</h3>
-                <p>{module.text}</p>
-              </li>
-            ))}
-          </ul>
+          <div data-reveal>
+            <ModuleGrid copy={copy} />
+          </div>
         </div>
       </Reveal>
 
-      <Reveal as="section" className={styles.section}>
+      <Reveal as="section" className={styles.section} id="models">
         <div className={`shell ${styles.twoCol}`}>
-          <div data-reveal>
+          <article className={`card ${styles.feature}`} data-reveal>
             <h2 className={styles.h3}>{copy.modelsTitle}</h2>
             <p className={styles.text}>{copy.modelsText}</p>
+            <ul className={styles.modelList}>
+              {models.map((model) => (
+                <li key={model.name}>
+                  <strong>
+                    {model.name}
+                    {model.beta && <em>Beta</em>}
+                  </strong>
+                  <span>{model.note}</span>
+                  <span className={styles.modelRam}>
+                    {model.ram} {dict.hardware.picker.unit}
+                  </span>
+                </li>
+              ))}
+            </ul>
             <Link className={`btn btn-glass ${styles.cta}`} href={localePath(lang, "documentation")}>
               {dict.chrome.nav[4]!.label} →
             </Link>
-          </div>
-          <div data-reveal>
+          </article>
+          <article className={`card ${styles.feature}`} data-reveal>
             <h2 className={styles.h3}>{copy.memoryTitle}</h2>
             <p className={styles.text}>{copy.memoryText}</p>
-          </div>
+            <div className={styles.memorySplit} aria-hidden>
+              <span>{dict.abilities.vignettes.memoryChats}</span>
+              <i />
+              <span>{dict.abilities.vignettes.memoryProject}</span>
+            </div>
+          </article>
         </div>
       </Reveal>
     </>

@@ -1,9 +1,9 @@
 .hero {
   position: relative;
-  padding: calc(var(--header-h) + clamp(64px, 9vw, 140px)) 0 clamp(48px, 6vw, 96px);
+  padding: calc(var(--header-h) + clamp(48px, 7vw, 104px)) 0 clamp(48px, 6vw, 88px);
   background:
-    radial-gradient(70% 80% at 80% 0%, rgba(255, 190, 90, 0.08), transparent 60%),
-    linear-gradient(180deg, var(--void), var(--canvas));
+    radial-gradient(60% 80% at 85% 0%, rgba(255, 180, 69, 0.14), transparent 65%),
+    linear-gradient(180deg, #fdfcf9, var(--canvas));
   border-bottom: 1px solid var(--glass-line);
   overflow: hidden;
 }
@@ -15,7 +15,7 @@
 }
 
 .inner[data-has-art="true"] {
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
 }
 
 .copy {
@@ -29,18 +29,85 @@
 }
 
 .copy > :nth-child(2) {
-  animation-delay: 80ms;
+  animation-delay: 70ms;
 }
 
 .copy > :nth-child(3) {
-  animation-delay: 160ms;
+  animation-delay: 140ms;
+}
+
+.copy > :nth-child(4) {
+  animation-delay: 210ms;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.crumbHome {
+  color: var(--ink-2);
+  transition: color var(--dur-touch) var(--ease-physical);
+}
+
+.crumbHome:hover {
+  color: var(--ink);
+}
+
+.crumbHere {
+  font-weight: 600;
+  color: var(--accent-ink);
 }
 
 .title {
-  font-size: clamp(2.6rem, 4.6vw + 0.6rem, 5.4rem);
-  font-weight: 650;
-  letter-spacing: -0.045em;
+  max-width: 14em;
+  font-size: clamp(2.6rem, 4.2vw + 0.8rem, 5rem);
   line-height: 1;
+}
+
+.lede {
+  max-width: 38em;
+}
+
+.jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+.jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  font-size: var(--text-sm);
+  font-weight: 540;
+  color: var(--ink-2);
+  transition:
+    color var(--dur-touch) var(--ease-physical),
+    border-color var(--dur-touch) var(--ease-physical);
+}
+
+.jump span {
+  color: var(--ink-faint);
+  transition: transform var(--dur-move) var(--ease-settle);
+}
+
+.jump:hover {
+  color: var(--ink);
+  border-color: var(--glass-line-strong);
+}
+
+.jump:hover span {
+  transform: translateY(2px);
 }
 
 .art {

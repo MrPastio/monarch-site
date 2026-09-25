@@ -24,93 +24,122 @@ const PROVIDERS = [
   { id: "nvidia", name: "NVIDIA" },
 ] as const;
 
+/**
+ * MAX, in the shape of the consent sheet the owner approved for the app:
+ * where the data goes (bridge) on top, what leaves and what stays below, then
+ * the three-part consent. The link is drawn only once every part is checked.
+ */
 export function Max({ copy }: { copy: Dict["max"] }) {
   const [checks, setChecks] = useState<boolean[]>(() => copy.consent.map(() => false));
-  const [provider, setProvider] = useState<string>("groq");
+  const [provider, setProvider] = useState<(typeof PROVIDERS)[number]["id"]>("groq");
   const ready = checks.every(Boolean);
-  const selected = PROVIDERS.findIndex((item) => item.id === provider);
+  const chosen = PROVIDERS.find((item) => item.id === provider)!;
 
   return (
     <Reveal as="section" className={styles.section} labelledBy="max-title">
       <div className="shell">
-        <ChapterHead id="max-title" index={copy.index} kicker={copy.kicker} title={copy.title} lede={copy.lede} />
-      </div>
+        <ChapterHead id="max-title" index={copy.index} kicker={copy.kicker} title={copy.title} lede={copy.lede} align="center" />
 
-      <div className={`shell-wide ${styles.flow}`} data-ready={ready}>
-        <div className={styles.machine} data-reveal>
-          <div className={styles.pcWrap}>
-          <svg viewBox="0 0 120 90" className={styles.pc} aria-hidden>
-            <rect x="8" y="6" width="104" height="64" rx="8" fill="#15171b" stroke="rgba(255,255,255,.18)" />
-            <rect x="14" y="12" width="92" height="52" rx="4" fill="#0b0c0e" />
-            <path d="M48 72 h24 l4 10 h-32 Z" fill="#23262b" />
-            <rect x="36" y="82" width="48" height="4" rx="2" fill="#2d3138" />
-          </svg>
-          <MonarchMark size={26} className={styles.pcMark} />
+        <div className={`card ${styles.sheet}`} data-ready={ready} data-reveal>
+          <div className={styles.bridge} aria-hidden>
+            <div className={styles.node}>
+              <span className={styles.nodeMark}>
+                <MonarchMark size={24} variant="light" />
+              </span>
+              <strong>{copy.local}</strong>
+              <small>Monarch</small>
+            </div>
+            <div className={styles.link}>
+              <svg viewBox="0 0 100 12" preserveAspectRatio="none">
+                <path className={styles.track} d="M1 6H99" />
+                <path className={styles.flow} d="M1 6H97" pathLength={1} />
+                <path className={styles.arrow} d="M93 2.5L98.5 6L93 9.5" />
+              </svg>
+            </div>
+            <div className={styles.node}>
+              <span className={styles.nodeMark} key={chosen.id}>
+                <Image src={asset(`/providers/${chosen.id}.svg`)} alt="" width={24} height={24} unoptimized />
+              </span>
+              <strong>{chosen.name}</strong>
+              <small>{copy.via}</small>
+            </div>
           </div>
-          <p className={styles.nodeTitle}>{copy.local}</p>
-        </div>
 
-        <div className={styles.wire} aria-hidden>
-          <span className={styles.wireFill} />
-        </div>
+          <div className={styles.providers} role="radiogroup" aria-label={copy.providersLabel}>
+            <p className={styles.providersLabel}>{copy.providersLabel}</p>
+            <div className={styles.providerGrid}>
+              {PROVIDERS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={item.id === provider}
+                  className={styles.provider}
+                  onClick={() => setProvider(item.id)}
+                >
+                  <Image src={asset(`/providers/${item.id}.svg`)} alt="" width={18} height={18} unoptimized />
+                  <span>{item.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
-        <div className={`glass ${styles.gate}`} data-reveal>
-          <p className={styles.gateTitle}>{copy.consentTitle}</p>
-          <ul>
+          <div className={styles.scope}>
+            <section data-kind="goes">
+              <h3>
+                <i />
+                {copy.goesTitle}
+              </h3>
+              <ul>
+                {copy.goes.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+            <section data-kind="stays">
+              <h3>
+                <i />
+                {copy.staysTitle}
+              </h3>
+              <ul>
+                {copy.stays.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
+
+          <fieldset className={styles.consent}>
+            <legend>{copy.consentTitle}</legend>
             {copy.consent.map((item, index) => (
-              <li key={item}>
-                <label className={styles.check}>
-                  <input
-                    type="checkbox"
-                    checked={checks[index]}
-                    onChange={(event) =>
-                      setChecks((current) => current.map((value, i) => (i === index ? event.target.checked : value)))
-                    }
-                  />
-                  <span className={styles.box} aria-hidden>
-                    <svg width="12" height="12" viewBox="0 0 12 12">
-                      <path d="M2.5 6.2 5 8.5l4.5-5" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" pathLength={1} />
-                    </svg>
-                  </span>
-                  {item}
-                </label>
-              </li>
+              <label key={item} className={styles.check}>
+                <input
+                  type="checkbox"
+                  checked={checks[index]}
+                  onChange={(event) => setChecks((current) => current.map((value, i) => (i === index ? event.target.checked : value)))}
+                />
+                <span className={styles.box} aria-hidden>
+                  <svg width="12" height="12" viewBox="0 0 16 16">
+                    <path d="M3.5 8.4l2.9 2.9 6.1-6.6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" pathLength={1} />
+                  </svg>
+                </span>
+                {item}
+              </label>
             ))}
-          </ul>
-          <p className={styles.status} aria-live="polite">
+          </fieldset>
+
+          <p className={styles.status} aria-live="polite" data-ready={ready}>
+            <span className={styles.statusDot} />
             {ready ? copy.ready : copy.waiting}
           </p>
         </div>
 
-        <div className={styles.wire} aria-hidden>
-          <span className={styles.wireFill} />
-        </div>
-
-        <div className={styles.cloud} data-reveal>
-          <p className={styles.cloudTitle}>{copy.providersLabel}</p>
-          <div className={styles.providers} role="radiogroup" aria-label={copy.providersLabel}>
-            {PROVIDERS.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                role="radio"
-                aria-checked={item.id === provider}
-                className={styles.provider}
-                data-live={ready && index === selected}
-                onClick={() => setProvider(item.id)}
-              >
-                <Image src={asset(`/providers/${item.id}.svg`)} alt="" width={22} height={22} unoptimized />
-                <span>{item.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="shell">
         <ul className={styles.points}>
           {copy.points.map((point) => (
             <li key={point} data-reveal>
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden>
+                <path d="M3 8.4 6.4 11.6 13 4.6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
               {point}
             </li>
           ))}

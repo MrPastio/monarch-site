@@ -9,6 +9,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scroll-behavior: smooth;
   background: var(--void);
   scrollbar-color: var(--graphite) var(--void);
 }
@@ -26,6 +27,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
+}
+
+/* Anchored sections land below the fixed header, not under it. */
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 20px);
 }
 
 img,

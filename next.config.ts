@@ -22,6 +22,7 @@ const config: NextConfig = staticExport
   ? {
       output: "export",
       basePath: basePath || undefined,
+      experimental: { globalNotFound: true },
       trailingSlash: true,
       reactStrictMode: true,
       poweredByHeader: false,
@@ -30,6 +31,7 @@ const config: NextConfig = staticExport
   : {
       reactStrictMode: true,
       poweredByHeader: false,
+      experimental: { globalNotFound: true },
       images: { formats: ["image/avif", "image/webp"] },
       async redirects() {
         // Addresses from the previous site keep working.

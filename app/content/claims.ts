@@ -67,8 +67,8 @@ export const claims = {
   securityNotAntivirus: {
     id: "securityNotAntivirus",
     ru: "Monarch Security показывает подозрительные события — это раннее наблюдение, а не антивирус.",
-    evidence: "SECURITY.md",
-    maturity: "preview",
+    evidence: "SECURITY.md, app/content/release-notes.ts (0.2.5: Security — Beta)",
+    maturity: "beta",
     limit: "Не заменяет антивирус и не удаляет угрозы.",
   },
   hardware: {
@@ -103,6 +103,67 @@ export const claims = {
     ru: "MAX с 12 провайдерами разрабатывается для версии 0.3 и ещё не опубликован.",
     evidence: "docs/release/MONARCH_0.3.0_CUMULATIVE_CHANGELOG.md",
     maturity: "alpha",
+  },
+  accessModes: {
+    id: "accessModes",
+    ru: "Три режима самостоятельности: всегда спрашивать, самостоятельно в проекте, самостоятельно на устройстве. Деньги и чувствительные для безопасности действия запрещены в любом.",
+    evidence: "src/core/permission-gate.ts (0.2.5: permissionRuleFor), src/ui/public/index.html (autonomy-mode-select)",
+    maturity: "stable",
+  },
+  securityThresholds: {
+    id: "securityThresholds",
+    ru: "Security: выкл. — только неизменяемые границы, наблюдать — журнал, охранять — вмешательство с риска 70%, строго — с 50%.",
+    evidence: "src/ui/public/index.html (0.2.5: security-model-confirmation)",
+    maturity: "beta",
+  },
+  agentTasks: {
+    id: "agentTasks",
+    ru: "Оскар раскладывает длинную задачу на шаги, показывает план, текущий шаг и итог; задачу можно остановить.",
+    evidence: "app/content/release-notes.ts (0.2.5), src/agent",
+    maturity: "stable",
+  },
+  computerUse: {
+    id: "computerUse",
+    ru: "Computer Use видит окна, запускает и закрывает приложения, нажимает, печатает и прокручивает; проверяет окно до и результат после.",
+    evidence: "src/modules/computer, app/content/release-notes.ts (0.2.5)",
+    maturity: "beta",
+  },
+  coderProjects: {
+    id: "coderProjects",
+    ru: "Coder — отдельный режим для кода внутри выбранного проекта.",
+    evidence: "src/modules/coder, src/ui/public/index.html (coder-mode-root)",
+    maturity: "stable",
+  },
+  memoryV4: {
+    id: "memoryV4",
+    ru: "Memory V4 отделяет обычные чаты от проектов Coder и отмечает ответы, где использовала память; Incognito в неё не попадает.",
+    evidence: "src/modules/memory, app/content/release-notes.ts (0.2.5)",
+    maturity: "stable",
+  },
+  voiceBeta: {
+    id: "voiceBeta",
+    ru: "Длинная диктовка и озвучка с пресетами голоса, скорости и интонации.",
+    evidence: "src/modules/voice, app/content/release-notes.ts (0.2.5: Voice Studio V2)",
+    maturity: "beta",
+  },
+  skillsPreview: {
+    id: "skillsPreview",
+    ru: "Навыки вызываются через «+» или «$», Personality выбирается для задачи.",
+    evidence: "src/modules/astra, src/modules/profile",
+    maturity: "preview",
+  },
+  telegramBot: {
+    id: "telegramBot",
+    ru: "Телефон привязывается одноразовым кодом на 15 минут; сообщения идут через Telegram.",
+    evidence: "src/modules/telegram, src/ui/public/index.html (telegram-pairing-code)",
+    maturity: "stable",
+    limit: "Сообщения проходят через серверы Telegram.",
+  },
+  sharingApi: {
+    id: "sharingApi",
+    ru: "Sharing открывает локальные модели для своих программ через OpenAI-совместимый API на 127.0.0.1.",
+    evidence: "src/modules/sharing/README.md",
+    maturity: "stable",
   },
   astraV3: {
     id: "astraV3",

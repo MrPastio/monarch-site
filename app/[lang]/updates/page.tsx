@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDict } from "@/content/dictionary";
 import { isLocale, localeMeta, localePath } from "@/lib/i18n";
 import { getReleaseCatalog } from "@/lib/releases";
 import { formatDate } from "@/lib/format";
 import { PageHero } from "@/components/page/page-hero";
-import { Reveal } from "@/components/motion/reveal";
+import { UpdatesRiver } from "./updates-river";
 import styles from "./updates.module.css";
 
 export const revalidate = 900;
@@ -35,49 +34,30 @@ export default async function UpdatesPage({ params }: { params: Promise<{ lang: 
 
   return (
     <>
-      <PageHero kicker={dict.chrome.nav[3]!.label} title={copy.title} lede={copy.lede} />
-      <Reveal as="section" className={styles.section}>
+      <PageHero kicker={dict.chrome.nav[3]!.label} title={copy.title} lede={copy.lede} home={localePath(lang)} />
+      <section className={styles.section}>
         <div className="shell">
-          <ol className={styles.river}>
-            <li className={styles.item} data-state="future" data-reveal>
-              <span className={styles.node} aria-hidden />
-              <div className={styles.card}>
-                <p className={styles.meta}>
-                  <span className={styles.badge}>{copy.future.label}</span>
-                </p>
-                <h2 className={styles.title}>{copy.future.title}</h2>
-                <p className={styles.summary}>{copy.future.text}</p>
-              </div>
-            </li>
-            {entries.map((entry) => {
-              const notes = entry.notes!;
-              const major = notes.scale === "major";
-              return (
-                <li key={entry.version} className={styles.item} data-state={entry.state} data-major={major} data-reveal>
-                  <span className={styles.node} aria-hidden />
-                  <Link href={localePath(lang, `updates/${entry.display}`)} className={styles.card}>
-                    <p className={styles.meta}>
-                      <span className={styles.version}>{entry.display}</span>
-                      <span className={styles.badge}>{stateLabels[entry.state]}</span>
-                      {entry.publishedAt && <time>{formatDate(entry.publishedAt, intl)}</time>}
-                    </p>
-                    <h2 className={styles.title}>{notes.title}</h2>
-                    <p className={styles.summary}>{notes.summary}</p>
-                    <p className={styles.tags}>
-                      {notes.categories.map((category) => (
-                        <span key={category}>{copy.categories[category]}</span>
-                      ))}
-                    </p>
-                    <span className={styles.open}>
-                      {copy.open} <span aria-hidden>→</span>
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ol>
+          <UpdatesRiver
+            entries={entries.map((entry) => ({
+              version: entry.version,
+              display: entry.display,
+              href: localePath(lang, `updates/${entry.display}`),
+              state: entry.state,
+              stateLabel: stateLabels[entry.state],
+              date: entry.publishedAt ? formatDate(entry.publishedAt, intl) : null,
+              major: entry.notes!.scale === "major",
+              title: entry.notes!.title,
+              summary: entry.notes!.summary,
+              categories: entry.notes!.categories,
+            }))}
+            future={copy.future}
+            categories={copy.categories}
+            filterAll={copy.filterAll}
+            filterLabel={copy.filterLabel}
+            open={copy.open}
+          />
         </div>
-      </Reveal>
+      </section>
     </>
   );
 }

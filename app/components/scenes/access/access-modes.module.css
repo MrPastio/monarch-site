@@ -1,0 +1,207 @@
+.root {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.head {
+  display: grid;
+  gap: var(--s-3);
+  max-width: 720px;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  line-height: 1.05;
+}
+
+.lede {
+  color: var(--ink-2);
+  max-width: 40em;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(20px, 3vw, 40px);
+  padding: clamp(16px, 2.4vw, 28px);
+}
+
+/* --- Modes: a vertical switch; the thumb travels between them --- */
+.modes {
+  position: relative;
+  display: grid;
+  grid-template-rows: repeat(var(--count), 1fr);
+  gap: 8px;
+}
+
+.thumb {
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc((100% - (var(--count) - 1) * 8px) / var(--count));
+  border: 1px solid var(--accent-line);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff6e4, #fffaf1);
+  box-shadow: 0 6px 18px rgba(221, 132, 20, 0.12);
+  transform: translateY(calc(var(--mode) * (100% + 8px)));
+  transition: transform var(--dur-panel) var(--ease-settle);
+}
+
+.mode {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--dur-touch) var(--ease-physical);
+}
+
+.mode:hover {
+  border-color: var(--glass-line);
+}
+
+.mode[aria-checked="true"]:hover {
+  border-color: transparent;
+}
+
+.modeName {
+  font-size: var(--text-base);
+  font-weight: 640;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  transition: color var(--dur-move) var(--ease-physical);
+}
+
+.mode[aria-checked="true"] .modeName {
+  color: var(--ink);
+}
+
+.modeText {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+/* --- Matrix --- */
+.matrix {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+}
+
+.matrixLabel {
+  font-size: var(--text-xs);
+  font-weight: 650;
+  letter-spacing: var(--track-kicker);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.actions {
+  display: grid;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  min-height: 52px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--glass-line);
+  transition:
+    opacity 420ms var(--ease-settle),
+    transform 520ms var(--ease-settle);
+  transition-delay: calc(80ms + var(--row) * 60ms);
+}
+
+@media (scripting: enabled) {
+  .root[data-unlit] .action {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.actionText {
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+
+/* The chip is a drum: all three verdicts stacked, rolled to the current one. */
+.chip {
+  --h: 30px;
+  position: relative;
+  flex: none;
+  height: var(--h);
+  overflow: hidden;
+  border-radius: var(--r-pill);
+  background: var(--chip-bg);
+  color: var(--chip-ink);
+  transition:
+    background-color var(--dur-panel) var(--ease-physical),
+    color var(--dur-panel) var(--ease-physical);
+}
+
+.chip[data-verdict="allow"] {
+  --chip-bg: rgba(36, 115, 67, 0.1);
+  --chip-ink: var(--ok);
+}
+
+.chip[data-verdict="confirm"] {
+  --chip-bg: rgba(221, 132, 20, 0.14);
+  --chip-ink: var(--accent-ink);
+}
+
+.chip[data-verdict="deny"] {
+  --chip-bg: rgba(180, 44, 38, 0.1);
+  --chip-ink: var(--danger);
+}
+
+.roll {
+  display: grid;
+  transform: translateY(calc(var(--v) * var(--h) * -1));
+  transition: transform var(--dur-panel) var(--ease-settle);
+}
+
+.rollItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: var(--h);
+  padding: 0 13px 0 11px;
+  font-size: var(--text-xs);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.rollItem i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.note {
+  margin-top: var(--s-2);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--ink-3);
+}
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .action {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+}

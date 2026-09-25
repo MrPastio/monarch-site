@@ -20,47 +20,64 @@ export default async function DocsPage({ params }: { params: Promise<{ lang: str
   if (!isLocale(lang)) notFound();
   const dict = getDict(lang);
   const copy = dict.pages.docs;
+  const toc = [
+    ...copy.sections.map((section) => ({ href: `#${section.id}`, label: section.title })),
+    { href: "#trouble", label: copy.troubleTitle },
+    { href: "#faq", label: dict.faq.title },
+  ];
 
   return (
     <>
-      <PageHero kicker={copy.kicker} title={copy.title} lede={copy.lede}>
-        <Link className="btn btn-primary btn-lg" href={localePath(lang, "download")}>
-          {dict.hero.primary}
-        </Link>
+      <PageHero kicker={copy.kicker} title={copy.title} lede={copy.lede} home={localePath(lang)}>
+        <div className={styles.docHeroCta}>
+          <Link className="btn btn-primary btn-lg" href={localePath(lang, "download")}>
+            {dict.hero.primary}
+          </Link>
+          <p>{dict.download.requirements.map((item) => item.value).join(" · ")}</p>
+        </div>
       </PageHero>
 
       <Reveal as="section" className={styles.section}>
-        <div className={`shell ${styles.docGrid}`}>
-          {copy.sections.map((section) => (
-            <div key={section.id} id={section.id} data-reveal>
-              <h2 className={styles.h3}>{section.title}</h2>
-              <ol className={styles.steps}>
-                {section.steps.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ol>
-            </div>
-          ))}
-        </div>
-      </Reveal>
+        <div className={`shell ${styles.docLayout}`}>
+          <nav className={styles.toc} aria-label={copy.toc}>
+            <p className={styles.tocTitle}>{copy.toc}</p>
+            {toc.map((item) => (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-      <Reveal as="section" className={styles.section}>
-        <div className="shell">
-          <h2 className={styles.h2} data-reveal>
-            {copy.troubleTitle}
-          </h2>
-          <div className={styles.cards}>
-            {copy.trouble.map((item) => (
-              <article key={item.q} className={styles.card} data-reveal>
-                <h3>{item.q}</h3>
-                <p>{item.a}</p>
+          <div className={styles.docSections}>
+            {copy.sections.map((section) => (
+              <article key={section.id} id={section.id} className={`card ${styles.docSection}`} data-reveal>
+                <h2 className={styles.h3}>{section.title}</h2>
+                <ol className={styles.steps}>
+                  {section.steps.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
               </article>
             ))}
+
+            <div id="trouble" className={styles.docTrouble} data-reveal>
+              <h2 className={styles.h3}>{copy.troubleTitle}</h2>
+              <div className={styles.cards} style={{ marginTop: "var(--s-4)" }}>
+                {copy.trouble.map((item) => (
+                  <article key={item.q} className={styles.card}>
+                    <h3>{item.q}</h3>
+                    <p>{item.a}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </Reveal>
 
-      <Faq copy={dict.faq} />
+      <div id="faq">
+        <Faq copy={dict.faq} />
+      </div>
     </>
   );
 }

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getDict } from "@/content/dictionary";
-import { isLocale } from "@/lib/i18n";
+import { isLocale, localePath } from "@/lib/i18n";
 import { PageHero } from "@/components/page/page-hero";
 import { Reveal } from "@/components/motion/reveal";
+import { PrincipleDemo } from "@/components/page/principle-demos";
 import { asset } from "@/lib/asset";
 import styles from "../prose.module.css";
 
@@ -22,28 +23,42 @@ export default async function PrinciplesPage({ params }: { params: Promise<{ lan
 
   return (
     <>
-      <PageHero kicker={copy.kicker} title={copy.title} lede={copy.lede} />
+      <PageHero kicker={copy.kicker} title={copy.title} lede={copy.lede} home={localePath(lang)} />
 
-      {[
-        { title: copy.designTitle, items: copy.design },
-        { title: copy.qualityTitle, items: copy.quality },
-      ].map((group) => (
-        <Reveal as="section" className={styles.section} key={group.title}>
-          <div className={`shell ${styles.split}`}>
-            <h2 className={styles.h2} data-reveal>
-              {group.title}
-            </h2>
-            <div className={styles.cards} style={{ marginTop: 0 }}>
-              {group.items.map((item) => (
-                <article key={item.title} className={styles.card} data-reveal>
+      <Reveal as="section" className={styles.section}>
+        <div className="shell">
+          <h2 className={styles.h2} data-reveal>
+            {copy.designTitle}
+          </h2>
+          <div className={styles.principleGrid} style={{ marginTop: "var(--s-6)" }}>
+            {copy.design.map((item, index) => (
+              <article key={item.title} className={`card ${styles.principle}`} data-reveal>
+                <PrincipleDemo index={index} layers={copy.layers} motionTry={copy.motionTry} reducedOn={copy.reducedOn} reducedOff={copy.reducedOff} />
+                <div>
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
-                </article>
-              ))}
-            </div>
+                </div>
+              </article>
+            ))}
           </div>
-        </Reveal>
-      ))}
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className={styles.section}>
+        <div className={`shell ${styles.split}`}>
+          <h2 className={styles.h2} data-reveal>
+            {copy.qualityTitle}
+          </h2>
+          <div className={styles.cards} style={{ marginTop: 0 }}>
+            {copy.quality.map((item) => (
+              <article key={item.title} className={styles.card} data-reveal>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </Reveal>
 
       <Reveal as="section" className={styles.section}>
         <div className={`shell ${styles.split}`}>
@@ -52,6 +67,17 @@ export default async function PrinciplesPage({ params }: { params: Promise<{ lan
           </h2>
           <div data-reveal>
             <p className={styles.bigText}>{copy.agentsText}</p>
+            <ul className={styles.roster}>
+              {copy.agentsRoster.map((agent) => (
+                <li key={agent.name} data-state={agent.state}>
+                  <span className={styles.rosterDot} aria-hidden />
+                  <div>
+                    <strong>{agent.name}</strong>
+                    <span>{agent.role}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
             <p className={styles.source}>
               <a href="https://github.com/MrPastio/monarch/blob/main/SECURITY.md" target="_blank" rel="noreferrer">
                 {copy.agentsSource} ↗

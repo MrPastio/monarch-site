@@ -1,4 +1,4 @@
-# Monarch Site v5 — «Дневной свет»
+# Monarch Site v5.1 — «Дневной свет»
 
 Public site for Monarch, a local AI for Windows. Live: https://mrpastio.github.io/monarch-site/
 
@@ -41,7 +41,15 @@ npx next build       # server target (Vercel-ready: proxy locale redirect, ISR, 
   receipt (three scenarios; one timeline owns the motion, reduced motion shows
   the result).
 - `app/components/scenes/path-map/*` — the request path as a line with the
-  policy fork (allow / ask you / deny).
+  policy fork (allow / ask you / deny); a travelling request lights the
+  stations it passes.
+- `app/components/scenes/abilities/*` — what 0.2.5 does, as small product
+  scenes that play once when seen (maturity labels match the app).
+- `app/components/scenes/access/*` — autonomy modes and what the permission
+  gate does with each action (mirrors 0.2.5 `permissionRuleFor`).
+- `app/components/page/*` — inner-page parts: architecture map, module grid
+  with filters, principle demos, 404 view (also used by
+  `app/global-not-found.tsx` for unmatched addresses).
 - `app/components/scenes/hero/crest-*` — the live 3D crest (shown on the
   download stage, `download/crest-stage.tsx`). Geometry comes from
   the owner-approved 1:1 trace (`scripts/source/crest-paths.grok.json`),

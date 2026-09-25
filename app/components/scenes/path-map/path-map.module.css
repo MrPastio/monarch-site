@@ -1,0 +1,421 @@
+.section {
+  padding: var(--section-y) 0;
+  background: linear-gradient(180deg, var(--canvas), var(--canvas-raised));
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-2);
+  margin-top: var(--s-7);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  font-size: var(--text-sm);
+  font-weight: 540;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    color var(--dur-touch) var(--ease-physical),
+    border-color var(--dur-touch) var(--ease-physical),
+    background-color var(--dur-touch) var(--ease-physical);
+}
+
+.tab:hover {
+  color: var(--ink);
+  border-color: var(--glass-line-strong);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--ink);
+  border-color: var(--accent-line);
+  background: #fff6e4;
+}
+
+.tabDot,
+.verdictDot {
+  display: block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.tab[data-verdict="confirm"] .tabDot,
+[data-tone="confirm"] .verdictDot {
+  background: var(--orange);
+}
+
+.tab[data-verdict="deny"] .tabDot,
+[data-tone="deny"] .verdictDot {
+  background: var(--danger);
+}
+
+/* --- The board --- */
+.board {
+  --lane: var(--ok);
+  margin-top: var(--s-5);
+  padding: clamp(24px, 3vw, 40px) clamp(16px, 2vw, 28px);
+}
+
+.board[data-verdict="confirm"] {
+  --lane: #e07a10;
+}
+
+.board[data-verdict="deny"] {
+  --lane: var(--danger);
+}
+
+.map {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.base {
+  fill: none;
+  stroke: var(--graphite);
+  stroke-width: 2;
+  stroke-dasharray: 2 6;
+  stroke-linecap: round;
+}
+
+.live {
+  fill: none;
+  stroke: var(--lane);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: draw 1500ms var(--ease-physical) both;
+}
+
+.board[data-unlit] .live {
+  animation: none;
+  stroke-dashoffset: 1;
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+.node {
+  fill: var(--surface);
+  stroke: var(--lane);
+  stroke-width: 3;
+  transition:
+    stroke var(--dur-move) var(--ease-physical),
+    fill var(--dur-move) var(--ease-physical);
+}
+
+.node[data-state="off"] {
+  stroke: var(--graphite);
+}
+
+.node[data-state="stop"] {
+  fill: var(--danger);
+}
+
+.board[data-unlit] .node {
+  stroke: var(--graphite);
+}
+
+.stop circle {
+  fill: var(--surface);
+  stroke: var(--danger);
+  stroke-width: 2.5;
+}
+
+.stop path {
+  stroke: var(--danger);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.stop {
+  opacity: 0;
+  transition: opacity var(--dur-move) var(--ease-physical);
+}
+
+.stop[data-on="true"] {
+  opacity: 1;
+  transition-delay: 1100ms;
+}
+
+/* Lane signs, stacked at the fork like a points lever. */
+.pill rect {
+  fill: var(--surface);
+  stroke: var(--glass-line-strong);
+  stroke-width: 1.5;
+  transition:
+    fill var(--dur-move) var(--ease-physical),
+    stroke var(--dur-move) var(--ease-physical);
+}
+
+.pill text {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 620;
+  text-anchor: middle;
+  fill: var(--ink-3);
+  transition: fill var(--dur-move) var(--ease-physical);
+}
+
+.pill[data-on="true"] rect {
+  fill: var(--lane);
+  stroke: var(--lane);
+}
+
+.pill[data-on="true"] text {
+  fill: #fff;
+}
+
+.pill[data-lane="confirm"][data-on="true"] rect {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+.pill[data-lane="confirm"][data-on="true"] text {
+  fill: var(--on-accent);
+}
+
+.board[data-unlit] .pill rect {
+  fill: var(--surface);
+  stroke: var(--glass-line-strong);
+}
+
+.board[data-unlit] .pill text {
+  fill: var(--ink-3);
+}
+
+.stations {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+
+.station {
+  padding: 0 4px;
+  text-align: center;
+  transition: opacity var(--dur-move) var(--ease-physical);
+}
+
+.station[data-state="off"] {
+  opacity: 0.4;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--accent-ink);
+}
+
+.station h3 {
+  margin-top: 4px;
+  font-size: var(--text-base);
+  font-weight: 640;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.station p {
+  margin-top: 6px;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.outcome {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-6);
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--r-card);
+  background: var(--surface-2);
+  font-size: var(--text-sm);
+  animation: settle 520ms var(--ease-settle);
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.outcomeAction {
+  color: var(--ink);
+}
+
+.outcomeVerdict {
+  color: var(--ink-2);
+}
+
+.outcomeVerdict strong {
+  font-weight: 650;
+  color: var(--lane);
+}
+
+.board[data-verdict="confirm"] .outcomeVerdict strong {
+  color: var(--accent-ink);
+}
+
+.outcomeReceipt {
+  font-weight: 600;
+}
+
+/* --- Verdicts and hard limits --- */
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+
+.verdicts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+
+.verdicts li {
+  padding: var(--s-5);
+}
+
+.verdicts .verdictDot {
+  width: 10px;
+  height: 10px;
+}
+
+.verdicts h3 {
+  margin-top: var(--s-4);
+  font-size: var(--text-lg);
+  font-weight: 640;
+  letter-spacing: -0.015em;
+}
+
+.verdicts p {
+  margin-top: 6px;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.limits {
+  padding: var(--s-6);
+  border-radius: var(--r-sheet);
+}
+
+.limits ul {
+  display: grid;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+.limits li {
+  display: flex;
+  gap: var(--s-3);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.limits svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--danger);
+}
+
+@media (max-width: 1080px) {
+  .lower {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .map {
+    display: none;
+  }
+
+  .stations {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 0;
+  }
+
+  .station {
+    position: relative;
+    padding: 0 0 var(--s-5) 36px;
+    text-align: left;
+  }
+
+  .station::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 3px solid var(--lane);
+    background: var(--surface);
+  }
+
+  .station::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 20px;
+    bottom: 2px;
+    width: 2px;
+    background: var(--graphite);
+  }
+
+  .station:last-child::after {
+    display: none;
+  }
+
+  .station[data-state="stop"]::before {
+    background: var(--danger);
+    border-color: var(--danger);
+  }
+
+  .num {
+    display: none;
+  }
+
+  .station h3 {
+    margin-top: 0;
+  }
+
+  .outcome {
+    grid-template-columns: 1fr;
+  }
+
+  .verdicts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (scripting: none) {
+  .board[data-unlit] .live {
+    stroke-dashoffset: 0;
+  }
+
+  .board[data-unlit] .node {
+    stroke: var(--lane);
+  }
+}

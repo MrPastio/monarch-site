@@ -1,15 +1,14 @@
 .section {
-  padding: var(--section-y) 0;
-  background:
-    radial-gradient(60% 60% at 72% 50%, rgba(255, 190, 90, 0.07), transparent 70%),
-    var(--canvas);
+  padding: clamp(72px, 8vw, 120px) 0 var(--section-y);
+  background: radial-gradient(50% 40% at 50% 18%, rgba(255, 190, 90, 0.1), transparent 70%);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--s-8);
-  align-items: center;
+  align-items: start;
+  margin-top: var(--s-8);
 }
 
 .copy {

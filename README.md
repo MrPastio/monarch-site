@@ -1,4 +1,4 @@
-# Monarch Site v4 — «Ночь внутри машины»
+# Monarch Site v5 — «Дневной свет»
 
 Public site for Monarch, a local AI for Windows. Live: https://mrpastio.github.io/monarch-site/
 
@@ -13,7 +13,8 @@ Node 22.13+ (`E:\Monarch\.tools\node-v22.23.1-win-x64`).
 ```bash
 npm install
 npm run dev          # http://localhost:4477 via E:\Monarch\.claude\launch.json (monarch-site-v4)
-npm test             # truth contract (4 locales), contrast, release data
+npm test             # truth contract (4 locales), contrast (paper + night), release data
+npm run og           # Open Graph images from the live hero (needs the dev server)
 npm run typecheck
 npx eslint .
 npx next build       # server target (Vercel-ready: proxy locale redirect, ISR, headers)
@@ -31,8 +32,18 @@ npx next build       # server target (Vercel-ready: proxy locale redirect, ISR, 
 
 ## What is where
 
+- `app/styles/tokens.css` — the palette is the desktop app's own light theme
+  (`src/ui/public/themes.css`); `.night` redefines the same tokens for the
+  protection chapter and the download stage.
 - `app/components/scenes/*` — one folder per chapter of the home page.
-- `app/components/scenes/hero/crest-*` — the live 3D crest. Geometry comes from
+- `app/components/scenes/hero/oscar-window.tsx` — the hero: a Monarch window in
+  which Oscar takes a real request through plan, permission, execution and a
+  receipt (three scenarios; one timeline owns the motion, reduced motion shows
+  the result).
+- `app/components/scenes/path-map/*` — the request path as a line with the
+  policy fork (allow / ask you / deny).
+- `app/components/scenes/hero/crest-*` — the live 3D crest (shown on the
+  download stage, `download/crest-stage.tsx`). Geometry comes from
   the owner-approved 1:1 trace (`scripts/source/crest-paths.grok.json`),
   refined by `scripts/build-crest-assets.mjs` → `app/assets/crest-paths.json`
   and the 2D mark in `app/components/brand/crest-paths.ts`.
@@ -47,9 +58,11 @@ npx next build       # server target (Vercel-ready: proxy locale redirect, ISR, 
 
 ## Rules
 
-- Design: Claude Design, night glass, orange/white/black/yellow. Motion has
-  weight and direction; no idle glow; `prefers-reduced-motion` shows final
-  states. Oscar changes only his pose.
+- Design: Claude Design on warm paper, the app's dark glass for the product
+  window and night chapters; orange/white/black/yellow. Headline accents are a
+  highlighter drawn once (`*word*` in copy). Motion has weight and direction;
+  no idle glow; `prefers-reduced-motion` shows final states. Oscar changes
+  only his pose.
 - Font: Onest only (as on the previous site). Logo: only the owner's artwork.
 - The site never shows the four-segment build version except in the exact
   installer file name, never calls the installer signed, never promises 100%.

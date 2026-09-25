@@ -1,0 +1,13 @@
+.band {
+  position: relative;
+  margin-inline: clamp(0px, 1.2vw, 16px);
+  border-radius: clamp(24px, 3vw, 40px);
+  background:
+    radial-gradient(900px 480px at 80% 0%, rgba(255, 170, 60, 0.08), transparent 70%),
+    var(--canvas);
+  overflow: clip;
+}
+
+.band + .band {
+  margin-top: var(--s-4);
+}

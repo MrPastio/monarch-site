@@ -1,5 +1,5 @@
 .section {
-  padding: var(--section-y) 0;
+  padding: var(--s-7) 0 var(--section-y);
   background: linear-gradient(180deg, var(--canvas), #060607 50%, var(--canvas));
 }
 
@@ -9,7 +9,7 @@
   grid-template-columns: minmax(0, 1.15fr) 120px minmax(0, 1fr);
   align-items: center;
   margin-top: var(--s-8);
-  min-height: 380px;
+  min-height: 320px;
 }
 
 .appWindow {

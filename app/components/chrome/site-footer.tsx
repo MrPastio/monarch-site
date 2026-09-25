@@ -9,7 +9,7 @@ export function SiteFooter({ locale, footer }: { locale: Locale; footer: Dict["f
     <footer className={styles.footer}>
       <div className={`shell-wide ${styles.inner}`}>
         <div className={styles.lead}>
-          <MonarchMark size={44} />
+          <MonarchMark size={44} variant="light" />
           <p className={`display ${styles.tagline}`}>{footer.tagline}</p>
         </div>
         <div className={styles.columns}>

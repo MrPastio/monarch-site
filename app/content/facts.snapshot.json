@@ -5,17 +5,38 @@
   "testFiles": 262,
   "tsTestFiles": 213,
   "pyTestFiles": 49,
-  "modules": 23,
+  "modules": 21,
   "firstPublic": "2026-06-12",
   "installerReleases": 10,
   "historyVersions": 15,
   "languages": [
-    { "name": "TypeScript", "bytes": 6372644 },
-    { "name": "Python", "bytes": 2322546 },
-    { "name": "JavaScript", "bytes": 1825626 },
-    { "name": "CSS", "bytes": 727658 },
-    { "name": "C#", "bytes": 340891 },
-    { "name": "HTML", "bytes": 249729 },
-    { "name": "PowerShell", "bytes": 238325 }
+    {
+      "name": "TypeScript",
+      "bytes": 6372644
+    },
+    {
+      "name": "Python",
+      "bytes": 2322546
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 1825626
+    },
+    {
+      "name": "CSS",
+      "bytes": 727658
+    },
+    {
+      "name": "C#",
+      "bytes": 340891
+    },
+    {
+      "name": "HTML",
+      "bytes": 249729
+    },
+    {
+      "name": "PowerShell",
+      "bytes": 238325
+    }
   ]
 }

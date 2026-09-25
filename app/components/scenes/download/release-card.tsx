@@ -21,7 +21,7 @@ export function ReleaseCard({
   const intl = localeMeta[locale].intl;
   const asset = entry.asset!;
   return (
-    <article className={styles.card}>
+    <article className={`night ${styles.card}`}>
       <header className={styles.head}>
         <MonarchMark size={40} />
         <div>

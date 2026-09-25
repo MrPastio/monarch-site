@@ -1,8 +1,6 @@
 .section {
   padding: var(--section-y) 0;
-  background:
-    radial-gradient(70% 45% at 80% 55%, rgba(120, 150, 255, 0.04), transparent 70%),
-    var(--canvas);
+  background: var(--canvas);
 }
 
 .flow {
@@ -37,13 +35,13 @@
   position: relative;
   height: 2px;
   margin: 0 var(--s-3);
-  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 5px, transparent 5px 11px);
+  background: repeating-linear-gradient(90deg, var(--graphite) 0 5px, transparent 5px 11px);
 }
 
 .wireFill {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #a8761a, #ffc247);
+  background: linear-gradient(90deg, #ffa326, #ff7a18);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 600ms var(--ease-settle);
@@ -60,6 +58,8 @@
 .gate {
   padding: var(--s-5);
   border-radius: var(--r-sheet);
+  background: var(--surface);
+  box-shadow: var(--shadow-sheet);
   transition: border-color var(--dur-panel) var(--ease-physical);
 }
 
@@ -91,7 +91,7 @@
 }
 
 .check:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--wash);
 }
 
 .check input {
@@ -106,7 +106,7 @@
   place-items: center;
   width: 22px;
   height: 22px;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border: 1.5px solid var(--glass-line-strong);
   border-radius: 7px;
   color: var(--on-accent);
   transition:
@@ -134,7 +134,7 @@
 }
 
 .check input:focus-visible + .box {
-  outline: 2px solid rgba(255, 190, 70, 0.8);
+  outline: 2px solid #a85a10;
   outline-offset: 2px;
 }
 
@@ -170,7 +170,7 @@
   padding: 0 12px;
   border: 1px solid var(--glass-line);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--surface);
   font-size: var(--text-xs);
   font-weight: 600;
   color: var(--ink-2);
@@ -232,7 +232,7 @@
     width: 2px;
     height: 36px;
     margin: 0 auto;
-    background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0 5px, transparent 5px 11px);
+    background: repeating-linear-gradient(180deg, var(--graphite) 0 5px, transparent 5px 11px);
   }
 
   .wireFill {

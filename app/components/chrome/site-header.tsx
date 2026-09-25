@@ -19,12 +19,24 @@ export function SiteHeader({
 }) {
   const pathname = usePathname() ?? `/${locale}`;
   const [scrolled, setScrolled] = useState(false);
+  const [overNight, setOverNight] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    // The bar takes the light of whatever it floats over: paper, or night.
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      const line = 32;
+      const nights = document.querySelectorAll<HTMLElement>(".night");
+      let over = false;
+      nights.forEach((node) => {
+        const rect = node.getBoundingClientRect();
+        if (rect.top <= line && rect.bottom >= line && rect.width > window.innerWidth * 0.8) over = true;
+      });
+      setOverNight(over);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -62,10 +74,10 @@ export function SiteHeader({
   const current = (href: string) => pathname === localePath(locale, href) || pathname.startsWith(`${localePath(locale, href)}/`);
 
   return (
-    <header className={styles.header} data-scrolled={scrolled || menuOpen} data-menu={menuOpen}>
+    <header className={styles.header} data-scrolled={scrolled || menuOpen} data-menu={menuOpen} data-night={overNight && !menuOpen}>
       <div className={styles.bar}>
         <Link href={localePath(locale)} className={styles.brand} aria-label={chrome.home}>
-          <MonarchMark size={26} />
+          <MonarchMark size={26} variant={overNight && !menuOpen ? "dark" : "light"} />
           <MonarchWordmark height={13} className={styles.wordmark} />
         </Link>
 

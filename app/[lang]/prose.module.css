@@ -53,7 +53,7 @@
 
 .modules {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   margin-top: var(--s-7);
   border: 1px solid var(--glass-line);
@@ -67,12 +67,12 @@
   flex-direction: column;
   gap: 6px;
   padding: var(--s-5);
-  background: var(--canvas);
+  background: var(--surface);
   transition: background-color var(--dur-move) var(--ease-physical);
 }
 
 .modules li:hover {
-  background: #101215;
+  background: var(--surface-2);
 }
 
 .modules code {
@@ -106,7 +106,7 @@
   padding: var(--s-5);
   border: 1px solid var(--glass-line);
   border-radius: var(--r-sheet);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface);
 }
 
 .card h3 {
@@ -140,7 +140,7 @@
 }
 
 .card[data-tone="deny"] h3 {
-  color: #ffb3ab;
+  color: var(--danger);
 }
 
 .list {

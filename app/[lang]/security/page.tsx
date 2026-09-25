@@ -6,6 +6,7 @@ import { PageHero } from "@/components/page/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { Safe } from "@/components/scenes/safe/safe";
 import { Guard } from "@/components/scenes/guard/guard";
+import { NightBand } from "@/components/scenes/night-band";
 import styles from "../prose.module.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -64,8 +65,10 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
         </div>
       </Reveal>
 
-      <Safe copy={dict.safe} agent={dict.ui.agent} />
-      <Guard copy={dict.guard} events={dict.ui.events} />
+      <NightBand>
+        <Safe copy={dict.safe} agent={dict.ui.agent} />
+        <Guard copy={dict.guard} events={dict.ui.events} />
+      </NightBand>
 
       <Reveal as="section" className={styles.section}>
         <div className={`shell ${styles.twoCol}`}>

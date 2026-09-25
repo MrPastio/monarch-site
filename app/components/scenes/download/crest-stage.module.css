@@ -1,0 +1,19 @@
+.stage {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 30vw, 420px);
+}
+
+.stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.poster {
+  width: auto;
+  height: 100%;
+  margin: 0 auto;
+  mix-blend-mode: screen;
+}

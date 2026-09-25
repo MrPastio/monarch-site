@@ -43,7 +43,7 @@
 .row[data-state="revoked"] .badge {
   border-color: var(--danger-line);
   background: var(--danger-soft);
-  color: #ffb3ab;
+  color: var(--danger);
 }
 
 .row[data-state="history"] .badge {
@@ -80,7 +80,7 @@
   border-radius: 14px;
   background: var(--danger-soft);
   font-size: var(--text-sm);
-  color: #ffc9c3;
+  color: var(--danger);
 }
 
 .reason {
@@ -108,7 +108,7 @@
   flex: none;
   width: 20px;
   height: 20px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid var(--glass-line-strong);
   border-radius: 6px;
   transition: background-color var(--dur-touch) var(--ease-physical), border-color var(--dur-touch) var(--ease-physical);
 }
@@ -131,7 +131,7 @@
 }
 
 .ack input:focus-visible + .box {
-  outline: 2px solid rgba(255, 190, 70, 0.8);
+  outline: 2px solid #a85a10;
   outline-offset: 2px;
 }
 

@@ -1,58 +1,64 @@
 /*
- * Monarch Site v4 — «Ночь внутри машины».
+ * Monarch Site v5 — «Дневной свет».
  * The single source of truth for colour, material, type, space and motion.
- * Values follow the desktop application (styles-v2.css, monarch-design.css)
- * so the site and the product feel like one object.
+ *
+ * The palette is the desktop application's own light theme
+ * (src/ui/public/themes.css): warm paper, near-black ink, amber that reads on
+ * paper. The site and the product are one object; the dark app window is the
+ * only night on the page, plus the protection chapter, which wears `.night`.
  *
  * Light is a state, not decoration: nothing here glows permanently.
  */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* --- Stage --- */
-  --void: #040405;
-  --canvas: #08090a;
-  --canvas-raised: #0d0f11;
-  --surface: #121416;
-  --surface-2: #17191c;
-  --surface-3: #1e2125;
-  --graphite: #23262b;
+  /* --- Stage (paper) --- */
+  --void: #f1ece3;
+  --canvas: #faf8f4;
+  --canvas-raised: #f5f1ea;
+  --surface: #ffffff;
+  --surface-2: #f6f2eb;
+  --surface-3: #eee8de;
+  --graphite: #d8d0c3;
 
-  /* --- Glass (app recipe) --- */
-  --glass: rgba(22, 23, 25, 0.72);
-  --glass-strong: rgba(28, 29, 31, 0.9);
-  --glass-line: rgba(255, 255, 255, 0.105);
-  --glass-line-strong: rgba(255, 255, 255, 0.17);
-  --glass-blur: 24px;
-  --specular: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  /* --- Glass on paper (app light recipe) --- */
+  --glass: rgba(255, 255, 255, 0.76);
+  --glass-strong: rgba(255, 255, 255, 0.95);
+  --glass-line: rgba(67, 47, 27, 0.13);
+  --glass-line-strong: rgba(67, 47, 27, 0.24);
+  --glass-blur: 22px;
+  --specular: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --wash: rgba(72, 48, 24, 0.035);
+  --wash-2: rgba(72, 48, 24, 0.07);
 
   /* --- Ink --- */
-  --ink: #f7f5ef;
-  --ink-2: #bdb9b0;
-  --ink-3: #8c887f;
-  --ink-faint: #5d5a54;
-  --ivory: #f3efe6;
+  --ink: #26221d;
+  --ink-2: #575149;
+  --ink-3: #6a6258;
+  --ink-faint: #9a9185;
+  --ivory: #fdfcf9;
 
   /* --- Crown (brand) --- */
   --accent: #ffb52b;
-  --accent-ink: #ffc862;
-  --accent-soft: rgba(255, 181, 43, 0.11);
-  --accent-line: rgba(255, 188, 34, 0.38);
+  --accent-ink: #8f4f00;
+  --accent-soft: rgba(221, 132, 20, 0.1);
+  --accent-line: rgba(162, 91, 12, 0.34);
   --orange: #ff7a18;
   --gold: #ffc247;
   --gold-deep: #c98a1b;
   --yellow: #ffe28a;
+  --highlight: #ffdb94;
   --on-accent: #1a1206;
   --accent-fill: linear-gradient(180deg, #ffc746, #ffa326);
 
   /* --- Semantic (never decorative) --- */
-  --ok: #69d398;
-  --ok-soft: rgba(105, 211, 152, 0.1);
-  --danger: #ff6b61;
-  --danger-soft: rgba(255, 107, 97, 0.09);
-  --danger-line: rgba(255, 107, 97, 0.34);
-  --caution: #ffc247;
+  --ok: #247343;
+  --ok-soft: rgba(36, 115, 67, 0.09);
+  --danger: #b42c26;
+  --danger-soft: rgba(180, 44, 38, 0.07);
+  --danger-line: rgba(180, 44, 38, 0.3);
+  --caution: #945100;
 
   /* --- Type --- */
   --font-display: "Onest Variable", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
@@ -66,15 +72,15 @@
   --text-lg: 1.125rem;
   --text-xl: clamp(1.2rem, 0.4vw + 1.1rem, 1.4rem);
   --text-2xl: clamp(1.5rem, 1.1vw + 1.2rem, 2.1rem);
-  --text-3xl: clamp(2rem, 2.4vw + 1.3rem, 3.3rem);
-  --text-4xl: clamp(2.6rem, 4.2vw + 1.2rem, 5.2rem);
-  --text-hero: clamp(3rem, 6.4vw + 0.6rem, 7.6rem);
+  --text-3xl: clamp(2rem, 2.2vw + 1.35rem, 3.25rem);
+  --text-4xl: clamp(2.5rem, 3.6vw + 1.3rem, 4.6rem);
+  --text-hero: clamp(2.75rem, 5.2vw + 0.9rem, 6.25rem);
 
-  --lh-tight: 0.98;
+  --lh-tight: 1;
   --lh-snug: 1.18;
   --lh-normal: 1.6;
-  --track-display: -0.035em;
-  --track-kicker: 0.14em;
+  --track-display: -0.042em;
+  --track-kicker: 0.12em;
 
   /* --- Space: 8px rhythm --- */
   --s-1: 4px;
@@ -87,12 +93,12 @@
   --s-8: 64px;
   --s-9: 96px;
   --s-10: 128px;
-  --section-y: clamp(96px, 12vw, 200px);
+  --section-y: clamp(80px, 9vw, 144px);
 
   /* --- Layout --- */
-  --shell: 1240px;
-  --shell-wide: 1440px;
-  --gutter: clamp(16px, 4.4vw, 64px);
+  --shell: 1200px;
+  --shell-wide: 1320px;
+  --gutter: clamp(16px, 4vw, 56px);
   --header-h: 64px;
 
   /* --- Radius (app: control 11, card 16, sheet 22) --- */
@@ -103,10 +109,11 @@
   --r-stage: 28px;
   --r-pill: 999px;
 
-  /* --- Elevation --- */
-  --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.32), var(--specular);
-  --shadow-sheet: 0 28px 80px rgba(0, 0, 0, 0.55), var(--specular);
-  --shadow-cta: 0 10px 28px rgba(255, 150, 20, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  /* --- Elevation (warm, app light theme) --- */
+  --shadow-card: 0 1px 2px rgba(70, 45, 18, 0.05), 0 12px 32px rgba(70, 45, 18, 0.065), var(--specular);
+  --shadow-sheet: 0 2px 6px rgba(70, 45, 18, 0.05), 0 30px 80px rgba(70, 45, 18, 0.16), var(--specular);
+  --shadow-window: 0 2px 4px rgba(40, 26, 10, 0.08), 0 24px 48px rgba(40, 26, 10, 0.16), 0 60px 120px rgba(40, 26, 10, 0.18);
+  --shadow-cta: 0 8px 22px rgba(221, 132, 20, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.45);
 
   /* --- Motion: weight, direction, continuity --- */
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
@@ -117,4 +124,42 @@
   --dur-move: 240ms;
   --dur-panel: 420ms;
   --dur-scene: 900ms;
+}
+
+/*
+ * Night: the protection chapter and the download stage. Same token names, so
+ * every component works in both — only the light changes.
+ */
+.night {
+  color-scheme: dark;
+  --canvas: #12110f;
+  --canvas-raised: #171613;
+  --surface: #1b1916;
+  --surface-2: #211f1b;
+  --surface-3: #2a2722;
+  --graphite: #3a362f;
+  --glass: rgba(30, 28, 25, 0.72);
+  --glass-strong: rgba(34, 32, 28, 0.92);
+  --glass-line: rgba(255, 244, 225, 0.1);
+  --glass-line-strong: rgba(255, 244, 225, 0.18);
+  --specular: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --wash: rgba(255, 244, 225, 0.035);
+  --wash-2: rgba(255, 244, 225, 0.07);
+  --ink: #f6f2ea;
+  --ink-2: #c5bfb4;
+  --ink-3: #a19a8f;
+  --ink-faint: #6f695f;
+  --accent-ink: #ffc862;
+  --accent-soft: rgba(255, 181, 43, 0.11);
+  --accent-line: rgba(255, 188, 34, 0.36);
+  --ok: #69d398;
+  --ok-soft: rgba(105, 211, 152, 0.1);
+  --danger: #ff8f86;
+  --danger-soft: rgba(255, 107, 97, 0.09);
+  --danger-line: rgba(255, 107, 97, 0.34);
+  --caution: #ffc247;
+  --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.32), var(--specular);
+  --shadow-sheet: 0 28px 80px rgba(0, 0, 0, 0.5), var(--specular);
+  background: var(--canvas);
+  color: var(--ink);
 }

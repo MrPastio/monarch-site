@@ -85,7 +85,7 @@
 
 .legend li[data-active="true"] {
   border-color: var(--glass-line);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--wash-2);
 }
 
 .legend h3 {

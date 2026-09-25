@@ -22,12 +22,17 @@ const contrast = (a, b) => {
   return (light + 0.05) / (dark + 0.05);
 };
 
-function token(name) {
-  const match = tokens.match(new RegExp(`--${name}:\\s*(#[0-9a-f]{6})`, "i"));
+// Paper is :root; night is the `.night` scope, which redefines the same names.
+const paper = tokens.slice(tokens.indexOf(":root {"), tokens.indexOf(".night {"));
+const night = tokens.slice(tokens.indexOf(".night {"));
+
+function token(name, block = paper) {
+  const match = block.match(new RegExp(`--${name}:\\s*(#[0-9a-f]{6})`, "i"));
   assert.ok(match, `token --${name} not found`);
   return match[1];
 }
 
+// Text pairs only: --accent is a fill on paper and never carries text there.
 const pairs = [
   ["ink", "canvas", 4.5],
   ["ink-2", "canvas", 4.5],
@@ -35,16 +40,34 @@ const pairs = [
   ["ink", "surface", 4.5],
   ["ink-2", "surface-2", 4.5],
   ["ink-3", "surface", 4.5],
+  ["ink-3", "surface-3", 4.5],
   ["accent-ink", "canvas", 4.5],
-  ["accent", "canvas", 4.5],
+  ["accent-ink", "surface-2", 4.5],
   ["on-accent", "accent", 4.5],
   ["ok", "canvas", 4.5],
   ["danger", "canvas", 4.5],
 ];
 
+const nightPairs = [
+  ["ink", "canvas", 4.5],
+  ["ink-2", "canvas", 4.5],
+  ["ink-3", "canvas", 4.5],
+  ["ink-3", "surface-2", 4.5],
+  ["accent-ink", "canvas", 4.5],
+  ["ok", "canvas", 4.5],
+  ["danger", "canvas", 4.5],
+];
+
 for (const [foreground, background, minimum] of pairs) {
-  test(`--${foreground} on --${background} >= ${minimum}:1`, () => {
+  test(`paper: --${foreground} on --${background} >= ${minimum}:1`, () => {
     const ratio = contrast(token(foreground), token(background));
+    assert.ok(ratio >= minimum, `contrast is ${ratio.toFixed(2)}:1, needs ${minimum}:1`);
+  });
+}
+
+for (const [foreground, background, minimum] of nightPairs) {
+  test(`night: --${foreground} on --${background} >= ${minimum}:1`, () => {
+    const ratio = contrast(token(foreground, night), token(background, night));
     assert.ok(ratio >= minimum, `contrast is ${ratio.toFixed(2)}:1, needs ${minimum}:1`);
   });
 }

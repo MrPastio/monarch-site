@@ -6,7 +6,7 @@ import { isLocale, localePath } from "@/lib/i18n";
 import { PageHero } from "@/components/page/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { ProcessStack } from "@/components/illustration/process-stack";
-import { Journey } from "@/components/scenes/journey/journey";
+import { PathMap } from "@/components/scenes/path-map/path-map";
 import styles from "../prose.module.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -48,7 +48,7 @@ export default async function HowPage({ params }: { params: Promise<{ lang: stri
         </div>
       </Reveal>
 
-      <Journey copy={dict.journey} ui={dict.ui} />
+      <PathMap copy={dict.journey} verdicts={dict.pages.security.verdicts} />
 
       <Reveal as="section" className={styles.section}>
         <div className="shell">

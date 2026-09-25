@@ -38,11 +38,29 @@ export const en: Dict = {
     ],
     scrollCue: "Scroll — let’s look inside",
     crestLabel: "The Monarch crest: a shield with a crown and circuit traces",
+    note: "Free, no account needed. Models run right on your computer.",
+    window: {
+      label: "Demo: how Oscar carries out a request in Monarch",
+      newChat: "New chat",
+      recent: "Recent",
+      chats: ["Quarterly report", "Backup script", "Trip ideas"],
+      safe: "Safe",
+      security: "Security running",
+      greeting: "What shall we do?",
+      placeholder: "Message Oscar…",
+      model: "Basic 12B",
+      local: "local",
+      thinking: "Oscar is working out the task…",
+      plan: "Plan",
+      allowedOnce: "Allowed once",
+      done: "Done: approved, carried out, logged",
+      try: "Try a request",
+    },
   },
   hardware: {
-    index: "01",
+    index: "02",
     kicker: "On your hardware",
-    title: "All the thinking happens here — inside your computer.",
+    title: "All the thinking happens *here* — inside your computer.",
     lede: "Monarch’s models run on your PC’s processor and memory. Chats, files and history live on your drive, not on someone else’s server.",
     labels: {
       cpu: "Processor",
@@ -56,6 +74,7 @@ export const en: Dict = {
     picker: {
       label: "How much memory does your computer have?",
       unit: "GB",
+      recommended: "Monarch suggests",
       fits: "Fits",
       tight: "Not enough memory",
       hint: "On first launch Monarch suggests a model that suits your computer. You can add more later in settings.",
@@ -82,9 +101,9 @@ export const en: Dict = {
     ],
   },
   journey: {
-    index: "02",
+    index: "01",
     kicker: "The path of a request",
-    title: "Words are not results. Monarch checks the deed.",
+    title: "Words are not results. Monarch *checks the deed*.",
     lede: "Every task takes the same path. The model proposes — it doesn’t decide.",
     choose: "Pick a request",
     stations: [
@@ -149,7 +168,7 @@ export const en: Dict = {
   safe: {
     index: "03",
     kicker: "Monarch Safe",
-    title: "A vault even Oscar can’t enter.",
+    title: "A vault *even Oscar* can’t enter.",
     lede: "Encrypted storage for files and private chats. A separate process with no network, its own PIN and its own keys.",
     points: [
       { value: "AES-256-GCM", text: "Every file version gets its own random 256-bit key." },
@@ -164,7 +183,7 @@ export const en: Dict = {
   guard: {
     index: "04",
     kicker: "Monarch Security",
-    title: "A sentinel that stays when the window closes.",
+    title: "A sentinel that *stays* when the window closes.",
     lede: "Security runs apart from the app: close Monarch and the watch goes on. It’s built on strict rule-based checks; a model only advises.",
     modesLabel: "Agent action protection mode",
     modes: [
@@ -184,7 +203,7 @@ export const en: Dict = {
   max: {
     index: "05",
     kicker: "MAX · in development, version 0.3",
-    title: "The cloud — only when you call it.",
+    title: "The cloud — only when *you* call it.",
     lede: "MAX turns on powerful cloud models with a single switch. Every service is connected separately, with its own consent.",
     consentTitle: "Three-part consent",
     consent: ["The chosen service’s terms and privacy", "What data will go to the cloud", "Possible charges from the provider"],
@@ -202,8 +221,8 @@ export const en: Dict = {
   facts: {
     index: "06",
     kicker: "Facts",
-    title: "Monarch in numbers.",
-    lede: "Figures come from the open source code of Monarch 0.2.5 and its public releases.",
+    title: "Monarch *in numbers*.",
+    lede: "Figures come from the open source code of Monarch and its public releases.",
     items: {
       files: "files in the open source code",
       tests: "test files",
@@ -217,7 +236,7 @@ export const en: Dict = {
     timelineTitle: "How Monarch grew",
     timeline: [
       { date: "12 June 2026", title: "Open source", text: "Monarch appears on GitHub." },
-      { date: "0.2.0", title: "Beta and Studio", text: "The first public Beta." },
+      { date: "0.2.0", title: "First Beta", text: "The first public Beta." },
       { date: "0.2.2", title: "Monarch Safe", text: "An encrypted vault for files and chats." },
       { date: "22 July 2026", title: "Updates inside Monarch", text: "A signed stable channel and one-click install." },
       { date: "0.2.4", title: "Agent Runtime", text: "Oscar performs real, verified actions." },
@@ -228,7 +247,7 @@ export const en: Dict = {
   download: {
     index: "07",
     kicker: "Download",
-    title: "Take Monarch home.",
+    title: "Take Monarch *home*.",
     lede: "Free, no account. One installer for Windows; models are picked on first launch.",
     primary: "Download Monarch",
     all: "All versions",
@@ -383,7 +402,7 @@ export const en: Dict = {
       ],
       kernelTitle: "One decision per action",
       kernelText: "Modules don’t grant themselves rights. They collect facts, and a single layer — the PolicyKernel — makes the final call: allow, ask you, or deny. Verification is separate: an action only counts as done once the core has confirmed its effect.",
-      modulesTitle: "23 modules in one system",
+      modulesTitle: "21 modules in one system",
       modules: [
         { id: "oscar", name: "Oscar", text: "Chat and an agent that understands the task" },
         { id: "models", name: "Models", text: "Local models and their installation" },
@@ -399,7 +418,6 @@ export const en: Dict = {
         { id: "profile", name: "Profile", text: "Personality and conversation style" },
         { id: "safe", name: "Safe", text: "Encrypted storage" },
         { id: "security", name: "Security", text: "Monitoring and action protection" },
-        { id: "studio", name: "Studio", text: "Photos and basic video — Alpha" },
         { id: "sharing", name: "Sharing", text: "Local access for your own programs" },
         { id: "telegram", name: "Telegram", text: "A bot for talking to Monarch" },
         { id: "plugins", name: "Plugins", text: "Connectable services" },
@@ -407,7 +425,6 @@ export const en: Dict = {
         { id: "device", name: "Device", text: "Hardware details for choosing a model" },
         { id: "diagnostics", name: "Diagnostics", text: "Clear reasons for failures" },
         { id: "assistant", name: "Assistant", text: "Basic answers and routing" },
-        { id: "monarch-modules", name: "Registry", text: "The catalog and contract of all modules" },
       ],
       modelsTitle: "Models to choose from",
       modelsText: "Monarch offers Basic 2B, Basic 12B and Pro 27B and recommends the one that fits your computer. Models are downloaded separately from the app and stored on your drive.",

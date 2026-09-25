@@ -6,13 +6,13 @@ import { CountUp } from "./count-up";
 import styles from "./facts.module.css";
 
 const LANGUAGE_COLORS: Record<string, string> = {
-  TypeScript: "#ffb52b",
-  Python: "#f3efe6",
+  TypeScript: "#ffa326",
+  Python: "#26221d",
   JavaScript: "#ff7a18",
-  CSS: "#ffe28a",
-  "C#": "#9aa0a8",
-  HTML: "#c98a1b",
-  PowerShell: "#5d636c",
+  CSS: "#ffd77a",
+  "C#": "#8f877b",
+  HTML: "#b86b12",
+  PowerShell: "#cfc6b8",
 };
 
 export function Facts({ copy, locale }: { copy: Dict["facts"]; locale: string }) {

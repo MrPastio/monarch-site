@@ -26,17 +26,11 @@
   letter-spacing: -0.05em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(180deg, #fffaf0, #d8d1c2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--ink);
 }
 
-.number:nth-child(4) dt,
 .number:nth-child(6) dt {
-  background: linear-gradient(180deg, #ffe7a8, #e1ad33);
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: var(--accent-ink);
 }
 
 .number dd {
@@ -133,7 +127,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 194, 71, 0.6), rgba(255, 255, 255, 0.12) 85%, transparent);
+  background: linear-gradient(90deg, var(--accent-line), var(--glass-line) 85%, transparent);
 }
 
 .timeline li {
@@ -145,7 +139,7 @@
   display: block;
   width: 15px;
   height: 15px;
-  border: 2px solid #c9942a;
+  border: 2px solid var(--orange);
   border-radius: 50%;
   background: var(--canvas);
 }
@@ -199,7 +193,7 @@
     right: auto;
     width: 1px;
     height: auto;
-    background: linear-gradient(180deg, rgba(255, 194, 71, 0.6), rgba(255, 255, 255, 0.12));
+    background: linear-gradient(180deg, var(--accent-line), var(--glass-line));
   }
 
   .tlDot {

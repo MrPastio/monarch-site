@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/scenes/hero/hero";
 import { Hardware } from "@/components/scenes/hardware/hardware";
-import { Journey } from "@/components/scenes/journey/journey";
+import { PathMap } from "@/components/scenes/path-map/path-map";
+import { NightBand } from "@/components/scenes/night-band";
 import { Safe } from "@/components/scenes/safe/safe";
 import { Guard } from "@/components/scenes/guard/guard";
 import { Max } from "@/components/scenes/max/max";
@@ -20,14 +21,16 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <Hero locale={lang} hero={dict.hero} />
+      <Hero locale={lang} hero={dict.hero} journey={dict.journey} ui={dict.ui} />
+      <PathMap copy={dict.journey} verdicts={dict.pages.security.verdicts} />
       <Hardware copy={dict.hardware} />
-      <Journey copy={dict.journey} ui={dict.ui} />
-      <Safe copy={dict.safe} agent={dict.ui.agent} />
-      <Guard copy={dict.guard} events={dict.ui.events} />
+      <NightBand id="protection">
+        <Safe copy={dict.safe} agent={dict.ui.agent} />
+        <Guard copy={dict.guard} events={dict.ui.events} />
+      </NightBand>
       <Max copy={dict.max} />
       <Facts copy={dict.facts} locale={localeMeta[lang].intl} />
-      <Download copy={dict.download} locale={lang} />
+      <Download copy={dict.download} locale={lang} crestLabel={dict.hero.crestLabel} />
       <Faq copy={dict.faq} />
     </>
   );

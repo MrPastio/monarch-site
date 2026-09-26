@@ -1,6 +1,7 @@
 # Monarch Site v5.1 — «Дневной свет»
 
-Public site for Monarch, a local AI for Windows. Live: https://mrpastio.github.io/monarch-site/
+Public site for Monarch, a local AI for Windows. Live: https://monarch-site-sigma.vercel.app/
+The earlier GitHub Pages deployment remains at https://mrpastio.github.io/monarch-site/.
 
 Separate repository on purpose: the marketing site never mixes with runtime
 code. The previous site (`E:\Monarch\marketing-site`, OpenAI Sites) stays
@@ -29,6 +30,11 @@ npx next build       # server target (Vercel-ready: proxy locale redirect, ISR, 
   `.github/workflows/pages.yml` removes the server-only parts, exports, runs
   `scripts/export-extras.mjs` and deploys. It rebuilds daily to pick up new
   releases.
+
+The Vercel project is `antonkalesnik21-8246s-projects/monarch-site` and was
+published from `site-v5-daylight` on 2026-09-26. GitHub login connection is
+not configured in Vercel yet, so source changes require a manual deployment:
+`vercel deploy --prod` from this directory. Keep `STATIC_EXPORT` unset for it.
 
 ## What is where
 

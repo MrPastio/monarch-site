@@ -32,9 +32,12 @@ npx next build       # server target (Vercel-ready: proxy locale redirect, ISR, 
   releases.
 
 The Vercel project is `antonkalesnik21-8246s-projects/monarch-site` and was
-published from `site-v5-daylight` on 2026-09-26. GitHub login connection is
-not configured in Vercel yet, so source changes require a manual deployment:
+published from `site-v5-daylight` on 2026-09-26. The Vercel project is not
+connected to `MrPastio/monarch-site` for automatic deploys yet, so source
+changes require a manual deployment:
 `vercel deploy --prod` from this directory. Keep `STATIC_EXPORT` unset for it.
+To enable automatic deploys, connect the GitHub account with write access to
+`MrPastio/monarch-site`, then link that repository in the Vercel project.
 
 ## What is where
 

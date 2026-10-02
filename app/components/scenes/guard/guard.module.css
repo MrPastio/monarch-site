@@ -424,7 +424,7 @@
   bottom: -6px;
   right: 0;
   width: calc(100% - var(--th) * 1%);
-  border: 1px dashed var(--danger-line);
+  border: var(--stroke) dashed var(--line);
   border-radius: 10px;
   background: rgba(var(--ink-rgb), 0.1);
   transition:
@@ -510,7 +510,8 @@
 }
 
 .samples li[data-outcome="stopped"] {
-  border-color: var(--danger-line);
+  border-color: var(--line);
+  border-style: dashed;
   background: var(--danger-soft);
 }
 

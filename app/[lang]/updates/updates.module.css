@@ -178,7 +178,8 @@ a.card:hover {
 }
 
 .item[data-state="revoked"] .badge {
-  border-color: var(--danger-line);
+  border-color: var(--line);
+  border-style: dashed;
   color: var(--danger);
 }
 

@@ -61,18 +61,18 @@
   align-items: center;
   gap: var(--s-3);
   margin-top: var(--s-2);
-  padding: 10px 10px 10px 14px;
-  border: 1px solid var(--glass-line);
-  border-radius: 12px;
-  background: #050506;
+  padding: 10px 10px 10px 16px;
+  border-radius: 16px;
+  background: var(--pp-paper-2);
 }
 
 .command code {
   flex: 1;
   min-width: 0;
   font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--accent-ink);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink);
   overflow-wrap: anywhere;
 }
 

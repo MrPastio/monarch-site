@@ -136,7 +136,8 @@
 }
 
 .card[data-tone="deny"] {
-  border-color: var(--danger-line);
+  border-color: var(--line);
+  border-style: dashed;
 }
 
 .card[data-tone="deny"] h3 {

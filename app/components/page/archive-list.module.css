@@ -25,25 +25,23 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* State is a shape: current is inked, revoked is dashed, the rest is outlined. */
 .badge {
-  padding: 2px 9px;
-  border: 1px solid var(--glass-line-strong);
+  padding: 2px 10px;
+  border: var(--stroke) solid var(--line);
   border-radius: var(--r-pill);
   font-size: var(--text-2xs);
-  font-weight: 650;
-  color: var(--ink-2);
+  font-weight: 500;
+  color: var(--ink);
 }
 
 .row[data-state="current"] .badge {
-  border-color: rgba(var(--ink-rgb), 0.45);
-  background: var(--ok-soft);
-  color: var(--ok);
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
 }
 
 .row[data-state="revoked"] .badge {
-  border-color: var(--danger-line);
-  background: var(--danger-soft);
-  color: var(--danger);
+  border-style: dashed;
 }
 
 .row[data-state="history"] .badge {
@@ -75,12 +73,12 @@
 .revoked {
   display: grid;
   gap: var(--s-2);
-  padding: var(--s-4);
-  border: 1px solid var(--danger-line);
-  border-radius: 14px;
-  background: var(--danger-soft);
+  padding: var(--s-4) var(--s-5);
+  border: var(--stroke) dashed var(--line);
+  border-radius: 18px;
+  background: var(--pp-paper);
   font-size: var(--text-sm);
-  color: var(--danger);
+  color: var(--ink);
 }
 
 .reason {
@@ -108,31 +106,43 @@
   flex: none;
   width: 20px;
   height: 20px;
-  border: 1.5px solid var(--glass-line-strong);
+  border: var(--stroke) solid var(--line);
   border-radius: 6px;
-  transition: background-color var(--dur-touch) var(--ease-physical), border-color var(--dur-touch) var(--ease-physical);
+  background: var(--pp-paper);
+  transition:
+    background-color var(--dur-touch) linear,
+    transform var(--dur-move) var(--ease-spring);
 }
 
+.ack:hover .box {
+  background: var(--pp-paper-2);
+}
+
+/* Checked: ink box with a paper pixel tick that pops in. */
 .ack input:checked + .box {
-  border-color: var(--danger);
-  background: var(--danger);
+  background: var(--pp-ink);
 }
 
 .ack input:checked + .box::after {
   content: "";
   position: absolute;
-  left: 6px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
-  border: solid var(--ink);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+  inset: 3px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7' fill='%23ffffff'%3E%3Crect x='5.07' y='1.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='6.07' y='1.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='4.07' y='2.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='5.07' y='2.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='.07' y='3.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='1.07' y='3.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='3.07' y='3.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='4.07' y='3.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='1.07' y='4.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='2.07' y='4.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='3.07' y='4.07' width='.86' height='.86' rx='.24'/%3E%3Crect x='2.07' y='5.07' width='.86' height='.86' rx='.24'/%3E%3C/svg%3E") center / contain no-repeat;
+  animation: tick-pop var(--dur-move) var(--ease-spring);
+}
+
+@keyframes tick-pop {
+  from {
+    transform: scale(0.3);
+  }
+}
+
+.ack input:active + .box {
+  transform: scale(0.92);
 }
 
 .ack input:focus-visible + .box {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
 }
 
 /* Download controls unfold from the warning that guards them. */

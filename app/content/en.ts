@@ -23,7 +23,7 @@ export const en: Dict = {
     pendingTranslation: "translation in progress",
   },
   hero: {
-    kicker: "Monarch {version} · Windows 10 and 11",
+    kicker: "Windows 10 and 11",
     title: [
       [{ t: "Your " }, { t: "intelligence", accent: true }, { t: " —" }],
       [{ t: "on your own " }, { t: "hardware", accent: true }, { t: "." }],
@@ -91,10 +91,13 @@ export const en: Dict = {
     ],
     scenes: {
       newChat: "New chat",
+      oscar: "Oscar",
+      placeholder: "Message Oscar…",
       stop: "Stop",
       done: "done",
       task: {
         prompt: "Gather September’s reports into one folder",
+        working: "Oscar is working…",
         steps: ["Found 6 reports", "Created the “September” folder", "Moved 6 files", "Checked the result"],
         askTitle: "Move 6 files to “September”?",
         askReason: "Why I ask: “Always ask” mode",
@@ -106,6 +109,7 @@ export const en: Dict = {
         prompt: "Explain in simple words how a mortgage works",
         cloud: "Cloud service",
         local: "Model on your computer",
+        localSub: "answers if the cloud is silent",
         waiting: "Waiting for the cloud…",
         failed: "The service didn’t answer",
         label: "MAX didn’t answer — your computer’s model replied",
@@ -666,7 +670,7 @@ export const en: Dict = {
       lede: "The rules Monarch is designed, written and tested by. They’re the same for people and for the AI agents that help build it.",
       designTitle: "Design",
       design: [
-        { title: "Calm glass", text: "A minimal language: black, white, orange and yellow, moderate blur, nothing for effect’s sake." },
+        { title: "Paper and ink", text: "Everything is paper; ink marks only what matters: text, outlines, the current choice. There is no colour — status is a shape and a word, and whatever thinks is made of pixels." },
         { title: "Motion has weight", text: "Elements arrive and leave from a clear place, unfold and fold. No blinking, no constant glow." },
         { title: "One animation owner", text: "Any transition can be interrupted at any moment and never queues — the interface never makes you wait." },
         { title: "Respect for your settings", text: "If “reduce motion” is on in your system, Monarch and this site show final states without animation." },
@@ -689,7 +693,7 @@ export const en: Dict = {
       motionTry: "Click — and interrupt it halfway",
       reducedOn: "Reduce motion is on for you right now — the site shows final states.",
       reducedOff: "Motion is on right now. Turn on reduce motion in your system and the site will show final states straight away.",
-      layers: ["Paper", "Glass", "Night"],
+      layers: ["Paper", "Ink", "Pixels"],
       agentsSource: "The policy is described in SECURITY.md of the open repository",
       brandTitle: "The mark",
       brandText: "A shield with a crown and circuit traces: protection, sovereignty and computing on your own hardware. The primary version sits on a dark ground, the second on a light one.",

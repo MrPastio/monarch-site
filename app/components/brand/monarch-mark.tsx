@@ -12,6 +12,25 @@ const palettes = {
   light: { shield: "#172234", crown: "#bf9a65" },
 } as const;
 
+/**
+ * The app icon as PaperPixel shows it: the primary crest (white shield, gold
+ * crown) on an ink tile. On paper the logo always sits on its tile; the gold
+ * of the crown is the only colour on the site.
+ */
+export function MonarchTile({ size = 32, title, className }: { size?: number; title?: string; className?: string }) {
+  return (
+    <span
+      className={[styles.tile, className].filter(Boolean).join(" ")}
+      style={{ width: size, height: size, borderRadius: Math.round(size * 0.27) }}
+      role={title ? "img" : undefined}
+      aria-label={title}
+      aria-hidden={title ? undefined : true}
+    >
+      <MonarchMark size={Math.round(size * 0.62)} variant="dark" />
+    </span>
+  );
+}
+
 export function MonarchMark({
   size = 32,
   variant = "dark",

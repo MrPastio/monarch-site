@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { MonarchMark, MonarchWordmark } from "@/components/brand/monarch-mark";
+import { MonarchTile, MonarchWordmark } from "@/components/brand/monarch-mark";
 import type { Dict } from "@/content/dictionary";
 import { locales, localeMeta, localePath, type Locale } from "@/lib/i18n";
 import styles from "./site-header.module.css";
+import { PixelGlyph } from "@/components/pixel/pixel";
 
 export function SiteHeader({
   locale,
@@ -77,7 +78,7 @@ export function SiteHeader({
     <header className={styles.header} data-scrolled={scrolled || menuOpen} data-menu={menuOpen} data-night={overNight && !menuOpen}>
       <div className={styles.bar}>
         <Link href={localePath(locale)} className={styles.brand} aria-label={chrome.home}>
-          <MonarchMark size={26} variant={overNight && !menuOpen ? "dark" : "light"} />
+          <MonarchTile size={30} />
           <MonarchWordmark height={13} className={styles.wordmark} />
         </Link>
 
@@ -105,9 +106,7 @@ export function SiteHeader({
               onClick={() => setLangOpen((open) => !open)}
             >
               {localeMeta[locale].short}
-              <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden>
-                <path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <PixelGlyph name="chevron-down" size={10} />
             </button>
             <div className={styles.langMenu} role="menu" data-open={langOpen}>
               {locales.map((code) => (

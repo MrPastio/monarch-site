@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MonarchMark, MonarchWordmark } from "@/components/brand/monarch-mark";
+import { MonarchTile, MonarchWordmark } from "@/components/brand/monarch-mark";
 import type { Dict } from "@/content/dictionary";
 import { localePath, type Locale } from "@/lib/i18n";
 import styles from "./site-footer.module.css";
@@ -10,7 +10,7 @@ export function SiteFooter({ locale, footer }: { locale: Locale; footer: Dict["f
       <div className={`shell-wide ${styles.top}`}>
         <div className={styles.brand}>
           <Link href={localePath(locale)} className={styles.brandLink} aria-label="Monarch">
-            <MonarchMark size={34} variant="light" />
+            <MonarchTile size={40} />
             <MonarchWordmark height={15} className={styles.wordmark} />
           </Link>
           <p className={styles.tagline}>{footer.tagline}</p>

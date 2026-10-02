@@ -60,8 +60,8 @@
   border: 1px solid var(--glass-line);
   border-radius: 18px;
   background:
-    radial-gradient(90% 70% at 30% 20%, rgba(255, 170, 60, 0.12), transparent 70%),
-    linear-gradient(160deg, #1c1a16, #0f0e0c);
+    radial-gradient(90% 70% at 30% 20%, rgba(var(--ink-rgb), 0.12), transparent 70%),
+    linear-gradient(160deg, #171716, #0b0b0b);
 }
 
 /* The window folds into its taskbar button — and grows back out of it. */
@@ -72,9 +72,9 @@
   right: 18px;
   height: 180px;
   overflow: hidden;
-  border: 1px solid rgba(255, 244, 225, 0.14);
+  border: 1px solid rgba(var(--ink-rgb), 0.14);
   border-radius: 12px;
-  background: #181714;
+  background: #171716;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
   transform-origin: 70px 250px;
   transition:
@@ -96,7 +96,7 @@
   gap: 7px;
   height: 28px;
   padding: 0 10px;
-  border-bottom: 1px solid rgba(255, 244, 225, 0.08);
+  border-bottom: 1px solid rgba(var(--ink-rgb), 0.08);
   font-size: 11px;
   color: var(--ink-3);
 }
@@ -105,7 +105,7 @@
   width: 8px;
   height: 8px;
   border-radius: 2px;
-  background: rgba(255, 244, 225, 0.14);
+  background: rgba(var(--ink-rgb), 0.14);
 }
 
 .titlebar i:first-of-type {
@@ -121,7 +121,7 @@
 .appBody span {
   height: 9px;
   border-radius: 5px;
-  background: rgba(255, 244, 225, 0.08);
+  background: rgba(var(--ink-rgb), 0.08);
 }
 
 .appBody span:nth-child(2) {
@@ -134,7 +134,7 @@
 
 .appBody span:nth-child(4) {
   width: 40%;
-  background: rgba(255, 181, 43, 0.25);
+  background: rgba(var(--ink-rgb), 0.25);
 }
 
 .taskbar {
@@ -147,7 +147,7 @@
   gap: 8px;
   height: 40px;
   padding: 0 12px;
-  border-top: 1px solid rgba(255, 244, 225, 0.08);
+  border-top: 1px solid rgba(var(--ink-rgb), 0.08);
   background: rgba(10, 9, 8, 0.78);
 }
 
@@ -155,7 +155,7 @@
   width: 16px;
   height: 16px;
   border-radius: 4px;
-  background: linear-gradient(135deg, rgba(255, 244, 225, 0.5), rgba(255, 244, 225, 0.2));
+  background: linear-gradient(135deg, rgba(var(--ink-rgb), 0.5), rgba(var(--ink-rgb), 0.2));
 }
 
 .taskApp {
@@ -166,7 +166,7 @@
   height: 30px;
   margin-left: 16px;
   border-radius: 8px;
-  background: rgba(255, 244, 225, 0.08);
+  background: rgba(var(--ink-rgb), 0.08);
   transition: background-color var(--dur-move) var(--ease-physical);
 }
 
@@ -209,7 +209,7 @@
   height: 24px;
   border-radius: 6px;
   color: var(--accent-ink);
-  background: rgba(255, 181, 43, 0.12);
+  background: rgba(var(--ink-rgb), 0.12);
 }
 
 /* The toast rises out of the tray it belongs to. */
@@ -223,7 +223,7 @@
   padding: 9px 12px;
   border: 1px solid var(--accent-line);
   border-radius: 12px;
-  background: #22201b;
+  background: #232322;
   font-size: var(--text-xs);
   font-weight: 600;
   color: var(--ink);
@@ -251,7 +251,7 @@
   padding: var(--s-4);
   border: 1px solid var(--accent-line);
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255, 181, 43, 0.06), transparent 40%), var(--surface);
+  background: linear-gradient(180deg, rgba(var(--ink-rgb), 0.06), transparent 40%), var(--surface);
   color: var(--ink);
 }
 
@@ -318,7 +318,7 @@
 }
 
 .events li[data-tone="warn"] {
-  background: rgba(255, 181, 43, 0.1);
+  background: rgba(var(--ink-rgb), 0.1);
   color: var(--accent-ink);
 }
 
@@ -371,7 +371,7 @@
   width: calc((100% - 8px) / var(--count));
   border: 1px solid var(--accent-line);
   border-radius: 10px;
-  background: rgba(255, 181, 43, 0.14);
+  background: rgba(var(--ink-rgb), 0.14);
   transform: translateX(calc(100% * var(--index)));
   transition: transform var(--dur-panel) var(--ease-settle);
 }
@@ -414,7 +414,7 @@
   position: relative;
   height: 14px;
   border-radius: var(--r-pill);
-  background: linear-gradient(90deg, rgba(105, 211, 152, 0.35), rgba(255, 194, 71, 0.45) 55%, rgba(255, 107, 97, 0.55));
+  background: linear-gradient(90deg, rgba(var(--ink-rgb), 0.35), rgba(var(--ink-rgb), 0.45) 55%, rgba(var(--ink-rgb), 0.55));
 }
 
 /* Everything right of the threshold is where Security steps in. */
@@ -426,7 +426,7 @@
   width: calc(100% - var(--th) * 1%);
   border: 1px dashed var(--danger-line);
   border-radius: 10px;
-  background: rgba(255, 107, 97, 0.1);
+  background: rgba(var(--ink-rgb), 0.1);
   transition:
     width var(--dur-panel) var(--ease-settle),
     opacity var(--dur-move) var(--ease-physical);

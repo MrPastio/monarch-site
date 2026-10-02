@@ -30,7 +30,7 @@
 }
 
 .wordmark {
-  color: #172234;
+  color: var(--ink);
 }
 
 .tagline {

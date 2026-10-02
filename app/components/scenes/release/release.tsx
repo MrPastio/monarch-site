@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
-import { MonarchMark } from "@/components/brand/monarch-mark";
+import { MonarchTile } from "@/components/brand/monarch-mark";
 import { getGsap, prefersReducedMotion } from "@/components/motion/gsap";
-import { asset } from "@/lib/asset";
+import { PixelGlyph, PixelLoader } from "@/components/pixel/pixel";
 import { TIMELINES } from "./timelines";
 import styles from "./release.module.css";
 
@@ -88,8 +88,11 @@ export function Release({ copy, access, lanes }: { copy: Copy; access: Access; l
                     data-past={story && index < active}
                     style={{ "--i": index } as React.CSSProperties}
                   >
+                    {/* Pixel progress: five cells per feature fill as the page scrolls. */}
                     <span className={styles.rail} aria-hidden>
-                      <i />
+                      {[0, 1, 2, 3, 4].map((cell) => (
+                        <i key={cell} style={{ "--k": cell } as React.CSSProperties} />
+                      ))}
                     </span>
                     <h3 className={styles.stepTitle}>
                       {story ? (
@@ -153,7 +156,7 @@ function Window({ children, counter }: { children: React.ReactNode; counter?: st
   return (
     <div className={styles.window}>
       <div className={styles.titlebar}>
-        <MonarchMark size={14} variant="light" />
+        <MonarchTile size={18} />
         <span>Monarch</span>
         {counter && <span className={styles.counter}>{counter}</span>}
         <span className={styles.controls}>
@@ -273,15 +276,7 @@ function SceneBody({ id, s, access, lanes }: { id: string; s: Scenes; access: Ac
 }
 
 function Check() {
-  return (
-    <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden>
-      <path d="M2.5 6.2 5 8.5l4.5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function Avatar({ pose }: { pose: string }) {
-  return <span className={styles.avatar} style={{ backgroundImage: `url("${asset(`/mascot/oscar-${pose}.webp`)}")` }} />;
+  return <PixelGlyph name="check" size={14} animate />;
 }
 
 /* ---------- 1. A task, done in the chat ---------- */
@@ -289,45 +284,53 @@ function TaskScene({ s }: { s: Scenes }) {
   const t = s.task;
   return (
     <div className={styles.chat}>
-      <p className={styles.user} data-k="prompt">
-        <span className={styles.typed}>{t.prompt}</span>
+      <p className={styles.chatHead}>
+        <b>{s.oscar}</b>
+        <span className={styles.chatPill}>{s.newChat}</span>
       </p>
-      <div className={styles.oscar}>
-        <Avatar pose="success" />
-        <div className={styles.oscarBody}>
-          <ol className={styles.taskSteps}>
-            {t.steps.map((step, index) => (
-              <li key={step} data-k="step" data-state="done" style={{ "--i": index } as React.CSSProperties}>
-                <span className={styles.stepMark}>
-                  <Check />
-                </span>
-                {step}
-              </li>
-            ))}
-          </ol>
-          <div className={styles.ask} data-k="ask" data-state="allowed">
+      <div className={styles.thread}>
+        <p className={styles.user} data-k="prompt">
+          {t.prompt}
+        </p>
+        <p className={styles.working} data-k="working" data-state="done">
+          <span className={styles.workingLoader}>
+            <PixelLoader size="m" label={t.working} />
+          </span>
+          <span className={styles.workingDone}>
+            <PixelGlyph name="check" size={14} />
+          </span>
+          {t.working}
+        </p>
+        <ol className={styles.taskSteps}>
+          {t.steps.map((step, index) => (
+            <li key={step} data-k="step" data-state="done" style={{ "--i": index } as React.CSSProperties}>
+              <span className={styles.square} />
+              {step}
+            </li>
+          ))}
+        </ol>
+        <div className={styles.ask} data-k="ask" data-state="allowed">
+          <div>
             <p className={styles.askTitle}>{t.askTitle}</p>
             <p className={styles.askReason}>{t.askReason}</p>
-            <span className={styles.allow} data-k="allow">
-              <Check />
-              {t.allow}
-            </span>
           </div>
-          <div className={styles.report} data-k="report">
-            <p className={styles.reportTitle}>{t.reportTitle}</p>
-            <div className={styles.reportChips}>
-              {t.report.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
+          <span className={styles.allow} data-k="allow">
+            {t.allow}
+          </span>
+        </div>
+        <div className={styles.report} data-k="report">
+          <p className={styles.reportTitle}>{t.reportTitle}</p>
+          <div className={styles.reportChips}>
+            {t.report.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
           </div>
         </div>
       </div>
       <div className={styles.composer}>
-        <span className={styles.placeholder} />
-        <span className={styles.stop} data-k="stop" data-state="idle">
+        <span className={styles.placeholder}>{s.placeholder}</span>
+        <span className={styles.send} data-k="stop" data-state="idle" aria-hidden>
           <i />
-          {s.stop}
         </span>
       </div>
     </div>
@@ -339,49 +342,31 @@ function MaxScene({ s }: { s: Scenes }) {
   const m = s.max;
   return (
     <div className={styles.max}>
-      <div className={styles.maxComposer} data-k="composer">
-        <span className={styles.maxPrompt}>
-          <span className={styles.typed} data-k="maxPrompt">
-            {m.prompt}
-          </span>
-        </span>
-        <span className={styles.maxToggle} data-k="toggle" data-on="true">
-          <i />
-          MAX
-        </span>
-      </div>
+      {/* Threads from the composer up to both minds; scaled with the scene. */}
+      <svg className={styles.routeLines} viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden>
+        <path className={styles.lineCloud} data-k="lineCloud" d="M228,222 C250,170 286,120 318,66" pathLength={1} />
+        <path className={styles.lineBroken} data-k="lineBroken" d="M228,222 C250,170 286,120 318,66" />
+        <path className={styles.lineLocal} data-k="lineLocal" d="M200,222 C176,170 120,124 96,66" pathLength={1} />
+      </svg>
 
-      <div className={styles.route}>
-        <svg className={styles.routeLines} viewBox="0 0 400 150" preserveAspectRatio="none">
-          <path className={styles.lineCloudTrack} d="M60 75 C 160 75, 200 28, 320 28" pathLength={1} />
-          <path className={styles.lineCloud} data-k="lineCloud" d="M60 75 C 160 75, 200 28, 320 28" pathLength={1} />
-          <path className={styles.lineBroken} data-k="lineBroken" d="M60 75 C 160 75, 200 28, 320 28" />
-          <path className={styles.lineLocal} data-k="lineLocal" d="M60 75 C 160 75, 200 122, 320 122" pathLength={1} />
+      <span className={styles.nodeLocal} data-k="local" data-state="answering">
+        <b>{m.local}</b>
+        <small>{m.localSub}</small>
+      </span>
+      <span className={styles.nodeCloud} data-k="cloud" data-state="failed">
+        <svg className={styles.cloudShape} viewBox="0 0 220 120" preserveAspectRatio="none" aria-hidden>
+          <path d="M44,108 C18,108 8,90 14,74 C20,60 36,56 48,60 C50,36 70,22 92,26 C104,8 136,6 150,26 C170,18 194,32 192,56 C210,58 216,78 208,92 C202,104 190,108 176,108 Z" />
         </svg>
-        <span className={styles.nodeYou}>
-          <MonarchMark size={18} variant="light" />
-        </span>
-        <span className={styles.nodeCloud} data-k="cloud" data-state="failed">
-          <svg width="18" height="14" viewBox="0 0 20 14" aria-hidden>
-            <path d="M5.5 13a4.5 4.5 0 0 1-.6-8.96A5.5 5.5 0 0 1 15.4 4.5 4.25 4.25 0 0 1 15 13z" fill="none" stroke="currentColor" strokeWidth="1.5" />
-          </svg>
-          <span>
-            <b>{m.cloud}</b>
-            <small data-when="waiting">{m.waiting}</small>
-            <small data-when="failed">{m.failed}</small>
-          </span>
-        </span>
-        <span className={styles.nodeLocal} data-k="local" data-state="answering">
-          <svg width="18" height="16" viewBox="0 0 20 16" aria-hidden>
-            <rect x="1.5" y="1.5" width="17" height="10.5" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M6 15h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          <b>{m.local}</b>
-        </span>
-      </div>
+        <b>MAX</b>
+        <small data-when="waiting">{m.waiting}</small>
+        <small data-when="failed">{m.failed}</small>
+      </span>
 
       <div className={styles.answer} data-k="answer">
-        <span className={styles.fallbackLabel}>{m.label}</span>
+        <span className={styles.fallbackLabel}>
+          <i />
+          {m.label}
+        </span>
         <p>
           <span className={styles.typed} data-k="answerText">
             {m.answer}
@@ -389,9 +374,19 @@ function MaxScene({ s }: { s: Scenes }) {
         </p>
       </div>
 
-      <div className={styles.switchRow}>
-        <span>{m.fallback}</span>
-        <span className={styles.switch} data-on="true" />
+      <div className={styles.maxComposer} data-k="composer">
+        <span className={styles.maxPrompt}>
+          <span className={styles.typed} data-k="maxPrompt">
+            {m.prompt}
+          </span>
+        </span>
+        <span className={styles.maxToggle} data-k="toggle" data-on="true">
+          MAX
+          <i />
+        </span>
+        <span className={styles.sendInk} aria-hidden>
+          <PixelGlyph name="arrow-up" size={14} />
+        </span>
       </div>
     </div>
   );

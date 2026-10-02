@@ -5,9 +5,10 @@ import { useState } from "react";
 import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
-import { MonarchMark } from "@/components/brand/monarch-mark";
+import { MonarchTile } from "@/components/brand/monarch-mark";
 import { asset } from "@/lib/asset";
 import styles from "./max.module.css";
+import { PixelGlyph } from "@/components/pixel/pixel";
 
 const PROVIDERS = [
   { id: "groq", name: "Groq" },
@@ -44,7 +45,7 @@ export function Max({ copy }: { copy: Dict["max"] }) {
           <div className={styles.bridge} aria-hidden>
             <div className={styles.node}>
               <span className={styles.nodeMark}>
-                <MonarchMark size={24} variant="light" />
+                <MonarchTile size={30} />
               </span>
               <strong>{copy.local}</strong>
               <small>Monarch</small>
@@ -119,9 +120,7 @@ export function Max({ copy }: { copy: Dict["max"] }) {
                   onChange={(event) => setChecks((current) => current.map((value, i) => (i === index ? event.target.checked : value)))}
                 />
                 <span className={styles.box} aria-hidden>
-                  <svg width="12" height="12" viewBox="0 0 16 16">
-                    <path d="M3.5 8.4l2.9 2.9 6.1-6.6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" pathLength={1} />
-                  </svg>
+                  <PixelGlyph name="check" size={12} animate />
                 </span>
                 {item}
               </label>
@@ -137,9 +136,7 @@ export function Max({ copy }: { copy: Dict["max"] }) {
         <ul className={styles.points}>
           {copy.points.map((point) => (
             <li key={point} data-reveal>
-              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden>
-                <path d="M3 8.4 6.4 11.6 13 4.6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <PixelGlyph name="check" size={14} />
               {point}
             </li>
           ))}

@@ -5,6 +5,7 @@ import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
 import styles from "./hardware.module.css";
+import { PixelGlyph } from "@/components/pixel/pixel";
 
 /**
  * Local models, measured in the one number people know about their PC:
@@ -89,25 +90,6 @@ export function Hardware({ copy }: { copy: Dict["hardware"] }) {
 }
 
 function NoteGlyph({ index }: { index: number }) {
-  const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
-  if (index === 0)
-    return (
-      <svg width="18" height="18" viewBox="0 0 18 18">
-        <rect x="3" y="3" width="12" height="12" rx="2.5" {...common} />
-        <path d="M6.5 9h5M9 6.5v5" {...common} />
-      </svg>
-    );
-  if (index === 1)
-    return (
-      <svg width="18" height="18" viewBox="0 0 18 18">
-        <circle cx="9" cy="9" r="6" {...common} />
-        <path d="M3 9h12M9 3c1.8 1.7 2.6 3.7 2.6 6S10.8 13.3 9 15M9 3C7.2 4.7 6.4 6.7 6.4 9s.8 4.3 2.6 6" {...common} />
-      </svg>
-    );
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18">
-      <path d="M3 13.5a6 6 0 1 1 12 0" {...common} />
-      <path d="M9 13.5 11.8 8.6" {...common} />
-    </svg>
-  );
+  // Separate models, network on request, honest speed — from the 7 × 7 set.
+  return <PixelGlyph name={(["folder", "lock", "clock"] as const)[index] ?? "dot"} size={14} />;
 }

@@ -3,7 +3,7 @@
   place-items: center;
   min-height: 86vh;
   padding: calc(var(--header-h) + var(--s-8)) 0 var(--s-9);
-  background: radial-gradient(60% 50% at 50% 20%, rgba(255, 180, 69, 0.14), transparent 70%), var(--canvas);
+  background: radial-gradient(60% 50% at 50% 20%, rgba(var(--ink-rgb), 0.14), transparent 70%), var(--canvas);
 }
 
 .inner {

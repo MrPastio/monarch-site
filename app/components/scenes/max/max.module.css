@@ -157,7 +157,7 @@
 
 .provider[aria-checked="true"] {
   border-color: var(--accent-line);
-  background: #fff4e8;
+  background: var(--surface-2);
   color: var(--ink);
 }
 
@@ -297,7 +297,7 @@
 }
 
 .check input:focus-visible + .box {
-  outline: 2px solid #a85a10;
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
 

@@ -62,17 +62,17 @@
 
 .bar {
   display: flex;
-  gap: 3px;
-  height: 16px;
+  gap: 4px;
+  height: 14px;
   margin-top: var(--s-4);
 }
 
 /* The bar grows once, left to right, when it is seen. */
 .bar span {
-  min-width: 4px;
-  border-radius: 4px;
+  min-width: 6px;
+  border-radius: 3px;
   transform-origin: left;
-  transition: transform 900ms var(--ease-settle);
+  transition: transform 900ms steps(16, end);
   transition-delay: calc(120ms + var(--i) * 70ms);
 }
 
@@ -100,7 +100,8 @@
 .legend i {
   width: 10px;
   height: 10px;
-  border-radius: 3px;
+  border-radius: 2.5px;
+  box-shadow: inset 0 0 0 1px rgba(11, 11, 11, 0.12);
 }
 
 .legend span {
@@ -134,10 +135,9 @@
   bottom: 18px;
   left: 7px;
   width: 2px;
-  border-radius: 1px;
-  background: linear-gradient(180deg, var(--orange), var(--accent-line) 70%, var(--glass-line));
+  background: repeating-linear-gradient(180deg, var(--ink) 0 4px, transparent 4px 7px);
   transform-origin: top;
-  transition: transform 1400ms var(--ease-settle) 100ms;
+  transition: transform 1400ms steps(20, end) 100ms;
 }
 
 .timeline li {
@@ -162,20 +162,21 @@
   }
 }
 
+/* Every release is a pixel on the line; the next one is hollow and dashed. */
 .tlDot {
   position: absolute;
   top: 4px;
-  left: -30px;
-  width: 16px;
-  height: 16px;
-  border: 3px solid var(--orange);
-  border-radius: 50%;
-  background: var(--canvas);
+  left: -29px;
+  width: 14px;
+  height: 14px;
+  border-radius: 3.5px;
+  background: var(--ink);
+  box-shadow: 0 0 0 4px var(--canvas);
 }
 
 .timeline li[data-last="true"] .tlDot {
-  border-style: dashed;
-  border-color: var(--ink-3);
+  border: 1.5px dashed var(--ink);
+  background: var(--canvas);
 }
 
 .tlDate {
@@ -183,11 +184,11 @@
   padding-top: 1px;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--accent-ink);
+  color: var(--ink-3);
 }
 
 .tlTitle {
-  font-weight: 640;
+  font-weight: 600;
   line-height: 1.35;
 }
 

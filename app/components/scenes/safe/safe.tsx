@@ -7,6 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { useLit } from "@/components/motion/marked";
 import { asset } from "@/lib/asset";
 import styles from "./safe.module.css";
+import { PixelGlyph } from "@/components/pixel/pixel";
 
 const CELLS = Array.from({ length: 40 }, (_, index) => index);
 const HEX = "3f a9 0c e1 7b 52 d8 16 9e 44 c0 2a f7 6d 81 b3 05 ea 39 7c d2 60 1f 8b a4 57 e9 0b 36 cd 72 98 14 fb 4e a0 6b 2d 93 c8".split(" ");
@@ -37,9 +38,7 @@ export function Safe({ copy, agent, indexed = true }: { copy: Dict["safe"]; agen
         <div className={styles.side}>
           <Vault key={take} copy={copy} agent={agent} />
           <button type="button" className={`btn btn-glass ${styles.replay}`} onClick={() => setTake((value) => value + 1)}>
-            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
-              <path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v2.8h2.8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <PixelGlyph name="arrow-left" size={12} />
             {copy.labels.replay}
           </button>
         </div>
@@ -71,7 +70,7 @@ function Vault({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
             <svg width="22" height="24" viewBox="0 0 22 24">
               <path className={styles.shackle} d="M6 11V7.5a5 5 0 0 1 10 0V11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
               <rect x="3" y="11" width="16" height="11" rx="3" fill="currentColor" />
-              <circle cx="11" cy="16.2" r="1.7" fill="#12110f" />
+              <circle cx="11" cy="16.2" r="1.7" fill="#0b0b0b" />
             </svg>
           </span>
           <span className={styles.vaultName}>{copy.labels.vault}</span>
@@ -84,10 +83,10 @@ function Vault({ copy, agent }: { copy: Dict["safe"]; agent: string }) {
         <div className={styles.slot}>
           <div className={styles.file}>
             <svg width="26" height="32" viewBox="0 0 26 32">
-              <path d="M3 1h13l8 8v20a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2Z" fill="#f6f2ea" />
-              <path d="M16 1v6a2 2 0 0 0 2 2h6" fill="#d9d2c3" />
-              <rect x="5" y="15" width="12" height="2" rx="1" fill="#c9c1b0" />
-              <rect x="5" y="20" width="15" height="2" rx="1" fill="#c9c1b0" />
+              <path d="M3 1h13l8 8v20a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2Z" fill="#f7f7f5" />
+              <path d="M16 1v6a2 2 0 0 0 2 2h6" fill="#b4b4af" />
+              <rect x="5" y="15" width="12" height="2" rx="1" fill="#696965" />
+              <rect x="5" y="20" width="15" height="2" rx="1" fill="#696965" />
             </svg>
             <span>{copy.labels.file}</span>
           </div>

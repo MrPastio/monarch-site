@@ -6,6 +6,7 @@ import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
 import { MonarchMark } from "@/components/brand/monarch-mark";
 import styles from "./guard.module.css";
+import { PixelGlyph } from "@/components/pixel/pixel";
 
 type Copy = Dict["guard"];
 
@@ -37,9 +38,7 @@ export function Guard({ copy, events, indexed = true }: { copy: Copy; events: Di
           <ul className={styles.facts}>
             {copy.facts.map((fact) => (
               <li key={fact} data-reveal>
-                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden>
-                  <path d="M3.5 9.4 7.2 13l7.3-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <PixelGlyph name="check" size={14} />
                 {fact}
               </li>
             ))}

@@ -1,0 +1,64 @@
+.glyph {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+}
+
+.glyphAnimate rect {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop var(--dur-touch) var(--ease-spring) both;
+  animation-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.loader {
+  display: inline-flex;
+  flex: none;
+  line-height: 0;
+  color: inherit;
+}
+
+.loader canvas {
+  display: block;
+}
+
+.field {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  color: var(--ink);
+  touch-action: pan-y;
+  cursor: pointer;
+}
+
+.progress {
+  display: inline-flex;
+  gap: var(--pixel-gap);
+}
+
+.progress i {
+  width: var(--pixel-m);
+  height: var(--pixel-m);
+  border-radius: var(--r-pixel);
+  background: var(--pp-ink-faint);
+  transform: scale(0.34);
+  transition:
+    transform var(--dur-move) var(--ease-spring),
+    background-color var(--dur-touch) linear;
+  transition-delay: calc(var(--i) * 12ms);
+}
+
+.progress i[data-on="true"] {
+  background: var(--ink);
+  transform: scale(1);
+}

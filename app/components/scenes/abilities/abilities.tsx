@@ -4,8 +4,9 @@ import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
 import { useLit } from "@/components/motion/marked";
-import { MonarchMark } from "@/components/brand/monarch-mark";
+import { MonarchTile } from "@/components/brand/monarch-mark";
 import { asset } from "@/lib/asset";
+import { PixelGlyph } from "@/components/pixel/pixel";
 import styles from "./abilities.module.css";
 
 type Copy = Dict["abilities"];
@@ -53,11 +54,7 @@ function AbilityCard({ item, v, example }: { item: Item; v: Vignettes; example: 
 }
 
 function Tick() {
-  return (
-    <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden>
-      <path d="M2.5 6.2 5 8.5l4.5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  return <PixelGlyph name="check" size={12} />;
 }
 
 function Vignette({ id, v }: { id: string; v: Vignettes }) {
@@ -111,7 +108,7 @@ function Vignette({ id, v }: { id: string; v: Vignettes }) {
           </div>
           <span className={styles.found} />
           <svg className={styles.cursor} width="20" height="22" viewBox="0 0 20 22">
-            <path d="M2 1.5 17 11l-6.6 1.4L7 19.5Z" fill="#26221d" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" />
+            <path d="M2 1.5 17 11l-6.6 1.4L7 19.5Z" fill="#0b0b0b" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" />
           </svg>
         </div>
       );
@@ -220,7 +217,7 @@ function Vignette({ id, v }: { id: string; v: Vignettes }) {
       return (
         <div className={styles.sharing}>
           <p className={styles.endpoint}>
-            <MonarchMark size={14} variant="light" />
+            <MonarchTile size={18} />
             127.0.0.1:7861/v1
           </p>
           <pre className={styles.snippet}>

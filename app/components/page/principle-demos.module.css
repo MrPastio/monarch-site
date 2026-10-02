@@ -9,7 +9,7 @@
   padding: var(--s-4);
   overflow: hidden;
   background:
-    radial-gradient(90% 80% at 50% 0%, rgba(255, 190, 90, 0.14), transparent 70%),
+    radial-gradient(90% 80% at 50% 0%, rgba(var(--ink-rgb), 0.14), transparent 70%),
     var(--surface-2);
 }
 
@@ -32,31 +32,35 @@
   font-weight: 650;
 }
 
+/* Paper, ink, pixels: the three materials of PaperPixel, stacked. */
 .layers [data-layer="0"] {
   left: 0;
   top: 0;
-  background: #faf8f4;
-  border: 1px solid var(--glass-line);
-  color: var(--ink-2);
+  background: var(--pp-paper);
+  border: var(--stroke) solid var(--line);
+  color: var(--ink);
 }
 
 .layers [data-layer="1"] {
   left: 50px;
   top: 12px;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 10px 24px rgba(70, 45, 18, 0.12);
-  color: var(--ink);
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+  box-shadow: var(--shadow-float);
 }
 
 .layers [data-layer="2"] {
   left: 100px;
   top: 24px;
-  background: #1b1916;
-  color: #f6f2ea;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  background:
+    radial-gradient(circle, var(--ink) 0 2.6px, transparent 2.8px) 6px 6px / 10px 10px,
+    var(--pp-paper-2);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+}
+
+.layers [data-layer="2"]::first-line {
+  background: var(--pp-paper-2);
 }
 
 /* Weight: a ball dropped once, landing with a little give. */
@@ -78,7 +82,7 @@
   height: 36px;
   border-radius: 50%;
   background: var(--accent-fill);
-  box-shadow: 0 6px 16px rgba(221, 132, 20, 0.3);
+  box-shadow: 0 6px 16px rgba(var(--ink-rgb), 0.3);
 }
 
 .stage:not([data-unlit]) .weight {
@@ -117,7 +121,7 @@
 }
 
 .switch[data-on="true"] {
-  background: #ffecd9;
+  background: var(--surface-2);
   border-color: var(--accent-line);
 }
 
@@ -129,7 +133,7 @@
   height: 40px;
   border-radius: 50%;
   background: var(--ink);
-  box-shadow: 0 4px 10px rgba(40, 26, 10, 0.2);
+  box-shadow: 0 4px 10px rgba(11, 11, 11, 0.2);
   transition: transform 1200ms var(--ease-settle), background-color 900ms var(--ease-physical);
 }
 

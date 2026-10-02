@@ -3,9 +3,10 @@
 import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { Dict } from "@/content/dictionary";
-import { MonarchMark } from "@/components/brand/monarch-mark";
+import { MonarchTile } from "@/components/brand/monarch-mark";
 import { prefersReducedMotion } from "@/components/motion/gsap";
 import { asset } from "@/lib/asset";
+import { PixelGlyph, PixelLoader } from "@/components/pixel/pixel";
 import styles from "./oscar-window.module.css";
 
 type Journey = Dict["journey"];
@@ -167,7 +168,7 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
 
         <div className={styles.window} role="img" aria-label={copy.label}>
           <div className={styles.titlebar}>
-            <MonarchMark size={14} />
+            <MonarchTile size={18} />
             <span>Monarch</span>
             <span className={styles.caption} aria-hidden>
               <i />
@@ -179,9 +180,7 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
           <div className={styles.app}>
             <aside className={styles.sidebar}>
               <span className={styles.newChat}>
-                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
-                  <path d="M7 2.5v9M2.5 7h9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
+                <PixelGlyph name="plus" size={12} />
                 {copy.newChat}
               </span>
               <p className={styles.sideLabel}>{copy.recent}</p>
@@ -193,10 +192,7 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
               </ul>
               <div className={styles.sideFoot}>
                 <span>
-                  <svg width="13" height="13" viewBox="0 0 14 14" aria-hidden>
-                    <rect x="2.5" y="6" width="9" height="6.5" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" />
-                    <path d="M4.6 6V4.6a2.4 2.4 0 0 1 4.8 0V6" fill="none" stroke="currentColor" strokeWidth="1.3" />
-                  </svg>
+                  <PixelGlyph name="lock" size={12} />
                   {copy.safe}
                 </span>
                 <span>
@@ -218,7 +214,7 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
               <div className={styles.thread} key={run}>
                 {!reached("sent") && (
                   <div className={styles.empty}>
-                    <MonarchMark size={34} />
+                    <MonarchTile size={44} />
                     <p>{copy.greeting}</p>
                   </div>
                 )}
@@ -233,7 +229,12 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
                   <div className={styles.oscarRow}>
                     <span className={styles.avatar} style={{ backgroundImage: `url("${asset(`/mascot/oscar-${pose}.webp`)}")` }} />
                     <div className={styles.oscarBody}>
-                      {!reached("plan") && <p className={styles.thinking}>{copy.thinking}</p>}
+                      {!reached("plan") && (
+                        <p className={styles.thinking}>
+                          <PixelLoader size="s" label={copy.thinking} />
+                          {copy.thinking}
+                        </p>
+                      )}
 
                       {reached("plan") && (
                         <div className={styles.plan} data-verdict={scenario.verdict}>
@@ -278,13 +279,7 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
                         <div className={styles.receipt} data-verdict={scenario.verdict}>
                           <p className={styles.receiptHead}>{journey.receiptLabel}</p>
                           <p className={styles.receiptResult}>
-                            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden>
-                              {denied ? (
-                                <path d="M5 5l8 8M13 5l-8 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" pathLength={1} className={styles.draw} />
-                              ) : (
-                                <path d="M3.5 9.4 7.2 13l7.3-8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" pathLength={1} className={styles.draw} />
-                              )}
-                            </svg>
+                            <PixelGlyph name={denied ? "cross" : "check"} size={21} animate />
                             {scenario.receipt}
                           </p>
                           <p className={styles.receiptCheck}>
@@ -304,17 +299,14 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
                   {stage === "typing" && <i className={styles.caret} />}
                 </span>
                 <span className={styles.composerRow}>
-                  <span className={styles.tool}>+</span>
                   <span className={styles.tool}>
-                    <svg width="13" height="13" viewBox="0 0 14 14" aria-hidden>
-                      <circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" strokeWidth="1.2" />
-                      <path d="M1.8 7h10.4M7 1.8c1.6 1.5 2.3 3.3 2.3 5.2S8.6 10.7 7 12.2M7 1.8C5.4 3.3 4.7 5.1 4.7 7s.7 3.7 2.3 5.2" fill="none" stroke="currentColor" strokeWidth="1.2" />
-                    </svg>
+                    <PixelGlyph name="plus" size={12} />
+                  </span>
+                  <span className={styles.tool}>
+                    <PixelGlyph name="search" size={12} />
                   </span>
                   <span className={styles.send} data-armed={Boolean(composerText)}>
-                    <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
-                      <path d="M8 13V3m0 0L3.5 7.5M8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    <PixelGlyph name="send" size={14} />
                   </span>
                 </span>
               </div>
@@ -346,32 +338,12 @@ export function OscarWindow({ journey, ui, copy }: { journey: Journey; ui: Dict[
 function Tick() {
   return (
     <span className={styles.tick} aria-hidden>
-      <svg width="10" height="10" viewBox="0 0 12 12">
-        <path d="M2.5 6.2 5 8.5l4.5-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+      <PixelGlyph name="check" size={14} animate />
     </span>
   );
 }
 
+/* Status is a glyph shape, never a colour: check, alert, cross. */
 function VerdictGlyph({ verdict }: { verdict: string }) {
-  if (verdict === "deny")
-    return (
-      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
-        <circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M3.6 12.4 12.4 3.6" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    );
-  if (verdict === "confirm")
-    return (
-      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
-        <circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8 4.6v4.2M8 10.9v.3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-      </svg>
-    );
-  return (
-    <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden>
-      <circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M5.2 8.2 7.1 10l3.7-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  return <PixelGlyph name={verdict === "deny" ? "cross" : verdict === "confirm" ? "alert" : "check"} size={14} animate />;
 }

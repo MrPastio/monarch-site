@@ -1,6 +1,6 @@
 .section {
   padding: var(--section-y) 0;
-  background: linear-gradient(180deg, var(--canvas), var(--canvas-raised));
+  background: var(--pp-paper);
 }
 
 .tabs {
@@ -41,44 +41,53 @@
 }
 
 .tab[aria-pressed="true"] {
-  color: var(--ink);
-  border-color: var(--accent-line);
-  background: #fff4e8;
+  background: var(--pp-ink);
+  border-color: var(--pp-ink);
+  color: var(--pp-on-ink);
 }
 
+/* Status is a shape: allowed — filled pixel, ask — hollow, denied — cross. */
 .tabDot,
 .verdictDot {
   display: block;
   flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ok);
+  width: 9px;
+  height: 9px;
+  border-radius: 2.5px;
+  background: currentColor;
 }
 
 .tab[data-verdict="confirm"] .tabDot,
 [data-tone="confirm"] .verdictDot {
-  background: var(--orange);
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px currentColor;
 }
 
 .tab[data-verdict="deny"] .tabDot,
 [data-tone="deny"] .verdictDot {
-  background: var(--danger);
+  border-radius: 0;
+  background:
+    linear-gradient(45deg, transparent 40%, currentColor 40% 60%, transparent 60%),
+    linear-gradient(-45deg, transparent 40%, currentColor 40% 60%, transparent 60%);
 }
 
 /* --- The board --- */
 .board {
-  --lane: var(--ok);
+  --lane: var(--ink);
   margin-top: var(--s-5);
   padding: clamp(24px, 3vw, 40px) clamp(16px, 2vw, 28px);
 }
 
 .board[data-verdict="confirm"] {
-  --lane: #e07a10;
+  --lane: var(--ink);
 }
 
 .board[data-verdict="deny"] {
-  --lane: var(--danger);
+  --lane: var(--ink);
+}
+
+.board[data-verdict="deny"] .live {
+  stroke-dasharray: none;
 }
 
 .map {
@@ -89,55 +98,55 @@
 
 .base {
   fill: none;
-  stroke: var(--graphite);
+  stroke: var(--pp-ink-faint);
   stroke-width: 2;
-  stroke-dasharray: 2 6;
+  stroke-dasharray: 2 7;
   stroke-linecap: round;
 }
 
 .live {
   fill: none;
   stroke: var(--lane);
-  stroke-width: 4;
+  stroke-width: 3;
   stroke-linecap: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
 }
 
+/* Stations are pixels: hollow until the request passes, then filled with ink. */
 .node {
-  fill: var(--surface);
-  stroke: var(--graphite);
-  stroke-width: 3;
+  fill: var(--pp-paper);
+  stroke: var(--pp-ink-faint);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
   transition:
-    stroke 260ms var(--ease-physical),
-    fill 260ms var(--ease-physical);
+    stroke 200ms linear,
+    fill 200ms linear,
+    transform var(--dur-panel) var(--ease-spring);
 }
 
 .node[data-passed="true"] {
-  stroke: var(--lane);
+  fill: var(--ink);
+  stroke: var(--ink);
+  transform: scale(1.12);
 }
 
 .board[data-verdict="deny"][data-arrived="true"] .node[data-gate="true"] {
-  fill: var(--danger);
-  stroke: var(--danger);
+  fill: var(--pp-paper);
+  stroke: var(--ink);
+  stroke-dasharray: 4 3;
 }
 
-/* The request itself: a warm core with a soft halo, never pulsing. */
+/* The request itself: one ink pixel, tumbling as it travels. */
 .token {
   pointer-events: none;
 }
 
-.tokenHalo {
-  fill: var(--lane);
-  opacity: 0.16;
-  transition: fill var(--dur-move) var(--ease-physical);
-}
-
 .tokenCore {
-  fill: var(--lane);
-  stroke: var(--surface);
+  fill: var(--ink);
+  stroke: var(--pp-paper);
   stroke-width: 3;
-  transition: fill var(--dur-move) var(--ease-physical);
 }
 
 .board[data-unlit] .token {
@@ -149,14 +158,15 @@
   transition: opacity 360ms var(--ease-physical) 200ms;
 }
 
-.stop circle {
-  fill: var(--surface);
-  stroke: var(--danger);
-  stroke-width: 2.5;
+.stop rect {
+  fill: var(--pp-paper);
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
 }
 
 .stop path {
-  stroke: var(--danger);
+  stroke: var(--ink);
   stroke-width: 2.5;
   stroke-linecap: round;
 }
@@ -172,8 +182,8 @@
 
 /* Lane signs, stacked at the fork like a points lever. */
 .pill rect {
-  fill: var(--surface);
-  stroke: var(--glass-line-strong);
+  fill: var(--pp-paper);
+  stroke: var(--pp-ink-faint);
   stroke-width: 1.5;
   transition:
     fill var(--dur-move) var(--ease-physical),
@@ -183,33 +193,43 @@
 .pill text {
   font-family: var(--font-sans);
   font-size: 14px;
-  font-weight: 620;
+  font-weight: 500;
   text-anchor: middle;
   fill: var(--ink-3);
   transition: fill var(--dur-move) var(--ease-physical);
 }
 
+/* The chosen lane is inked; "ask you" stays hollow, "deny" is dashed — shape, not colour. */
 .pill[data-on="true"] rect {
-  fill: var(--lane);
-  stroke: var(--lane);
+  fill: var(--ink);
+  stroke: var(--ink);
 }
 
 .pill[data-on="true"] text {
-  fill: #fff;
+  fill: var(--pp-on-ink);
 }
 
 .pill[data-lane="confirm"][data-on="true"] rect {
-  fill: var(--accent);
-  stroke: var(--accent);
+  fill: var(--pp-paper);
+  stroke: var(--ink);
+  stroke-width: 2;
 }
 
-.pill[data-lane="confirm"][data-on="true"] text {
-  fill: var(--on-accent);
+.pill[data-lane="confirm"][data-on="true"] text,
+.pill[data-lane="deny"][data-on="true"] text {
+  fill: var(--ink);
+}
+
+.pill[data-lane="deny"][data-on="true"] rect {
+  fill: var(--pp-paper);
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
 }
 
 .board[data-unlit] .pill rect {
-  fill: var(--surface);
-  stroke: var(--glass-line-strong);
+  fill: var(--pp-paper);
+  stroke: var(--pp-ink-faint);
 }
 
 .board[data-unlit] .pill text {
@@ -241,19 +261,20 @@
 .num {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  color: var(--accent-ink);
+  color: var(--ink-3);
 }
 
 .station h3 {
   margin-top: 4px;
   font-size: var(--text-base);
-  font-weight: 640;
+  font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.25;
 }
 
 .station[data-stop="true"][data-passed="true"] h3 {
-  color: var(--danger);
+  text-decoration: underline dashed;
+  text-underline-offset: 5px;
 }
 
 .station p {
@@ -270,8 +291,8 @@
   gap: var(--s-2) var(--s-5);
   margin-top: var(--s-6);
   padding: var(--s-4) var(--s-5);
-  border-radius: var(--r-card);
-  background: var(--surface-2);
+  border-radius: 18px;
+  background: var(--pp-paper-2);
   font-size: var(--text-sm);
 }
 
@@ -296,16 +317,12 @@
 }
 
 .outcomeVerdict strong {
-  font-weight: 650;
-  color: var(--lane);
-}
-
-.board[data-verdict="confirm"] .outcomeVerdict strong {
-  color: var(--accent-ink);
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .outcomeReceipt {
-  font-weight: 650;
+  font-weight: 600;
 }
 
 /* --- Verdicts and hard limits --- */
@@ -345,9 +362,12 @@
   color: var(--ink-2);
 }
 
+/* What no "yes" allows: paper with a dashed line — the shape of a refusal. */
 .limits {
   padding: var(--s-6);
-  border-radius: var(--r-sheet);
+  border: var(--stroke) dashed var(--line);
+  border-radius: 26px;
+  background: var(--pp-paper);
 }
 
 .limits ul {
@@ -358,15 +378,15 @@
 
 .limits li {
   display: flex;
+  align-items: flex-start;
   gap: var(--s-3);
-  font-size: var(--text-sm);
-  color: var(--ink-2);
+  font-size: var(--text-base);
+  color: var(--ink);
 }
 
 .limits svg {
   flex: none;
-  margin-top: 3px;
-  color: var(--danger);
+  margin-top: 4px;
 }
 
 .access {
@@ -423,9 +443,9 @@
     top: 4px;
     width: 12px;
     height: 12px;
-    border-radius: 50%;
-    border: 3px solid var(--lane);
-    background: var(--surface);
+    border-radius: 3.5px;
+    border: 2px solid var(--ink);
+    background: var(--pp-paper);
   }
 
   .station::after {
@@ -435,16 +455,20 @@
     top: 20px;
     bottom: 2px;
     width: 2px;
-    background: var(--graphite);
+    background: repeating-linear-gradient(180deg, var(--pp-ink-faint) 0 2px, transparent 2px 6px);
   }
 
   .station:last-child::after {
     display: none;
   }
 
+  .station[data-passed="true"]::before {
+    background: var(--ink);
+  }
+
   .station[data-stop="true"]::before {
-    background: var(--danger);
-    border-color: var(--danger);
+    background: var(--pp-paper);
+    border-style: dashed;
   }
 
   .num {

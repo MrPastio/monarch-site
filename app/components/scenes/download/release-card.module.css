@@ -4,21 +4,10 @@
   flex-direction: column;
   gap: var(--s-5);
   padding: var(--s-6);
-  border: 1px solid var(--glass-line-strong);
-  border-radius: var(--r-stage);
-  background:
-    radial-gradient(120% 70% at 50% 0%, rgba(255, 194, 71, 0.1), transparent 60%),
-    linear-gradient(180deg, #16181b, #0e1012);
-  box-shadow: var(--shadow-sheet);
-}
-
-/* Hairline of gold along the top edge — the crown of the card. */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0 18% auto;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 194, 71, 0.7), transparent);
+  border: var(--stroke) solid var(--line);
+  border-radius: 30px;
+  background: var(--pp-paper);
+  box-shadow: var(--shadow-float);
 }
 
 .head {
@@ -35,19 +24,23 @@
 .version {
   font-size: var(--text-3xl);
   font-weight: 650;
+  font-variant-numeric: tabular-nums;
   letter-spacing: -0.04em;
   line-height: 1;
 }
 
 .channel {
   margin-left: auto;
-  padding: 4px 10px;
-  border: 1px solid rgba(105, 211, 152, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 11px;
+  border: var(--stroke) solid var(--line);
   border-radius: var(--r-pill);
-  background: var(--ok-soft);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--ok);
+  color: var(--ink);
 }
 
 .cta {
@@ -68,7 +61,7 @@
 
 .meta dt {
   font-size: var(--text-2xs);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--ink-3);
@@ -82,9 +75,8 @@
 
 .hash {
   padding: var(--s-4);
-  border: 1px solid var(--glass-line);
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.35);
+  border-radius: 18px;
+  background: var(--pp-paper-2);
 }
 
 .hashHead {
@@ -92,7 +84,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: var(--text-2xs);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--ink-3);
@@ -112,6 +104,8 @@
   align-self: flex-start;
   font-size: var(--text-sm);
   color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 4px;
   transition: color var(--dur-touch) var(--ease-physical);
 }
 

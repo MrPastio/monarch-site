@@ -8,14 +8,16 @@ import { useLit } from "@/components/motion/marked";
 import { CountUp } from "./count-up";
 import styles from "./facts.module.css";
 
+/* No colour in PaperPixel: languages differ by ink density and pattern. */
+const INK = "#0b0b0b";
 const LANGUAGE_COLORS: Record<string, string> = {
-  TypeScript: "#ffa326",
-  Python: "#26221d",
-  JavaScript: "#ff7a18",
-  CSS: "#ffd77a",
-  "C#": "#8f877b",
-  HTML: "#b86b12",
-  PowerShell: "#cfc6b8",
+  TypeScript: INK,
+  Python: "#3a3a38",
+  JavaScript: `repeating-linear-gradient(90deg, ${INK} 0 6px, transparent 6px 8px)`,
+  CSS: "#b4b4af",
+  "C#": `repeating-linear-gradient(90deg, #696965 0 2px, transparent 2px 5px)`,
+  HTML: "#696965",
+  PowerShell: "#e2e2de",
 };
 
 export function Facts({ copy, locale }: { copy: Dict["facts"]; locale: string }) {

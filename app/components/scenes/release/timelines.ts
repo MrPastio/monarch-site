@@ -17,11 +17,14 @@ export const TIMELINES: Record<string, Build> = {
     const steps = k(q, "step");
     const ask = k(q, "ask");
     const stop = k(q, "stop");
+    const working = k(q, "working");
     gsap.set(steps, { autoAlpha: 0, y: 10, attr: { "data-state": "pending" } });
+    gsap.set(working, { attr: { "data-state": "running" } });
     gsap.set(ask, { attr: { "data-state": "asking" } });
     gsap.set(stop, { attr: { "data-state": "running" } });
 
-    tl.from(k(q, "prompt"), { y: 64, scale: 0.94, autoAlpha: 0, transformOrigin: "100% 100%", duration: 0.75 });
+    tl.from(k(q, "prompt"), { y: 64, scale: 0.94, autoAlpha: 0, transformOrigin: "100% 100%", duration: 0.75 })
+      .from(working, { y: 10, autoAlpha: 0, duration: 0.45 }, "+=0.15");
     steps.forEach((step, index) => {
       tl.to(step, { autoAlpha: 1, y: 0, duration: 0.45 }, index === 0 ? "+=0.35" : "+=0.1");
       if (index === 2) {
@@ -33,6 +36,7 @@ export const TIMELINES: Record<string, Build> = {
     });
     tl.from(k(q, "report"), { autoAlpha: 0, y: 18, duration: 0.6 }, "+=0.2");
     tl.set(stop, { attr: { "data-state": "idle" } }, "<");
+    tl.set(working, { attr: { "data-state": "done" } }, "<");
   },
 
   max(tl, q, gsap) {

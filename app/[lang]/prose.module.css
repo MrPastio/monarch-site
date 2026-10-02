@@ -120,7 +120,7 @@
 }
 
 .card[data-tone="allow"] {
-  border-color: rgba(105, 211, 152, 0.35);
+  border-color: rgba(var(--ink-rgb), 0.35);
 }
 
 .card[data-tone="allow"] h3 {
@@ -291,7 +291,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #ffecd9;
+  background: var(--surface-2);
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   color: var(--accent-ink);

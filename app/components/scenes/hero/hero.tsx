@@ -5,6 +5,10 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import type { Dict } from "@/content/dictionary";
 import { localePath, type Locale } from "@/lib/i18n";
 import { OscarWindow } from "./oscar-window";
+import { PixelGlyph, PixelText, burstFrom } from "@/components/pixel/pixel";
+import { MonarchTile } from "@/components/brand/monarch-mark";
+import { Pencil } from "@/components/motion/marked";
+import type { GlyphName } from "@/components/pixel/engine";
 import styles from "./hero.module.css";
 
 export type HeroRelease = { url: string; size: string; display: string } | null;
@@ -64,27 +68,29 @@ export function Hero({
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
       <div className={`shell ${styles.copy}`} data-unlit={lit ? undefined : ""}>
+        {/* The app icon and the version, in the film's lettering: pixels fall in with weight. */}
+        <div className={styles.lockup}>
+          <MonarchTile size={88} title="Monarch" className={styles.tile} />
+          {release && <PixelText text={release.display} cell={11} label={`Monarch ${release.display}`} className={styles.version} />}
+        </div>
         {release ? (
           <Link href={localePath(locale, `updates/${release.display}`)} className={styles.badge}>
-            <span className={styles.badgeDot} aria-hidden />
-            {hero.kicker.replace("{version}", release.display)}
+            {hero.kicker}
             <span className={styles.badgeLink}>
-              {hero.badge} <span aria-hidden>→</span>
+              {hero.badge} <PixelGlyph name="arrow-right" size={10} />
             </span>
           </Link>
         ) : (
-          <p className={styles.badge}>
-            <span className={styles.badgeDot} aria-hidden />
-            {hero.kicker.replace(" {version}", "")}
-          </p>
+          <p className={styles.badge}>{hero.kicker}</p>
         )}
         <h1 id="hero-title" className={`display ${styles.title}`}>
           {hero.title.map((line, index) => (
             <span key={index} className={styles.line} style={{ "--line": index } as React.CSSProperties}>
               {line.map((part, partIndex) =>
-                "accent" in part && part.accent ? (
-                  <span key={partIndex} className="mark" style={{ "--mark-delay": `${260 + index * 220}ms` } as React.CSSProperties}>
+                "accent" in part && part.accent && index === hero.title.length - 1 ? (
+                  <span key={partIndex} className="mark" style={{ "--mark-delay": "760ms" } as React.CSSProperties}>
                     {part.t}
+                    <Pencil seed={part.t} />
                   </span>
                 ) : (
                   <span key={partIndex}>{part.t}</span>
@@ -99,7 +105,10 @@ export function Hero({
             <a
               href={release.url}
               className="btn btn-primary btn-lg"
-              onClick={() => setAfterOpen(true)}
+              onClick={(event) => {
+                burstFrom(event);
+                setAfterOpen(true);
+              }}
               aria-expanded={afterOpen}
               aria-controls="after-download"
             >
@@ -116,7 +125,7 @@ export function Hero({
           <Link href={localePath(locale, "how-it-works")} className="btn btn-glass btn-lg">
             {hero.secondary}
             <span className="arrow" aria-hidden>
-              →
+              <PixelGlyph name="arrow-right" size={12} />
             </span>
           </Link>
         </div>
@@ -139,7 +148,10 @@ export function Hero({
           <div className={styles.afterClip}>
             <div className={styles.afterCard}>
               <header className={styles.afterHead}>
-                <p className={styles.afterTitle}>{hero.after.title}</p>
+                <p className={styles.afterTitle}>
+                  {afterOpen && <PixelGlyph name="check" size={21} animate />}
+                  {hero.after.title}
+                </p>
                 <p className={styles.afterLede}>{hero.after.lede}</p>
               </header>
               <ol className={styles.afterSteps}>
@@ -153,7 +165,7 @@ export function Hero({
               </ol>
               <div className={styles.afterActions}>
                 <Link href={`${localePath(locale, "download")}#verify`} className={styles.afterLink}>
-                  {hero.after.verify} <span aria-hidden>→</span>
+                  {hero.after.verify} <PixelGlyph name="arrow-right" size={10} />
                 </Link>
                 <button type="button" className="btn btn-glass" onClick={() => setAfterOpen(false)}>
                   {hero.after.close}
@@ -172,7 +184,9 @@ export function Hero({
         <dl className={styles.facts}>
           {hero.facts.map((fact, index) => (
             <div key={fact.value} className={styles.fact}>
-              <span className={styles.factIndex}>{String(index + 1).padStart(2, "0")}</span>
+              <span className={styles.factIndex}>
+                <PixelGlyph name={FACT_GLYPHS[index] ?? "dot"} size={21} />
+              </span>
               <dt>{fact.value}</dt>
               <dd>{fact.label}</dd>
             </div>
@@ -183,17 +197,9 @@ export function Hero({
   );
 }
 
+/* Local, consent, verified — a glyph for each, from the 7 × 7 set. */
+const FACT_GLYPHS: GlyphName[] = ["home", "lock", "check"];
+
 export function DownloadGlyph() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden>
-      <path
-        d="M9 2.5v9m0 0 3.6-3.6M9 11.5 5.4 7.9M3 13.5v1.25c0 .41.34.75.75.75h10.5c.41 0 .75-.34.75-.75V13.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <PixelGlyph name="arrow-down" size={14} />;
 }

@@ -35,7 +35,7 @@
 }
 
 .row[data-state="current"] .badge {
-  border-color: rgba(105, 211, 152, 0.45);
+  border-color: rgba(var(--ink-rgb), 0.45);
   background: var(--ok-soft);
   color: var(--ok);
 }
@@ -125,13 +125,13 @@
   top: 2px;
   width: 5px;
   height: 10px;
-  border: solid #1b0d0b;
+  border: solid var(--ink);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 
 .ack input:focus-visible + .box {
-  outline: 2px solid #a85a10;
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
 

@@ -4,6 +4,7 @@ import { formatBytes, formatDate } from "@/lib/format";
 import { localeMeta, type Locale } from "@/lib/i18n";
 import { CopyButton } from "@/components/ui/copy-button";
 import { MonarchMark } from "@/components/brand/monarch-mark";
+import { PixelGlyph } from "@/components/pixel/pixel";
 import styles from "./release-card.module.css";
 
 /** The verified current release: file, size, date, SHA-256 and channel signature. */
@@ -28,13 +29,14 @@ export function ReleaseCard({
           <p className={styles.name}>Monarch</p>
           <p className={styles.version}>{entry.display}</p>
         </div>
-        <span className={styles.channel}>stable</span>
+        <span className={styles.channel}>
+          <PixelGlyph name="lock" size={10} />
+          stable
+        </span>
       </header>
 
       <a className={`btn btn-primary btn-lg ${styles.cta}`} href={asset.url} download>
-        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden>
-          <path d="M9 2.5v9m0 0 3.6-3.6M9 11.5 5.4 7.9M3 13.5v1.25c0 .41.34.75.75.75h10.5c.41 0 .75-.34.75-.75V13.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <PixelGlyph name="arrow-down" size={14} />
         {copy.primary}
         <span className={styles.ctaMeta}>{formatBytes(asset.size, intl)}</span>
       </a>

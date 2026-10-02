@@ -40,7 +40,7 @@
 
 .filter[aria-pressed="true"] {
   border-color: var(--accent-line);
-  background: #fff4e8;
+  background: var(--surface-2);
   color: var(--ink);
 }
 
@@ -94,7 +94,7 @@
 }
 
 .grid li[data-group="data"] {
-  --group: #c98a1b;
+  --group: var(--ink);
 }
 
 .grid li[data-group="guard"] {
@@ -102,7 +102,7 @@
 }
 
 .grid li[data-group="link"] {
-  --group: #315eaa;
+  --group: var(--ink);
 }
 
 .grid li[data-group="system"] {

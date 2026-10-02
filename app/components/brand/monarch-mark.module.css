@@ -10,3 +10,10 @@
   -webkit-mask: var(--wordmark) center / contain no-repeat;
   mask: var(--wordmark) center / contain no-repeat;
 }
+
+.tile {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  background: #0b0b0b;
+}

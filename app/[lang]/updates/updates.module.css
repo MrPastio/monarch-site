@@ -21,7 +21,7 @@
   bottom: 12px;
   width: 2px;
   border-radius: 1px;
-  background: linear-gradient(180deg, var(--graphite) 0 60px, var(--orange) 90px, rgba(201, 148, 42, 0.25));
+  background: linear-gradient(180deg, var(--graphite) 0 60px, var(--orange) 90px, rgba(var(--ink-rgb), 0.25));
 }
 
 .item {
@@ -87,7 +87,7 @@
 
 .filter[aria-pressed="true"] {
   border-color: var(--accent-line);
-  background: #fff4e8;
+  background: var(--surface-2);
   color: var(--ink);
 }
 
@@ -103,7 +103,7 @@
 }
 
 .item[data-major="true"] .node {
-  background: radial-gradient(circle, #ffc247 0 5px, var(--canvas) 5.5px);
+  background: radial-gradient(circle, var(--ink) 0 5px, var(--canvas) 5.5px);
 }
 
 .item[data-state="current"] .node {
@@ -141,8 +141,8 @@ a.card:hover {
 }
 
 .item[data-major="true"] .card {
-  border-color: rgba(255, 194, 71, 0.22);
-  background: linear-gradient(135deg, rgba(255, 194, 71, 0.1), var(--surface) 50%);
+  border-color: rgba(var(--ink-rgb), 0.22);
+  background: linear-gradient(135deg, rgba(var(--ink-rgb), 0.1), var(--surface) 50%);
 }
 
 .item[data-state="future"] .card {
@@ -173,7 +173,7 @@ a.card:hover {
 }
 
 .item[data-state="current"] .badge {
-  border-color: rgba(105, 211, 152, 0.45);
+  border-color: rgba(var(--ink-rgb), 0.45);
   color: var(--ok);
 }
 

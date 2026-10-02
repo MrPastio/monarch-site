@@ -7,6 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { useLit } from "@/components/motion/marked";
 import { prefersReducedMotion } from "@/components/motion/gsap";
 import { AccessModes } from "@/components/scenes/access/access-modes";
+import { PixelGlyph } from "@/components/pixel/pixel";
 import styles from "./path-map.module.css";
 
 type Copy = Dict["journey"];
@@ -52,7 +53,7 @@ export function PathMap({
   const { ref, unlit } = useLit<HTMLDivElement>();
   const liveRef = useRef<SVGPathElement>(null);
   const tokenRef = useRef<SVGGElement>(null);
-  const nodesRef = useRef<(SVGCircleElement | null)[]>([]);
+  const nodesRef = useRef<(SVGRectElement | null)[]>([]);
   const stationsRef = useRef<(HTMLLIElement | null)[]>([]);
   const [arrived, setArrived] = useState(false);
 
@@ -70,7 +71,8 @@ export function PathMap({
       const len = total * p;
       live.style.strokeDashoffset = String(1 - p);
       const point = live.getPointAtLength(Math.max(0, len - recoil));
-      token.setAttribute("transform", `translate(${point.x} ${point.y})`);
+      // The request is a pixel: it tumbles a quarter turn per station as it travels.
+      token.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${(len / 170) * 90})`);
       X.forEach((x, index) => {
         const reachable = verdict !== "deny" || index <= 3;
         const passed = reachable && point.x >= x - 2;
@@ -145,26 +147,27 @@ export function PathMap({
               </g>
             ))}
             <g className={styles.stop} data-on={verdict === "deny" && arrived} transform={`translate(${STOP_X} ${LANE.deny})`}>
-              <circle r="10" />
-              <path d="M-6 6 L6 -6" />
+              <rect x={-11} y={-11} width={22} height={22} rx={6} />
+              <path d="M-5 -5 L5 5 M5 -5 L-5 5" />
             </g>
             {X.map((x, index) => (
-              <circle
+              <rect
                 key={x}
                 ref={(node) => {
                   nodesRef.current[index] = node;
                 }}
-                cx={x}
-                cy={Y}
-                r={index === 3 ? 11 : 8}
+                x={x - (index === 3 ? 11 : 8)}
+                y={Y - (index === 3 ? 11 : 8)}
+                width={index === 3 ? 22 : 16}
+                height={index === 3 ? 22 : 16}
+                rx={index === 3 ? 6 : 4.5}
                 className={styles.node}
                 data-gate={index === 3}
                 data-reachable={reachable(index)}
               />
             ))}
             <g ref={tokenRef} className={styles.token} transform={`translate(${X[0]} ${Y})`}>
-              <circle r="15" className={styles.tokenHalo} />
-              <circle r="7" className={styles.tokenCore} />
+              <rect x={-9} y={-9} width={18} height={18} rx={5} className={styles.tokenCore} />
             </g>
           </svg>
 
@@ -207,15 +210,12 @@ export function PathMap({
               </li>
             ))}
           </ul>
-          <div className={`night ${styles.limits}`} data-reveal>
+          <div className={styles.limits} data-reveal>
             <p className="kicker">{copy.hardLimitsTitle}</p>
             <ul>
               {copy.hardLimits.map((limit) => (
                 <li key={limit}>
-                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden>
-                    <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" strokeWidth="1.4" />
-                    <path d="M3.4 12.6 12.6 3.4" stroke="currentColor" strokeWidth="1.4" />
-                  </svg>
+                  <PixelGlyph name="cross" size={14} />
                   {limit}
                 </li>
               ))}

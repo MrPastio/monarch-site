@@ -1,18 +1,13 @@
-/* The Monarch window: the app's dark glass, on paper. Local tokens only. */
+/* The Monarch window in PaperPixel: paper, ink, a 1.5px line; pixels for status. */
 .root {
-  /* 0.3: the app's white theme is the default (src/ui/public/white-theme.css). */
-  --w-bg: #ffffff;
-  --w-side: #f7f7f5;
-  --w-raised: #ffffff;
-  --w-field: #ffffff;
-  --w-line: rgba(24, 22, 18, 0.09);
-  --w-line-2: rgba(24, 22, 18, 0.16);
-  --w-ink: #1a1916;
-  --w-ink-2: #4f4c46;
-  --w-ink-3: #6f6b63;
-  --w-amber: #a65400;
-  --w-ok: #1f7a45;
-  --w-danger: #b3322a;
+  --w-bg: var(--pp-paper);
+  --w-side: var(--pp-paper);
+  --w-raised: var(--pp-paper);
+  --w-soft: var(--pp-paper-2);
+  --w-line: var(--pp-line-soft);
+  --w-ink: var(--ink);
+  --w-ink-2: var(--ink-2);
+  --w-ink-3: var(--ink-3);
   position: relative;
 }
 
@@ -39,26 +34,23 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  height: 38px;
+  height: 36px;
   padding: 0 16px;
-  border: 1px solid var(--glass-line);
+  border: var(--stroke) solid var(--line);
   border-radius: var(--r-pill);
-  background: var(--surface);
-  box-shadow: 0 1px 2px rgba(24, 22, 18, 0.04);
+  background: var(--pp-paper);
   font-size: var(--text-sm);
-  font-weight: 540;
-  color: var(--ink-2);
+  font-weight: 500;
+  color: var(--ink);
   cursor: pointer;
   transition:
-    color var(--dur-touch) var(--ease-physical),
-    border-color var(--dur-touch) var(--ease-physical),
-    background-color var(--dur-touch) var(--ease-physical),
-    transform var(--dur-touch) var(--ease-physical);
+    background-color var(--dur-press) linear,
+    color var(--dur-press) linear,
+    transform var(--dur-move) var(--ease-spring);
 }
 
 .try:hover {
-  color: var(--ink);
-  border-color: var(--glass-line-strong);
+  background: var(--pp-paper-2);
 }
 
 .try:active {
@@ -66,27 +58,32 @@
 }
 
 .try[aria-pressed="true"] {
-  color: var(--ink);
-  border-color: var(--accent-line);
-  background: #fff4e8;
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
 }
 
+/* Status is a shape: allowed — filled pixel, ask — hollow, denied — cross. */
 .tryDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ok);
+  position: relative;
+  width: var(--pixel-l);
+  height: var(--pixel-l);
+  border-radius: var(--r-pixel);
+  background: currentColor;
 }
 
 .try[data-verdict="confirm"] .tryDot {
-  background: var(--orange);
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px currentColor;
 }
 
 .try[data-verdict="deny"] .tryDot {
-  background: var(--danger);
+  background:
+    linear-gradient(45deg, transparent 42%, currentColor 42% 58%, transparent 58%),
+    linear-gradient(-45deg, transparent 42%, currentColor 42% 58%, transparent 58%);
+  border-radius: 0;
 }
 
-/* --- Frame: Oscar sits beside the window --- */
+/* --- Frame: Oscar sits on top of the window --- */
 .frame {
   position: relative;
 }
@@ -108,10 +105,10 @@
   height: 100%;
   object-fit: contain;
   opacity: 0;
-  transform: translateY(6px) scale(0.98);
+  transform: translateY(8px) scale(0.97);
   transition:
-    opacity 220ms var(--ease-physical),
-    transform 420ms var(--ease-settle);
+    opacity 200ms linear,
+    transform var(--dur-panel) var(--ease-spring);
 }
 
 .pose[data-on="true"] {
@@ -122,8 +119,8 @@
 .window {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(24, 22, 18, 0.12);
-  border-radius: 18px;
+  border: var(--stroke) solid var(--line);
+  border-radius: var(--r-card);
   background: var(--w-bg);
   color: var(--w-ink);
   box-shadow: var(--shadow-window);
@@ -135,9 +132,10 @@
   gap: 8px;
   height: 34px;
   padding: 0 0 0 14px;
-  border-bottom: 1px solid var(--w-line);
-  background: var(--w-side);
+  border-bottom: var(--stroke-hair) solid var(--w-line);
+  background: var(--w-bg);
   font-size: 12px;
+  font-weight: 500;
   color: var(--w-ink-3);
 }
 
@@ -159,7 +157,7 @@
   left: 50%;
   top: 50%;
   width: 10px;
-  height: 1px;
+  height: 1.5px;
   background: var(--w-ink-3);
   transform: translate(-50%, -50%);
 }
@@ -167,7 +165,8 @@
 .caption i:nth-child(2)::before {
   height: 9px;
   width: 9px;
-  border: 1px solid var(--w-ink-3);
+  border: 1.5px solid var(--w-ink-3);
+  border-radius: 2px;
   background: none;
 }
 
@@ -178,7 +177,7 @@
   left: 50%;
   top: 50%;
   width: 12px;
-  height: 1px;
+  height: 1.5px;
   background: var(--w-ink-3);
   transform: translate(-50%, -50%) rotate(45deg);
 }
@@ -199,7 +198,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 14px 12px;
-  border-right: 1px solid var(--w-line);
+  border-right: var(--stroke-hair) solid var(--w-line);
   background: var(--w-side);
 }
 
@@ -207,21 +206,20 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 34px;
-  padding: 0 12px;
-  border: 1px solid rgba(255, 184, 48, 0.3);
-  border-radius: 11px;
-  background: linear-gradient(120deg, rgba(255, 193, 65, 0.16), rgba(255, 149, 43, 0.06));
+  height: 36px;
+  padding: 0 14px;
+  border: var(--stroke) solid var(--line);
+  border-radius: var(--r-pill);
   font-size: 13px;
-  font-weight: 560;
-  color: var(--w-amber);
+  font-weight: 500;
+  color: var(--w-ink);
 }
 
 .sideLabel {
   margin: 14px 8px 2px;
-  font-size: 10.5px;
-  font-weight: 650;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--w-ink-3);
 }
@@ -232,9 +230,10 @@
 }
 
 .chats li {
+  position: relative;
   overflow: hidden;
-  padding: 7px 10px;
-  border-radius: 9px;
+  padding: 7px 10px 7px 20px;
+  border-radius: var(--r-control);
   font-size: 13px;
   color: var(--w-ink-2);
   white-space: nowrap;
@@ -242,8 +241,22 @@
 }
 
 .chats li[data-active] {
-  background: rgba(24, 22, 18, 0.07);
+  background: var(--w-soft);
   color: var(--w-ink);
+  font-weight: 500;
+}
+
+/* The selected item carries a pixel marker, as menus do in PaperPixel. */
+.chats li[data-active]::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: var(--pixel-m);
+  height: var(--pixel-m);
+  margin-top: -3px;
+  border-radius: var(--r-pixel);
+  background: var(--w-ink);
 }
 
 .sideFoot {
@@ -251,7 +264,7 @@
   gap: 4px;
   margin-top: auto;
   padding-top: 10px;
-  border-top: 1px solid var(--w-line);
+  border-top: var(--stroke-hair) solid var(--w-line);
 }
 
 .sideFoot span {
@@ -265,10 +278,10 @@
 
 .okDot {
   display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--w-ok);
+  width: var(--pixel-m);
+  height: var(--pixel-m);
+  border-radius: var(--r-pixel);
+  background: var(--w-ink);
 }
 
 /* --- Chat --- */
@@ -277,9 +290,7 @@
   flex-direction: column;
   min-width: 0;
   min-height: 0;
-  background:
-    radial-gradient(640px 360px at 70% -10%, rgba(242, 138, 30, 0.05), transparent 70%),
-    var(--w-bg);
+  background: var(--w-bg);
 }
 
 .chatHead {
@@ -289,13 +300,13 @@
   gap: 12px;
   height: 48px;
   padding: 0 20px;
-  border-bottom: 1px solid var(--w-line);
+  border-bottom: var(--stroke-hair) solid var(--w-line);
 }
 
 .chatTitle {
   overflow: hidden;
   font-size: 13.5px;
-  font-weight: 560;
+  font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -305,12 +316,13 @@
   flex: none;
   align-items: center;
   gap: 7px;
-  height: 26px;
-  padding: 0 11px;
-  border: 1px solid var(--w-line-2);
+  height: 28px;
+  padding: 0 12px;
+  border: var(--stroke) solid var(--line);
   border-radius: var(--r-pill);
   font-size: 12px;
-  color: var(--w-ink-2);
+  font-weight: 500;
+  color: var(--w-ink);
 }
 
 .thread {
@@ -331,13 +343,13 @@
 /* Everything in the conversation arrives from below — the way chat flows. */
 .thread > :not(.user),
 .oscarBody > * {
-  animation: arrive 460ms var(--ease-settle) both;
+  animation: arrive 460ms var(--ease-spring) both;
 }
 
 @keyframes arrive {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px);
   }
 }
 
@@ -357,9 +369,8 @@
   align-self: flex-end;
   max-width: 80%;
   padding: 10px 15px;
-  border: 1px solid var(--w-line);
-  border-radius: 16px 16px 4px 16px;
-  background: #f4f4f2;
+  border-radius: 18px 18px 6px 18px;
+  background: var(--w-soft);
   font-size: 14px;
 }
 
@@ -374,9 +385,9 @@
 .avatar {
   width: 34px;
   height: 34px;
-  border: 1px solid var(--w-line-2);
+  border: var(--stroke) solid var(--line);
   border-radius: 50%;
-  background-color: #f2f2ef;
+  background-color: var(--pp-paper-2);
   background-size: 210%;
   background-position: 52% 10%;
   background-repeat: no-repeat;
@@ -389,26 +400,35 @@
 }
 
 .thinking {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding-top: 7px;
   font-size: 14px;
   color: var(--w-ink-3);
 }
 
-.plan,
+/* Nested cards are soft paper without a line; the decision card keeps the line. */
+.plan {
+  padding: 13px 15px;
+  border: var(--stroke) solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--w-raised);
+}
+
 .run,
 .receipt {
   padding: 13px 15px;
-  border: 1px solid var(--w-line);
-  border-radius: 14px;
-  background: var(--w-raised);
+  border-radius: var(--r-control);
+  background: var(--w-soft);
 }
 
 .planLabel,
 .receiptHead {
   margin-bottom: 8px;
-  font-size: 10.5px;
-  font-weight: 650;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: var(--track-kicker);
   text-transform: uppercase;
   color: var(--w-ink-3);
 }
@@ -419,14 +439,14 @@
   align-items: baseline;
   gap: 4px 10px;
   font-size: 14px;
-  font-weight: 560;
+  font-weight: 500;
   color: var(--w-ink);
 }
 
 .key {
   font-family: var(--font-mono);
   font-size: 11.5px;
-  color: var(--w-amber);
+  color: var(--w-ink-3);
 }
 
 .verdict {
@@ -436,30 +456,19 @@
   gap: 6px 8px;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid var(--w-line);
+  border-top: var(--stroke-hair) solid var(--w-line);
   font-size: 13px;
   color: var(--w-ink-2);
 }
 
 .verdict strong {
-  font-weight: 620;
+  font-weight: 600;
+  color: var(--w-ink);
 }
 
-.verdict[data-verdict="allow"] :is(svg, strong) {
-  color: var(--w-ok);
-}
-
-.verdict[data-verdict="confirm"] :is(svg, strong) {
-  color: var(--w-amber);
-}
-
-.verdict[data-verdict="deny"] :is(svg, strong) {
-  color: var(--w-danger);
-}
-
+/* A denial is not red: the card's line turns dashed and the word says it. */
 .plan[data-verdict="deny"] {
-  border-color: rgba(179, 50, 42, 0.32);
-  background: linear-gradient(0deg, rgba(179, 50, 42, 0.06), rgba(179, 50, 42, 0.06)), var(--w-raised);
+  border-style: dashed;
 }
 
 .consent {
@@ -468,31 +477,35 @@
   justify-content: space-between;
   gap: 12px;
   margin-top: 10px;
-  padding: 9px 9px 9px 13px;
-  border: 1px solid rgba(255, 184, 48, 0.3);
-  border-radius: 12px;
-  background: rgba(255, 176, 36, 0.07);
+  padding: 8px 8px 8px 14px;
+  border-radius: var(--r-control);
+  background: var(--w-soft);
   font-size: 13px;
 }
 
 .consentButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   flex: none;
-  padding: 6px 13px;
+  height: 30px;
+  padding: 0 14px;
+  border: var(--stroke) solid var(--pp-ink);
   border-radius: var(--r-pill);
-  background: var(--accent-fill);
+  background: var(--pp-ink);
   font-size: 12.5px;
-  font-weight: 650;
-  color: #1a1206;
+  font-weight: 500;
+  color: var(--pp-on-ink);
   transition:
-    transform var(--dur-press) var(--ease-physical),
-    background-color var(--dur-move) var(--ease-physical),
-    color var(--dur-move) var(--ease-physical);
+    transform var(--dur-move) var(--ease-spring),
+    background-color var(--dur-press) linear,
+    color var(--dur-press) linear;
 }
 
 .consent[data-pressed="true"] .consentButton {
-  background: rgba(31, 122, 69, 0.14);
-  color: var(--w-ok);
-  animation: press 260ms var(--ease-physical);
+  background: var(--pp-paper);
+  color: var(--pp-ink);
+  animation: press 260ms var(--ease-spring);
 }
 
 @keyframes press {
@@ -516,12 +529,12 @@
 }
 
 .runStep {
-  animation: arrive 380ms var(--ease-settle) both;
+  animation: arrive 380ms var(--ease-spring) both;
   animation-delay: calc(var(--i) * 320ms);
 }
 
 .runDone {
-  color: var(--w-ink-3);
+  color: var(--w-ink);
 }
 
 .tick {
@@ -530,17 +543,16 @@
   place-items: center;
   width: 18px;
   height: 18px;
-  border-radius: 50%;
-  background: rgba(31, 122, 69, 0.14);
-  color: var(--w-ok);
+  color: var(--w-ink);
 }
 
 .receipt {
-  border-color: rgba(31, 122, 69, 0.28);
+  border: var(--stroke) solid var(--line);
+  background: var(--w-raised);
 }
 
 .receipt[data-verdict="deny"] {
-  border-color: rgba(179, 50, 42, 0.32);
+  border-style: dashed;
 }
 
 .receiptResult {
@@ -549,27 +561,6 @@
   gap: 9px;
   font-size: 14.5px;
   font-weight: 600;
-}
-
-.receiptResult svg {
-  flex: none;
-  color: var(--w-ok);
-}
-
-.receipt[data-verdict="deny"] .receiptResult svg {
-  color: var(--w-danger);
-}
-
-.draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 560ms var(--ease-settle) 160ms forwards;
-}
-
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
 }
 
 .receiptCheck {
@@ -588,14 +579,14 @@
   width: min(100% - 32px, 600px);
   margin: 0 auto 16px;
   padding: 12px 12px 10px 16px;
-  border: 1px solid var(--w-line-2);
-  border-radius: 18px;
-  background: rgba(24, 22, 18, 0.04);
-  transition: border-color var(--dur-move) var(--ease-physical);
+  border: var(--stroke) solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--w-bg);
+  transition: box-shadow var(--dur-move) var(--ease-settle);
 }
 
 .composer[data-typing="true"] {
-  border-color: rgba(255, 184, 48, 0.4);
+  box-shadow: inset 0 0 0 0.5px var(--line);
 }
 
 .placeholder,
@@ -608,13 +599,15 @@
   color: var(--w-ink-3);
 }
 
+/* The caret is a pixel standing on its end: it holds still, it does not blink. */
 .caret {
   display: inline-block;
-  width: 1.5px;
+  width: 2px;
   height: 1.05em;
   margin-left: 2px;
   vertical-align: -0.15em;
-  background: var(--w-amber);
+  border-radius: 1px;
+  background: var(--w-ink);
 }
 
 .composerRow {
@@ -626,24 +619,11 @@
 .tool {
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--w-line);
+  width: 30px;
+  height: 30px;
+  border: var(--stroke) solid var(--line);
   border-radius: 50%;
-  font-size: 15px;
-  color: var(--w-ink-3);
-}
-
-.max {
-  height: 26px;
-  padding: 0 10px;
-  border: 1px solid var(--w-line);
-  border-radius: var(--r-pill);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: 0.06em;
-  color: var(--w-ink-3);
+  color: var(--w-ink);
 }
 
 .send {
@@ -653,16 +633,18 @@
   height: 32px;
   margin-left: auto;
   border-radius: 50%;
-  background: rgba(24, 22, 18, 0.08);
-  color: var(--w-ink-3);
+  background: var(--pp-paper-2);
+  color: var(--pp-ink-faint);
   transition:
-    background-color var(--dur-move) var(--ease-physical),
-    color var(--dur-move) var(--ease-physical);
+    background-color var(--dur-move) linear,
+    color var(--dur-move) linear,
+    transform var(--dur-panel) var(--ease-spring);
 }
 
 .send[data-armed="true"] {
-  background: var(--accent-fill);
-  color: #1a1206;
+  background: var(--pp-ink);
+  color: var(--pp-on-ink);
+  transform: rotate(0deg) scale(1.04);
 }
 
 @media (max-width: 760px) {
@@ -672,9 +654,7 @@
     height: 120px;
     bottom: calc(100% - 14px);
   }
-}
 
-@media (max-width: 760px) {
   .app {
     grid-template-columns: 1fr;
     height: 500px;
@@ -703,11 +683,5 @@
 
   .triesLabel {
     width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .draw {
-    stroke-dashoffset: 0;
   }
 }

@@ -82,7 +82,7 @@
 
 .item[data-open="true"] .icon {
   border-color: var(--accent-line);
-  background: #fff4e8;
+  background: var(--surface-2);
 }
 
 .item[data-open="true"] .icon::after {

@@ -1,88 +1,118 @@
 /*
- * Monarch Site v6 — «Чистый лист» (0.3).
+ * Monarch Site v6 — PaperPixel.
  * The single source of truth for colour, material, type, space and motion.
  *
- * The palette is the desktop application's 0.3 white theme
- * (src/ui/public/white-theme.css): true white surfaces, hairline neutral lines,
- * near-black ink and one warm accent. The site and the product are one object; the dark app window is the
- * only night on the page, plus the protection chapter, which wears `.night`.
+ * PaperPixel is the Monarch 0.3 design (src/ui/public/paper-pixel.css and the
+ * PaperPixel design system): everything is paper; ink marks only what must
+ * stand out — text, outlines, indicators, the current choice. Anything that
+ * thinks or answers is made of pixels (rounded squares with physics, see
+ * components/pixel). There is no colour: status is a shape and a word. The
+ * only colour on the site is the gold of the crown in the owner's logo.
  *
- * Light is a state, not decoration: nothing here glows permanently.
+ * The older token names stay so every component reads the same roles; their
+ * values are paper and ink now.
  */
 
 :root {
   color-scheme: light;
 
+  /* --- PaperPixel (Paper theme) --- */
+  --pp-paper: #ffffff;
+  --pp-paper-2: #f4f4f2;
+  --pp-paper-3: #e9e9e6;
+  --pp-ink: #0b0b0b;
+  --pp-ink-2: #3a3a38;
+  --pp-ink-muted: #696965;
+  --pp-ink-faint: #b4b4af;
+  --pp-ink-hover: #2a2a28;
+  --pp-on-ink: #ffffff;
+  --pp-line-soft: #e2e2de;
+  --ink-rgb: 11, 11, 11;
+  --paper-rgb: 255, 255, 255;
+  --stroke: 1.5px;
+  --stroke-bold: 2px;
+  --stroke-hair: 1px;
+  --pixel-xs: 3px;
+  --pixel-s: 4px;
+  --pixel-m: 6px;
+  --pixel-l: 8px;
+  --pixel-xl: 12px;
+  --pixel-gap: 2px;
+  --r-pixel: 2px;
+  --r-pixel-l: 3.5px;
+
   /* --- Stage (paper) --- */
   --void: #f4f4f2;
   --canvas: #ffffff;
-  --canvas-raised: #f7f7f5;
+  --canvas-raised: #f4f4f2;
   --surface: #ffffff;
-  --surface-2: #f6f6f4;
-  --surface-3: #eeeeeb;
-  --graphite: #d9d8d4;
+  --surface-2: #f4f4f2;
+  --surface-3: #e9e9e6;
+  --graphite: #e2e2de;
 
-  /* --- Glass on paper (app light recipe) --- */
-  --glass: rgba(255, 255, 255, 0.86);
-  --glass-strong: rgba(255, 255, 255, 0.95);
-  --glass-line: rgba(24, 22, 18, 0.09);
-  --glass-line-strong: rgba(24, 22, 18, 0.16);
-  --glass-blur: 22px;
-  --specular: inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  --wash: rgba(24, 22, 18, 0.03);
-  --wash-2: rgba(24, 22, 18, 0.055);
+  /* --- Material: paper holds its shape with a line, not with glass --- */
+  --glass: #ffffff;
+  --glass-strong: #ffffff;
+  --glass-line: #e2e2de;
+  --glass-line-strong: #0b0b0b;
+  --line: #0b0b0b;
+  --glass-blur: 0px;
+  --specular: 0 0 0 transparent;
+  --wash: rgba(11, 11, 11, 0.035);
+  --wash-2: rgba(11, 11, 11, 0.07);
 
   /* --- Ink --- */
-  --ink: #1a1916;
-  --ink-2: #4f4c46;
-  --ink-3: #66625b;
-  --ink-faint: #9a978f;
-  --ivory: #fdfcf9;
+  --ink: #0b0b0b;
+  --ink-2: #3a3a38;
+  --ink-3: #696965;
+  /* Readable faint text keeps 4.5:1; decorative pixels use --pp-ink-faint. */
+  --ink-faint: #696965;
+  --ivory: #ffffff;
 
-  /* --- Crown (brand) --- */
-  --accent: #ffb52b;
-  --accent-ink: #a65400;
-  --accent-soft: rgba(242, 138, 30, 0.09);
-  --accent-line: rgba(226, 112, 13, 0.34);
-  --orange: #ff7a18;
-  --gold: #ffc247;
-  --gold-deep: #c98a1b;
-  --yellow: #ffe28a;
-  --highlight: #ffdb94;
-  --on-accent: #1a1206;
-  --accent-fill: linear-gradient(180deg, #ffbc45, #f58a1f);
+  /* --- Accent is ink. Old accent roles resolve to paper and ink. --- */
+  --accent: #0b0b0b;
+  --accent-ink: #0b0b0b;
+  --accent-soft: #f4f4f2;
+  --accent-line: #0b0b0b;
+  --orange: #0b0b0b;
+  --gold: #0b0b0b;
+  --gold-deep: #0b0b0b;
+  --yellow: #0b0b0b;
+  --highlight: #0b0b0b;
+  --on-accent: #ffffff;
+  --accent-fill: #0b0b0b;
 
-  /* --- Semantic (never decorative) --- */
-  --ok: #1f7a45;
-  --ok-soft: rgba(36, 115, 67, 0.09);
-  --danger: #b3322a;
-  --danger-soft: rgba(180, 44, 38, 0.07);
-  --danger-line: rgba(180, 44, 38, 0.3);
-  --caution: #a35800;
+  /* --- Status is a shape and a word, never a colour --- */
+  --ok: #0b0b0b;
+  --ok-soft: #f4f4f2;
+  --danger: #0b0b0b;
+  --danger-soft: #f4f4f2;
+  --danger-line: #0b0b0b;
+  --caution: #0b0b0b;
 
-  /* --- Type --- */
+  /* --- Type: Onest only --- */
   --font-display: "Onest Variable", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
   --font-sans: "Onest Variable", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", "Cascadia Code", ui-monospace, Consolas, monospace;
+  --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
 
   --text-2xs: 0.6875rem;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: clamp(1.2rem, 0.4vw + 1.1rem, 1.4rem);
-  --text-2xl: clamp(1.5rem, 1.1vw + 1.2rem, 2.1rem);
-  --text-3xl: clamp(2rem, 2.2vw + 1.35rem, 3.25rem);
-  --text-4xl: clamp(2.5rem, 3.6vw + 1.3rem, 4.6rem);
-  --text-hero: clamp(2.75rem, 5.2vw + 0.9rem, 6.25rem);
+  --text-lg: 1.0625rem;
+  --text-xl: clamp(1.1875rem, 0.5vw + 1.05rem, 1.4375rem);
+  --text-2xl: clamp(1.5rem, 1.1vw + 1.2rem, 2rem);
+  --text-3xl: clamp(2rem, 2.2vw + 1.35rem, 2.75rem);
+  --text-4xl: clamp(2.5rem, 3.6vw + 1.2rem, 4.25rem);
+  --text-hero: clamp(3rem, 5.6vw + 0.8rem, 6.5rem);
 
   --lh-tight: 1;
   --lh-snug: 1.18;
-  --lh-normal: 1.6;
-  --track-display: -0.042em;
-  --track-kicker: 0.12em;
+  --lh-normal: 1.55;
+  --track-display: -0.032em;
+  --track-kicker: 0.06em;
 
-  /* --- Space: 8px rhythm --- */
+  /* --- Space: 4px step, air is a function --- */
   --s-1: 4px;
   --s-2: 8px;
   --s-3: 12px;
@@ -101,65 +131,96 @@
   --gutter: clamp(16px, 4vw, 56px);
   --header-h: 64px;
 
-  /* --- Radius (app: control 11, card 16, sheet 22) --- */
-  --r-sm: 8px;
-  --r-control: 11px;
-  --r-card: 16px;
+  /* --- Radius: everything that is not a pixel is rounded --- */
+  --r-sm: 10px;
+  --r-control: 16px;
+  --r-card: 22px;
   --r-sheet: 22px;
-  --r-stage: 28px;
+  --r-stage: 30px;
   --r-pill: 999px;
 
-  /* --- Elevation (warm, app light theme) --- */
-  --shadow-card: 0 1px 2px rgba(24, 22, 18, 0.04), 0 8px 24px rgba(24, 22, 18, 0.05), var(--specular);
-  --shadow-sheet: 0 2px 6px rgba(24, 22, 18, 0.05), 0 24px 64px rgba(24, 22, 18, 0.14), var(--specular);
-  --shadow-window: 0 1px 3px rgba(24, 22, 18, 0.06), 0 20px 44px rgba(24, 22, 18, 0.1), 0 56px 112px rgba(24, 22, 18, 0.12);
-  --shadow-cta: 0 8px 22px rgba(226, 112, 13, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  /* --- Elevation: paper barely casts a shadow; only what floats does --- */
+  --shadow-card: none;
+  --shadow-float: 0 1px 2px rgba(11, 11, 11, 0.04), 0 16px 40px -12px rgba(11, 11, 11, 0.18);
+  --shadow-thumb: 0 1px 2px rgba(11, 11, 11, 0.08), 0 2px 6px rgba(11, 11, 11, 0.06);
+  --shadow-sheet: var(--shadow-float);
+  --shadow-window: 0 1px 2px rgba(11, 11, 11, 0.04), 0 28px 60px -24px rgba(11, 11, 11, 0.22);
+  --shadow-cta: none;
+  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #0b0b0b;
 
-  /* --- Motion: weight, direction, continuity --- */
-  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-physical: cubic-bezier(0.2, 0.82, 0.2, 1);
+  /* --- Motion: weight, direction, continuity; nothing moves at rest --- */
+  --ease-settle: cubic-bezier(0.2, 0, 0, 1);
+  --ease-physical: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --dur-press: 80ms;
-  --dur-touch: 150ms;
+  --dur-touch: 140ms;
   --dur-move: 240ms;
-  --dur-panel: 420ms;
-  --dur-scene: 900ms;
+  --dur-panel: 380ms;
+  --dur-scene: 620ms;
+  --stagger: 18ms;
 }
 
 /*
- * Night: the protection chapter and the download stage. Same token names, so
- * every component works in both — only the light changes.
+ * Ink: the same sheet turned over — black paper, white ink. The protection
+ * chapter and the download stage wear it. Same token names, so every
+ * component works in both — only the sheet changes.
  */
 .night {
   color-scheme: dark;
-  --canvas: #12110f;
-  --canvas-raised: #171613;
-  --surface: #1b1916;
-  --surface-2: #211f1b;
-  --surface-3: #2a2722;
-  --graphite: #3a362f;
-  --glass: rgba(30, 28, 25, 0.72);
-  --glass-strong: rgba(34, 32, 28, 0.92);
-  --glass-line: rgba(255, 244, 225, 0.1);
-  --glass-line-strong: rgba(255, 244, 225, 0.18);
-  --specular: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --wash: rgba(255, 244, 225, 0.035);
-  --wash-2: rgba(255, 244, 225, 0.07);
-  --ink: #f6f2ea;
-  --ink-2: #c5bfb4;
-  --ink-3: #a19a8f;
-  --ink-faint: #6f695f;
-  --accent-ink: #ffc862;
-  --accent-soft: rgba(255, 181, 43, 0.11);
-  --accent-line: rgba(255, 188, 34, 0.36);
-  --ok: #69d398;
-  --ok-soft: rgba(105, 211, 152, 0.1);
-  --danger: #ff8f86;
-  --danger-soft: rgba(255, 107, 97, 0.09);
-  --danger-line: rgba(255, 107, 97, 0.34);
-  --caution: #ffc247;
-  --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.32), var(--specular);
-  --shadow-sheet: 0 28px 80px rgba(0, 0, 0, 0.5), var(--specular);
+  --pp-paper: #0b0b0b;
+  --pp-paper-2: #171716;
+  --pp-paper-3: #232322;
+  --pp-ink: #f7f7f5;
+  --pp-ink-2: #c9c9c5;
+  --pp-ink-muted: #9b9b96;
+  --pp-ink-faint: #4a4a47;
+  --pp-ink-hover: #dcdcd8;
+  --pp-on-ink: #0b0b0b;
+  --pp-line-soft: #2a2a28;
+  --ink-rgb: 247, 247, 245;
+  --paper-rgb: 11, 11, 11;
+  --void: #0b0b0b;
+  --canvas: #0b0b0b;
+  --canvas-raised: #171716;
+  --surface: #0b0b0b;
+  --surface-2: #171716;
+  --surface-3: #232322;
+  --graphite: #2a2a28;
+  --glass: #0b0b0b;
+  --glass-strong: #0b0b0b;
+  --glass-line: #2a2a28;
+  --glass-line-strong: #f7f7f5;
+  --line: #f7f7f5;
+  --wash: rgba(247, 247, 245, 0.04);
+  --wash-2: rgba(247, 247, 245, 0.08);
+  --ink: #f7f7f5;
+  --ink-2: #c9c9c5;
+  --ink-3: #9b9b96;
+  --ink-faint: #9b9b96;
+  --ivory: #0b0b0b;
+  --accent: #f7f7f5;
+  --accent-ink: #f7f7f5;
+  --accent-soft: #171716;
+  --accent-line: #f7f7f5;
+  --orange: #f7f7f5;
+  --gold: #f7f7f5;
+  --gold-deep: #f7f7f5;
+  --yellow: #f7f7f5;
+  --highlight: #f7f7f5;
+  --on-accent: #0b0b0b;
+  --accent-fill: #f7f7f5;
+  --ok: #f7f7f5;
+  --ok-soft: #171716;
+  --danger: #f7f7f5;
+  --danger-soft: #171716;
+  --danger-line: #f7f7f5;
+  --caution: #f7f7f5;
+  --shadow-float: 0 16px 40px -12px rgba(0, 0, 0, 0.8);
+  --shadow-thumb: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-sheet: var(--shadow-float);
+  --shadow-window: 0 28px 60px -24px rgba(0, 0, 0, 0.8);
+  --focus-ring: 0 0 0 2px #0b0b0b, 0 0 0 4px #f7f7f5;
   background: var(--canvas);
   color: var(--ink);
 }

@@ -26,7 +26,7 @@ export function MonarchTile({ size = 32, title, className }: { size?: number; ti
       aria-label={title}
       aria-hidden={title ? undefined : true}
     >
-      <MonarchMark size={Math.round(size * 0.62)} variant="dark" />
+      <MonarchMark size={Math.round(size * 0.47)} variant="dark" />
     </span>
   );
 }

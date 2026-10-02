@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { Hero } from "@/components/scenes/hero/hero";
+import { Release } from "@/components/scenes/release/release";
 import { Hardware } from "@/components/scenes/hardware/hardware";
 import { Abilities } from "@/components/scenes/abilities/abilities";
 import { PathMap } from "@/components/scenes/path-map/path-map";
@@ -31,6 +32,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Hero locale={lang} hero={dict.hero} journey={dict.journey} ui={dict.ui} release={release} />
+      <Release copy={dict.release} access={dict.access} lanes={dict.journey.lanes} />
       <Abilities copy={dict.abilities} />
       <PathMap copy={dict.journey} verdicts={dict.pages.security.verdicts} access={dict.access} />
       <Hardware copy={dict.hardware} />

@@ -43,7 +43,7 @@
 .tab[aria-pressed="true"] {
   color: var(--ink);
   border-color: var(--accent-line);
-  background: #fff6e4;
+  background: #fff4e8;
 }
 
 .tabDot,

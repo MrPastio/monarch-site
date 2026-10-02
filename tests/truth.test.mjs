@@ -95,8 +95,13 @@ for (const locale of locales) {
     }
   });
 
-  test(`${locale}: unreleased work is labelled as such`, () => {
+  // The 0.3 site ships together with the 0.3 release: the "what's new"
+  // chapter must say which version it describes, and nothing may still call
+  // MAX a preview of 0.3.
+  test(`${locale}: the 0.3 chapter names its version`, () => {
+    const kicker = sources[locale].match(/release: \{\s*index: "\d\d",\s*kicker: "([^"]+)"/)?.[1];
+    assert.ok(kicker && /0\.3/.test(kicker), `${locale}: the release chapter must name 0.3`);
     const maxKicker = sources[locale].match(/max: \{\s*index: "\d\d",\s*kicker: "([^"]+)"/)?.[1];
-    assert.ok(maxKicker && /0\.3/.test(maxKicker), `${locale}: MAX must be marked as 0.3 / in development`);
+    assert.ok(maxKicker && !/0\.3/.test(maxKicker), `${locale}: MAX is part of 0.3, not a preview of it`);
   });
 }

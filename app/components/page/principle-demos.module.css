@@ -117,7 +117,7 @@
 }
 
 .switch[data-on="true"] {
-  background: #fff1d6;
+  background: #ffecd9;
   border-color: var(--accent-line);
 }
 

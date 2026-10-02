@@ -1,10 +1,10 @@
 /*
- * Monarch Site v5 — «Дневной свет».
+ * Monarch Site v6 — «Чистый лист» (0.3).
  * The single source of truth for colour, material, type, space and motion.
  *
- * The palette is the desktop application's own light theme
- * (src/ui/public/themes.css): warm paper, near-black ink, amber that reads on
- * paper. The site and the product are one object; the dark app window is the
+ * The palette is the desktop application's 0.3 white theme
+ * (src/ui/public/white-theme.css): true white surfaces, hairline neutral lines,
+ * near-black ink and one warm accent. The site and the product are one object; the dark app window is the
  * only night on the page, plus the protection chapter, which wears `.night`.
  *
  * Light is a state, not decoration: nothing here glows permanently.
@@ -14,51 +14,51 @@
   color-scheme: light;
 
   /* --- Stage (paper) --- */
-  --void: #f1ece3;
-  --canvas: #faf8f4;
-  --canvas-raised: #f5f1ea;
+  --void: #f4f4f2;
+  --canvas: #ffffff;
+  --canvas-raised: #f7f7f5;
   --surface: #ffffff;
-  --surface-2: #f6f2eb;
-  --surface-3: #eee8de;
-  --graphite: #d8d0c3;
+  --surface-2: #f6f6f4;
+  --surface-3: #eeeeeb;
+  --graphite: #d9d8d4;
 
   /* --- Glass on paper (app light recipe) --- */
-  --glass: rgba(255, 255, 255, 0.76);
+  --glass: rgba(255, 255, 255, 0.86);
   --glass-strong: rgba(255, 255, 255, 0.95);
-  --glass-line: rgba(67, 47, 27, 0.13);
-  --glass-line-strong: rgba(67, 47, 27, 0.24);
+  --glass-line: rgba(24, 22, 18, 0.09);
+  --glass-line-strong: rgba(24, 22, 18, 0.16);
   --glass-blur: 22px;
   --specular: inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  --wash: rgba(72, 48, 24, 0.035);
-  --wash-2: rgba(72, 48, 24, 0.07);
+  --wash: rgba(24, 22, 18, 0.03);
+  --wash-2: rgba(24, 22, 18, 0.055);
 
   /* --- Ink --- */
-  --ink: #26221d;
-  --ink-2: #575149;
-  --ink-3: #6a6258;
-  --ink-faint: #9a9185;
+  --ink: #1a1916;
+  --ink-2: #4f4c46;
+  --ink-3: #66625b;
+  --ink-faint: #9a978f;
   --ivory: #fdfcf9;
 
   /* --- Crown (brand) --- */
   --accent: #ffb52b;
-  --accent-ink: #8f4f00;
-  --accent-soft: rgba(221, 132, 20, 0.1);
-  --accent-line: rgba(162, 91, 12, 0.34);
+  --accent-ink: #a65400;
+  --accent-soft: rgba(242, 138, 30, 0.09);
+  --accent-line: rgba(226, 112, 13, 0.34);
   --orange: #ff7a18;
   --gold: #ffc247;
   --gold-deep: #c98a1b;
   --yellow: #ffe28a;
   --highlight: #ffdb94;
   --on-accent: #1a1206;
-  --accent-fill: linear-gradient(180deg, #ffc746, #ffa326);
+  --accent-fill: linear-gradient(180deg, #ffbc45, #f58a1f);
 
   /* --- Semantic (never decorative) --- */
-  --ok: #247343;
+  --ok: #1f7a45;
   --ok-soft: rgba(36, 115, 67, 0.09);
-  --danger: #b42c26;
+  --danger: #b3322a;
   --danger-soft: rgba(180, 44, 38, 0.07);
   --danger-line: rgba(180, 44, 38, 0.3);
-  --caution: #945100;
+  --caution: #a35800;
 
   /* --- Type --- */
   --font-display: "Onest Variable", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
@@ -110,10 +110,10 @@
   --r-pill: 999px;
 
   /* --- Elevation (warm, app light theme) --- */
-  --shadow-card: 0 1px 2px rgba(70, 45, 18, 0.05), 0 12px 32px rgba(70, 45, 18, 0.065), var(--specular);
-  --shadow-sheet: 0 2px 6px rgba(70, 45, 18, 0.05), 0 30px 80px rgba(70, 45, 18, 0.16), var(--specular);
-  --shadow-window: 0 2px 4px rgba(40, 26, 10, 0.08), 0 24px 48px rgba(40, 26, 10, 0.16), 0 60px 120px rgba(40, 26, 10, 0.18);
-  --shadow-cta: 0 8px 22px rgba(221, 132, 20, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  --shadow-card: 0 1px 2px rgba(24, 22, 18, 0.04), 0 8px 24px rgba(24, 22, 18, 0.05), var(--specular);
+  --shadow-sheet: 0 2px 6px rgba(24, 22, 18, 0.05), 0 24px 64px rgba(24, 22, 18, 0.14), var(--specular);
+  --shadow-window: 0 1px 3px rgba(24, 22, 18, 0.06), 0 20px 44px rgba(24, 22, 18, 0.1), 0 56px 112px rgba(24, 22, 18, 0.12);
+  --shadow-cta: 0 8px 22px rgba(226, 112, 13, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.45);
 
   /* --- Motion: weight, direction, continuity --- */
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);

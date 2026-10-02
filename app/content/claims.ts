@@ -98,11 +98,51 @@ export const claims = {
     maturity: "stable",
     limit: "Не защищает от вредоносного кода под той же учётной записью, пока Сейф открыт.",
   },
-  maxInDevelopment: {
-    id: "maxInDevelopment",
-    ru: "MAX с 12 провайдерами разрабатывается для версии 0.3 и ещё не опубликован.",
-    evidence: "docs/release/MONARCH_0.3.0_CUMULATIVE_CHANGELOG.md",
-    maturity: "alpha",
+  maxProviders: {
+    id: "maxProviders",
+    ru: "MAX подключает облачные сервисы по отдельному согласию для каждого; в поле ввода он включается одним переключателем.",
+    evidence: "docs/architecture/MAX_PROVIDER_CONNECTIONS_2026-09-07.md, release/notes/v0.3.0.95.md",
+    maturity: "beta",
+    limit: "Запросы в MAX уходят в выбранный сервис; оплату устанавливает провайдер.",
+  },
+  maxLocalFallback: {
+    id: "maxLocalFallback",
+    ru: "Если MAX не ответил и локальная работа разрешена, обычный ответ даёт модель на компьютере с меткой в чате; платный запрос не повторяется, подстраховка отключаемая.",
+    evidence: "src/oscar-turn/coordinator.ts, src/settings/model-preference.ts (maxLocalFallback), AGENTS.md 2026-09-26",
+    maturity: "beta",
+    limit: "Только для ответов в чате, не для действий агента.",
+  },
+  customModels: {
+    id: "customModels",
+    ru: "Свои модели добавляются файлом или по ссылке Hugging Face и работают в обычном чате.",
+    evidence: "src/modules/models/custom-models.ts, release/notes/v0.3.0.95.md",
+    maturity: "beta",
+    limit: "Не используются для действий агента и автоматической смены моделей.",
+  },
+  inChatTasks: {
+    id: "inChatTasks",
+    ru: "Задачи с файлами и приложениями выполняются по шагам в обычном чате, с подтверждениями, остановкой и итогом.",
+    evidence: "src/oscar-turn/coordinator.ts (astraTaskReport), src/ui/public/whats-new.json",
+    maturity: "beta",
+    limit: "Качество зависит от выбранной модели.",
+  },
+  accessSection: {
+    id: "accessSection",
+    ru: "Раздел «Доступ» показывает режим самостоятельности и таблицу действий; карточка подтверждения называет причину.",
+    evidence: "src/core/permission-gate.ts (permissionMatrix), src/core/policy-reason.ts",
+    maturity: "stable",
+  },
+  coderRebuilt: {
+    id: "coderRebuilt",
+    ru: "Coder 0.3: разговоры по проекту, живой ход работы, «было / стало» перед записью и изменения Git.",
+    evidence: "src/ui/public/modules/coder-view.js, src/app/coder-agent-controller.ts, src/ui/public/modules/coder-diff.js",
+    maturity: "beta",
+  },
+  firstSetup: {
+    id: "firstSetup",
+    ru: "Первая настройка: язык, тема и выбор — компьютер, MAX или вместе; интерфейс на четырёх языках, светлая тема по умолчанию.",
+    evidence: "src/ui/public/modules/model-onboarding.js, release/notes/v0.3.0.95.md",
+    maturity: "stable",
   },
   accessModes: {
     id: "accessModes",
@@ -131,7 +171,7 @@ export const claims = {
   coderProjects: {
     id: "coderProjects",
     ru: "Coder — отдельный режим для кода внутри выбранного проекта.",
-    evidence: "src/modules/coder, src/ui/public/index.html (coder-mode-root)",
+    evidence: "src/modules/coder, src/ui/public/modules/coder-view.js",
     maturity: "stable",
   },
   memoryV4: {

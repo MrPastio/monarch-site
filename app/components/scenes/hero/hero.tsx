@@ -67,7 +67,7 @@ export function Hero({
         {release ? (
           <Link href={localePath(locale, `updates/${release.display}`)} className={styles.badge}>
             <span className={styles.badgeDot} aria-hidden />
-            {hero.kicker}
+            {hero.kicker.replace("{version}", release.display)}
             <span className={styles.badgeLink}>
               {hero.badge} <span aria-hidden>→</span>
             </span>
@@ -75,7 +75,7 @@ export function Hero({
         ) : (
           <p className={styles.badge}>
             <span className={styles.badgeDot} aria-hidden />
-            {hero.kicker}
+            {hero.kicker.replace(" {version}", "")}
           </p>
         )}
         <h1 id="hero-title" className={`display ${styles.title}`}>

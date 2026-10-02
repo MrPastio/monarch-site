@@ -1,4 +1,4 @@
-# Monarch Site v5.1 — «Дневной свет»
+# Monarch Site v6 — «Чистый лист» (0.3)
 
 Public site for Monarch, a local AI for Windows. Live: https://monarch-site-sigma.vercel.app/
 The earlier GitHub Pages deployment remains at https://mrpastio.github.io/monarch-site/.
@@ -52,6 +52,12 @@ To enable automatic deploys, connect the GitHub account with write access to
 - `app/components/scenes/path-map/*` — the request path as a line with the
   policy fork (allow / ask you / deny); a travelling request lights the
   stations it passes.
+- `app/components/scenes/release/*` — «Новое в 0.3»: one pinned Monarch
+  window, six scenes (tasks in chat, MAX with the computer as a safety net,
+  own models, Access, Coder, first setup). One GSAP timeline per scene
+  (`timelines.ts`); the markup is always the final state, so no-JS and
+  reduced motion rest there. Narrow screens get a list that plays each scene
+  once when seen.
 - `app/components/scenes/abilities/*` — what 0.2.5 does, as small product
   scenes that play once when seen (maturity labels match the app).
 - `app/components/scenes/access/*` — autonomy modes and what the permission

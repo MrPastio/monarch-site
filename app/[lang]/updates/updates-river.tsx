@@ -30,7 +30,7 @@ export function UpdatesRiver({
   open,
 }: {
   entries: RiverEntry[];
-  future: { label: string; title: string; text: string };
+  future: { label: string; title: string; text: string } | null;
   categories: Record<string, string>;
   filterAll: string;
   filterLabel: string;
@@ -50,6 +50,7 @@ export function UpdatesRiver({
         ))}
       </div>
       <ol className={styles.river}>
+        {future && (
         <li className={styles.item} data-state="future" data-shown="true">
           <div className={styles.fold}>
             <div className={styles.foldInner}>
@@ -64,6 +65,7 @@ export function UpdatesRiver({
             </div>
           </div>
         </li>
+        )}
         {entries.map((entry) => {
           const shown = filter === "all" || entry.categories.includes(filter);
           return (

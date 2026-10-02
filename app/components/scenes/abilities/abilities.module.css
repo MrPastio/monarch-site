@@ -419,7 +419,7 @@
 }
 
 .tree li[data-active="true"] {
-  background: #fff1d6;
+  background: #ffecd9;
   color: var(--accent-ink);
 }
 
@@ -482,7 +482,7 @@
   padding: 8px 10px;
   border: 1px solid var(--accent-line);
   border-radius: 10px;
-  background: #fff6e4;
+  background: #fff4e8;
   font-size: 11.5px;
   line-height: 1.4;
   color: var(--ink);
@@ -527,59 +527,92 @@
   height: 20px;
 }
 
-/* --- Voice --- */
-.voice {
+/* --- Own models --- */
+.models {
   display: grid;
-  justify-items: center;
-  gap: 18px;
-  width: min(90%, 300px);
+  gap: 12px;
+  width: min(88%, 290px);
 }
 
-.wave {
+.modelName {
   display: flex;
   align-items: center;
-  gap: 3px;
-  height: 70px;
-}
-
-.wave span {
-  display: block;
-  width: 4px;
-  height: calc(var(--h) * 70px);
-  border-radius: 2px;
-  background: linear-gradient(180deg, #ffc746, #ff7a18);
-  transform-origin: center;
-  transition: transform 700ms var(--ease-settle);
-  transition-delay: calc(100ms + var(--i) * 28ms);
-}
-
-.card[data-unlit] .wave span {
-  transform: scaleY(0.08);
-}
-
-.voiceRow {
-  display: flex;
   gap: 8px;
+  font-size: 13px;
+  font-weight: 640;
+  color: var(--ink);
 }
 
-.mic,
-.preset {
+.modelChip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 28px;
-  padding: 0 12px;
-  border: 1px solid var(--glass-line);
+  height: 22px;
+  padding: 0 9px;
+  border: 1px solid var(--accent-line);
   border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  font-size: 10.5px;
+  font-weight: 650;
+  color: var(--accent-ink);
+}
+
+.variants {
+  display: grid;
+  gap: 7px;
+  padding: 10px 12px;
+  border: 1px solid var(--glass-line);
+  border-radius: 12px;
   background: var(--surface);
+}
+
+.variants li {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) 46px;
+  align-items: center;
+  gap: 8px;
   font-size: 11.5px;
-  font-weight: 600;
   color: var(--ink-2);
 }
 
-.mic {
-  color: var(--accent-ink);
-  border-color: var(--accent-line);
+.variantBar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--wash-2);
+  overflow: hidden;
+}
+
+.variantBar i {
+  display: block;
+  width: calc(var(--w) * 100%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-fill);
+  transform-origin: left center;
+  transition: transform 800ms var(--ease-settle);
+  transition-delay: calc(120ms + var(--i) * 90ms);
+}
+
+.variants li[data-fits="false"] .variantBar i {
+  background: repeating-linear-gradient(90deg, var(--ink-faint) 0 4px, transparent 4px 7px);
+}
+
+.variants li[data-fits="false"] {
+  color: var(--ink-3);
+}
+
+.variantSize {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.card[data-unlit] .variantBar i {
+  transform: scaleX(0);
+}
+
+.modelsNote {
+  font-size: 11px;
+  color: var(--ink-3);
 }
 
 /* --- Skills --- */
@@ -634,7 +667,7 @@
 }
 
 .menu span[data-active="true"] {
-  background: #fff1d6;
+  background: #ffecd9;
 }
 
 .miniComposer {
@@ -721,7 +754,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background-color: #f4efe6;
+  background-color: #f2f2ef;
   background-size: 230%;
   background-position: 50% 12%;
   background-repeat: no-repeat;

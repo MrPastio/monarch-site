@@ -125,7 +125,7 @@
 .box[data-state="active"] {
   border-color: var(--accent-line);
   box-shadow: 0 10px 28px rgba(221, 132, 20, 0.2);
-  background: linear-gradient(135deg, #fff6e4, #fffaf1);
+  background: linear-gradient(135deg, #fff4e8, #fffaf5);
 }
 
 .box[data-state="idle"] {

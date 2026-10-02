@@ -13,7 +13,7 @@ type Item = Copy["items"][number];
 type Vignettes = Copy["vignettes"];
 
 /**
- * What Monarch 0.2.5 does, as a bento of small product scenes. Each scene
+ * What Monarch does, as a bento of small product scenes. Each scene
  * plays once, when its card is actually seen, and then rests in its final
  * state. Maturity labels match the app.
  */
@@ -161,24 +161,29 @@ function Vignette({ id, v }: { id: string; v: Vignettes }) {
           </div>
         </div>
       );
-    case "voice":
+    case "models":
       return (
-        <div className={styles.voice}>
-          <div className={styles.wave}>
-            {WAVE.map((height, index) => (
-              <span key={index} style={{ "--h": height, "--i": index } as React.CSSProperties} />
+        <div className={styles.models}>
+          <p className={styles.modelName}>
+            <span className={styles.modelChip}>{v.modelsChip}</span>
+            {v.modelsName}
+          </p>
+          <ul className={styles.variants}>
+            {v.modelsVariants.map((variant, index) => (
+              <li
+                key={variant.label}
+                data-fits={variant.fits}
+                style={{ "--i": index, "--w": variant.share } as React.CSSProperties}
+              >
+                <span className={styles.variantLabel}>{variant.label}</span>
+                <span className={styles.variantBar}>
+                  <i />
+                </span>
+                <span className={styles.variantSize}>{variant.size}</span>
+              </li>
             ))}
-          </div>
-          <div className={styles.voiceRow}>
-            <span className={styles.mic}>
-              <svg width="12" height="14" viewBox="0 0 12 14" aria-hidden>
-                <rect x="3.5" y="1" width="5" height="8" rx="2.5" fill="currentColor" />
-                <path d="M1.5 6.5a4.5 4.5 0 0 0 9 0M6 11v2" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-              </svg>
-              {v.dictation}
-            </span>
-            <span className={styles.preset}>{v.voicePreset}</span>
-          </div>
+          </ul>
+          <p className={styles.modelsNote}>{v.modelsNote}</p>
         </div>
       );
     case "skills":
@@ -234,9 +239,3 @@ function Vignette({ id, v }: { id: string; v: Vignettes }) {
       return null;
   }
 }
-
-// Deterministic waveform heights (0..1), so the server and client agree.
-const WAVE = Array.from({ length: 34 }, (_, index) => {
-  const value = Math.abs(Math.sin(index * 1.7) * 0.6 + Math.sin(index * 0.45) * 0.4);
-  return Number((0.18 + value * 0.82).toFixed(3));
-});

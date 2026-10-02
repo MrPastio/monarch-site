@@ -50,7 +50,8 @@ export default async function UpdatesPage({ params }: { params: Promise<{ lang: 
               summary: entry.notes!.summary,
               categories: entry.notes!.categories,
             }))}
-            future={copy.future}
+            // The "soon" card retires itself once a 0.3 installer is in the catalog.
+            future={entries.some((entry) => entry.version.startsWith("0.3")) ? null : copy.future}
             categories={copy.categories}
             filterAll={copy.filterAll}
             filterLabel={copy.filterLabel}

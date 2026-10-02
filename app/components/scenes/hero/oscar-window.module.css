@@ -1,17 +1,18 @@
 /* The Monarch window: the app's dark glass, on paper. Local tokens only. */
 .root {
-  --w-bg: #141311;
-  --w-side: #181714;
-  --w-raised: #1f1d1a;
-  --w-field: #0f0e0c;
-  --w-line: rgba(255, 244, 225, 0.09);
-  --w-line-2: rgba(255, 244, 225, 0.15);
-  --w-ink: #f4f2ee;
-  --w-ink-2: #c3c2c0;
-  --w-ink-3: #a2a3a6;
-  --w-amber: #ffc862;
-  --w-ok: #69d398;
-  --w-danger: #ff8f86;
+  /* 0.3: the app's white theme is the default (src/ui/public/white-theme.css). */
+  --w-bg: #ffffff;
+  --w-side: #f7f7f5;
+  --w-raised: #ffffff;
+  --w-field: #ffffff;
+  --w-line: rgba(24, 22, 18, 0.09);
+  --w-line-2: rgba(24, 22, 18, 0.16);
+  --w-ink: #1a1916;
+  --w-ink-2: #4f4c46;
+  --w-ink-3: #6f6b63;
+  --w-amber: #a65400;
+  --w-ok: #1f7a45;
+  --w-danger: #b3322a;
   position: relative;
 }
 
@@ -43,7 +44,7 @@
   border: 1px solid var(--glass-line);
   border-radius: var(--r-pill);
   background: var(--surface);
-  box-shadow: 0 1px 2px rgba(70, 45, 18, 0.05);
+  box-shadow: 0 1px 2px rgba(24, 22, 18, 0.04);
   font-size: var(--text-sm);
   font-weight: 540;
   color: var(--ink-2);
@@ -67,7 +68,7 @@
 .try[aria-pressed="true"] {
   color: var(--ink);
   border-color: var(--accent-line);
-  background: #fff6e4;
+  background: #fff4e8;
 }
 
 .tryDot {
@@ -121,7 +122,7 @@
 .window {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(40, 26, 10, 0.18);
+  border: 1px solid rgba(24, 22, 18, 0.12);
   border-radius: 18px;
   background: var(--w-bg);
   color: var(--w-ink);
@@ -241,7 +242,7 @@
 }
 
 .chats li[data-active] {
-  background: rgba(255, 244, 225, 0.07);
+  background: rgba(24, 22, 18, 0.07);
   color: var(--w-ink);
 }
 
@@ -277,7 +278,7 @@
   min-width: 0;
   min-height: 0;
   background:
-    radial-gradient(640px 360px at 70% -10%, rgba(255, 170, 60, 0.07), transparent 70%),
+    radial-gradient(640px 360px at 70% -10%, rgba(242, 138, 30, 0.05), transparent 70%),
     var(--w-bg);
 }
 
@@ -358,7 +359,7 @@
   padding: 10px 15px;
   border: 1px solid var(--w-line);
   border-radius: 16px 16px 4px 16px;
-  background: #2a2723;
+  background: #f4f4f2;
   font-size: 14px;
 }
 
@@ -375,7 +376,7 @@
   height: 34px;
   border: 1px solid var(--w-line-2);
   border-radius: 50%;
-  background-color: #f4efe6;
+  background-color: #f2f2ef;
   background-size: 210%;
   background-position: 52% 10%;
   background-repeat: no-repeat;
@@ -457,8 +458,8 @@
 }
 
 .plan[data-verdict="deny"] {
-  border-color: rgba(255, 107, 97, 0.32);
-  background: linear-gradient(0deg, rgba(255, 107, 97, 0.06), rgba(255, 107, 97, 0.06)), var(--w-raised);
+  border-color: rgba(179, 50, 42, 0.32);
+  background: linear-gradient(0deg, rgba(179, 50, 42, 0.06), rgba(179, 50, 42, 0.06)), var(--w-raised);
 }
 
 .consent {
@@ -478,7 +479,7 @@
   flex: none;
   padding: 6px 13px;
   border-radius: var(--r-pill);
-  background: linear-gradient(180deg, #ffc746, #ffa326);
+  background: var(--accent-fill);
   font-size: 12.5px;
   font-weight: 650;
   color: #1a1206;
@@ -489,7 +490,7 @@
 }
 
 .consent[data-pressed="true"] .consentButton {
-  background: rgba(105, 211, 152, 0.14);
+  background: rgba(31, 122, 69, 0.14);
   color: var(--w-ok);
   animation: press 260ms var(--ease-physical);
 }
@@ -530,16 +531,16 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: rgba(105, 211, 152, 0.14);
+  background: rgba(31, 122, 69, 0.14);
   color: var(--w-ok);
 }
 
 .receipt {
-  border-color: rgba(105, 211, 152, 0.28);
+  border-color: rgba(31, 122, 69, 0.28);
 }
 
 .receipt[data-verdict="deny"] {
-  border-color: rgba(255, 107, 97, 0.32);
+  border-color: rgba(179, 50, 42, 0.32);
 }
 
 .receiptResult {
@@ -589,7 +590,7 @@
   padding: 12px 12px 10px 16px;
   border: 1px solid var(--w-line-2);
   border-radius: 18px;
-  background: rgba(255, 244, 225, 0.04);
+  background: rgba(24, 22, 18, 0.04);
   transition: border-color var(--dur-move) var(--ease-physical);
 }
 
@@ -652,7 +653,7 @@
   height: 32px;
   margin-left: auto;
   border-radius: 50%;
-  background: rgba(255, 244, 225, 0.08);
+  background: rgba(24, 22, 18, 0.08);
   color: var(--w-ink-3);
   transition:
     background-color var(--dur-move) var(--ease-physical),
@@ -660,7 +661,7 @@
 }
 
 .send[data-armed="true"] {
-  background: linear-gradient(180deg, #ffc746, #ffa326);
+  background: var(--accent-fill);
   color: #1a1206;
 }
 

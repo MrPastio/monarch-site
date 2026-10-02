@@ -157,7 +157,7 @@
 
 .provider[aria-checked="true"] {
   border-color: var(--accent-line);
-  background: #fff6e4;
+  background: #fff4e8;
   color: var(--ink);
 }
 

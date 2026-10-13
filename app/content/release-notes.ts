@@ -90,9 +90,8 @@ export const updateCategoryLabels: Record<UpdateCategory, string> = {
 export const productUpdates: readonly ProductUpdate[] = [
   {
     version: "0.3.0",
-    // Flip to "published" with publishedOn on release day. A draft stays out of
-    // the history until the signed channel and GitHub carry a 0.3 installer.
-    status: "draft",
+    status: "published",
+    publishedOn: "2026-10-13",
     title: "Monarch 0.3 Preview — тот же чат, больше дела",
     summary:
       "Оскар делает задачи прямо в чате, напоминает о делах и сам скачивает всё нужное для работы. MAX подключает облачные модели одним переключателем, Coder переделан, а данные на диске зашифрованы.",

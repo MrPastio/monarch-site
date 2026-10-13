@@ -12,9 +12,6 @@ import styles from "./release.module.css";
 
 type Copy = Dict["release"];
 type Scenes = Copy["scenes"];
-type Access = Dict["access"];
-type Lanes = Dict["journey"]["lanes"];
-type Verdict = keyof Lanes;
 
 /**
  * «Новое в 0.3». On wide screens the chapter pins one Monarch window while
@@ -24,7 +21,7 @@ type Verdict = keyof Lanes;
  * list where every scene plays once when seen. Reduced motion shows every
  * scene in its final state.
  */
-export function Release({ copy, access, lanes }: { copy: Copy; access: Access; lanes: Lanes }) {
+export function Release({ copy }: { copy: Copy }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [story, setStory] = useState(false);
   const [active, setActive] = useState(0);
@@ -109,7 +106,7 @@ export function Release({ copy, access, lanes }: { copy: Copy; access: Access; l
                     {!story && (
                       <div className={styles.inline} aria-hidden>
                         <Window>
-                          <SeenScene id={item.id} s={copy.scenes} access={access} lanes={lanes} />
+                          <SeenScene id={item.id} s={copy.scenes} />
                         </Window>
                       </div>
                     )}
@@ -126,8 +123,6 @@ export function Release({ copy, access, lanes }: { copy: Copy; access: Access; l
                       key={item.id}
                       id={item.id}
                       s={copy.scenes}
-                      access={access}
-                      lanes={lanes}
                       playing={index === active}
                       place={index < active ? "past" : index > active ? "future" : "now"}
                     />
@@ -199,8 +194,6 @@ function SeenScene(props: Omit<SceneProps, "playing" | "place">) {
 type SceneProps = {
   id: string;
   s: Scenes;
-  access: Access;
-  lanes: Lanes;
   playing: boolean;
   place: "past" | "now" | "future";
 };
@@ -210,7 +203,7 @@ type SceneProps = {
  * it is (the scene leaves as it looked); the context is reverted only after
  * the exit, so the next visit starts clean from the final markup.
  */
-function Scene({ id, s, access, lanes, playing, place }: SceneProps) {
+function Scene({ id, s, playing, place }: SceneProps) {
   const ref = useRef<HTMLDivElement>(null);
   const pending = useRef<{ revert: () => void; timer: number } | null>(null);
 
@@ -251,21 +244,21 @@ function Scene({ id, s, access, lanes, playing, place }: SceneProps) {
 
   return (
     <div ref={ref} className={styles.scene} data-scene={id} data-place={place}>
-      <SceneBody id={id} s={s} access={access} lanes={lanes} />
+      <SceneBody id={id} s={s} />
     </div>
   );
 }
 
-function SceneBody({ id, s, access, lanes }: { id: string; s: Scenes; access: Access; lanes: Lanes }) {
+function SceneBody({ id, s }: { id: string; s: Scenes }) {
   switch (id) {
     case "tasks":
       return <TaskScene s={s} />;
+    case "reminders":
+      return <RemindersScene s={s} />;
+    case "downloads":
+      return <DownloadsScene s={s} />;
     case "max":
       return <MaxScene s={s} />;
-    case "models":
-      return <ModelsScene s={s} />;
-    case "access":
-      return <AccessScene s={s} access={access} lanes={lanes} />;
     case "coder":
       return <CoderScene s={s} />;
     case "setup":
@@ -392,93 +385,82 @@ function MaxScene({ s }: { s: Scenes }) {
   );
 }
 
-/* ---------- 3. Your own models ---------- */
-function ModelsScene({ s }: { s: Scenes }) {
-  const m = s.models;
+/* ---------- 2. A reminder: asked in the chat, delivered by Windows ---------- */
+function RemindersScene({ s }: { s: Scenes }) {
+  const r = s.reminders;
   return (
-    <div className={styles.models}>
-      <div className={styles.drop} data-k="drop">
-        <span className={styles.dropHint} data-k="dropHint">
-          {m.drop}
-        </span>
-        <div className={styles.modelCard} data-k="card">
-          <p className={styles.modelHead}>
-            <b>{m.name}</b>
-            <small>{m.link}</small>
-          </p>
-          <ul className={styles.modelVariants}>
-            {m.variants.map((variant, index) => {
-              const fits = index < 3;
-              return (
-                <li
-                  key={variant}
-                  data-k="variant"
-                  data-fits={fits}
-                  data-picked={index === 1}
-                  style={{ "--w": [0.3, 0.41, 0.53, 1][index], "--i": index } as React.CSSProperties}
-                >
-                  <span>{variant}</span>
-                  <span className={styles.bar}>
-                    <i data-k="bar" />
-                  </span>
-                  <small>{m.sizes[index]}</small>
-                  <em>{fits ? m.fits : m.tight}</em>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
-      <div className={styles.file} data-k="file">
-        <span className={styles.fileIcon} />
-        <span>
-          <b>{m.name}</b>
-          <small>{m.sizes[1]}</small>
-        </span>
-      </div>
-      <p className={styles.added} data-k="added">
-        <Check />
-        {m.added}
+    <div className={styles.chat}>
+      <p className={styles.chatHead}>
+        <b>{s.oscar}</b>
+        <span className={styles.chatPill}>{s.newChat}</span>
       </p>
+      <div className={styles.thread}>
+        <p className={styles.user} data-k="remPrompt">
+          {r.prompt}
+        </p>
+        <p className={styles.remAnswer} data-k="remAnswer">
+          <Check />
+          {r.answer}
+        </p>
+        <p className={styles.remClock} data-k="remClock" aria-hidden>
+          <span className={styles.remClockFace} />
+          <b data-k="remTime" data-time="due">
+            <span data-when="now">{r.now}</span>
+            <span data-when="due">{r.due}</span>
+          </b>
+        </p>
+      </div>
+      <div className={styles.remToast} data-k="remToast">
+        <span className={styles.remToastKicker}>{r.toastKicker}</span>
+        <b>{r.toastText}</b>
+        <span className={styles.remToastActions}>
+          <span>{r.done}</span>
+          <span>{r.snooze}</span>
+        </span>
+      </div>
+      <div className={styles.composer}>
+        <span className={styles.placeholder}>{s.placeholder}</span>
+        <span className={styles.send} data-k="remSend" data-state="idle" aria-hidden>
+          <i />
+        </span>
+      </div>
     </div>
   );
 }
 
-/* ---------- 4. Access ---------- */
-function AccessScene({ s, access, lanes }: { s: Scenes; access: Access; lanes: Lanes }) {
-  const verdicts: Verdict[] = ["allow", "confirm", "deny"];
-  const finalMode = 1;
+/* ---------- 3. Everything a feature needs, downloaded by Monarch ---------- */
+function DownloadsScene({ s }: { s: Scenes }) {
+  const d = s.downloads;
   return (
-    <div className={styles.access} data-k="access" data-mode={finalMode}>
-      <p className={styles.accessTitle}>{s.access.title}</p>
-      <div className={styles.modes}>
-        <span className={styles.modePill} aria-hidden />
-        {access.modes.map((mode, index) => (
-          <span key={mode.id} className={styles.mode} data-index={index}>
-            {mode.name}
-          </span>
-        ))}
-      </div>
-      <ul className={styles.matrix}>
-        {access.actions.map((action) => (
-          <li key={action.id}>
-            <span>{action.text}</span>
-            <span className={styles.drum} data-k="drum" data-verdicts={action.verdicts.join(" ")} data-verdict={action.verdicts[finalMode]}>
-              <span className={styles.drumReel}>
-                {verdicts.map((verdict) => (
-                  <i key={verdict} data-v={verdict}>
-                    {lanes[verdict]}
-                  </i>
-                ))}
+    <div className={styles.downloads}>
+      <p className={styles.dlTitle}>{d.title}</p>
+      <ul className={styles.dlList}>
+        {d.items.map((item, index) => (
+          <li key={item.name} data-k="dlRow" data-state="done" style={{ "--i": index } as React.CSSProperties}>
+            <span className={styles.dlName}>
+              <b>{item.name}</b>
+              <small>{item.what}</small>
+            </span>
+            <span className={styles.dlSize}>{item.size}</span>
+            <span className={styles.dlAction}>
+              <span className={styles.dlButton} data-k="dlButton">
+                {d.download}
+              </span>
+              <span className={styles.bar}>
+                <i data-k="dlBar" style={{ "--w": 1 } as React.CSSProperties} />
+              </span>
+              <span className={styles.dlReady} data-k="dlReady">
+                <Check />
+                {d.ready}
               </span>
             </span>
           </li>
         ))}
       </ul>
-      <div className={styles.reason} data-k="reason">
-        <span className={styles.reasonDot} />
-        {s.access.reason}
-      </div>
+      <p className={styles.added} data-k="dlNote">
+        <Check />
+        {d.note}
+      </p>
     </div>
   );
 }

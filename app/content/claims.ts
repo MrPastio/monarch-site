@@ -25,6 +25,20 @@ export type Claim = {
 };
 
 export const claims = {
+  reminders: {
+    id: "reminders",
+    ru: "Оскар ставит напоминание по фразе в чате и напоминает уведомлением Windows.",
+    evidence: "src/modules/reminders/reminder-time.ts",
+    maturity: "preview",
+    limit: "Напоминание приходит, пока Monarch запущен; пропущенное показывается при следующем запуске.",
+  },
+  componentDownloads: {
+    id: "componentDownloads",
+    ru: "Модели и компоненты для функций скачиваются из настроек Monarch с докачкой и проверкой SHA-256.",
+    evidence: "src/modules/models/component-manager.ts",
+    maturity: "stable",
+    limit: "Нужен интернет и место на диске; крупные модели скачиваются долго.",
+  },
   localFirst: {
     id: "localFirst",
     ru: "Основные модели, чаты и файлы остаются на твоём компьютере.",

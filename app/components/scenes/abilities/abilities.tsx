@@ -4,7 +4,6 @@ import type { Dict } from "@/content/dictionary";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
 import { useLit } from "@/components/motion/marked";
-import { MonarchTile } from "@/components/brand/monarch-mark";
 import { asset } from "@/lib/asset";
 import { PixelGlyph } from "@/components/pixel/pixel";
 import styles from "./abilities.module.css";
@@ -211,25 +210,6 @@ function Vignette({ id, v }: { id: string; v: Vignettes }) {
             <span className={styles.tgAvatar} style={{ backgroundImage: `url("${asset("/mascot/oscar-success.webp")}")` }} />
             {v.tgBot}
           </p>
-        </div>
-      );
-    case "sharing":
-      return (
-        <div className={styles.sharing}>
-          <p className={styles.endpoint}>
-            <MonarchTile size={18} />
-            127.0.0.1:7861/v1
-          </p>
-          <pre className={styles.snippet}>
-            <span style={{ "--i": 0 } as React.CSSProperties}>
-              <b>from</b> openai <b>import</b> OpenAI
-            </span>
-            <span style={{ "--i": 1 } as React.CSSProperties}>client = OpenAI(</span>
-            <span style={{ "--i": 2 } as React.CSSProperties}>
-              {"  "}base_url=<em>&quot;http://127.0.0.1:7861/v1&quot;</em>,
-            </span>
-            <span style={{ "--i": 3 } as React.CSSProperties}>)</span>
-          </pre>
         </div>
       );
     default:

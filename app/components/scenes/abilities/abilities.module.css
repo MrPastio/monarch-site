@@ -30,6 +30,13 @@
   align-items: stretch;
 }
 
+/* Seven cards on three columns: the last one closes the row instead of leaving a hole. */
+@media (min-width: 1081px) {
+  .card[data-id="telegram"] {
+    grid-column: span 2;
+  }
+}
+
 .stage {
   position: relative;
   display: grid;
@@ -114,7 +121,6 @@
 /* Things in a scene arrive from below once the card is seen, each in turn. */
 .planList li,
 .diff span,
-.snippet span,
 .menu span,
 .memNote,
 .memAnswer,
@@ -128,7 +134,7 @@
 }
 
 @media (scripting: enabled) {
-  .card[data-unlit] :is(.planList li, .diff span, .snippet span, .menu span, .memNote, .memAnswer, .tgUser, .tgBot, .pair) {
+  .card[data-unlit] :is(.planList li, .diff span, .menu span, .memNote, .memAnswer, .tgUser, .tgBot, .pair) {
     opacity: 0;
     transform: translateY(12px);
   }
@@ -141,7 +147,6 @@
 .phone,
 .memory,
 .coder,
-.sharing,
 .models {
   border: var(--stroke) solid var(--line);
   border-radius: 18px;
@@ -755,45 +760,6 @@
 
 .tgBot {
   padding: 0;
-}
-
-/* --- Sharing API --- */
-.sharing {
-  display: grid;
-  gap: 10px;
-  width: min(92%, 330px);
-  padding: 12px;
-}
-
-.endpoint {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 500;
-}
-
-.snippet {
-  display: grid;
-  margin: 0;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: var(--pp-paper-2);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  line-height: 1.7;
-  white-space: pre;
-  overflow: hidden;
-}
-
-.snippet b {
-  font-weight: 600;
-}
-
-.snippet em {
-  font-style: normal;
-  color: var(--ink-3);
 }
 
 @media (max-width: 1080px) {

@@ -63,40 +63,30 @@ export const TIMELINES: Record<string, Build> = {
       .from(answer, { clipPath: "inset(0 100% 0 0)", ease: typing(answer[0]?.textContent?.length ?? 60), duration: 1.8 }, "-=0.3");
   },
 
-  models(tl, q, gsap) {
-    const variants = k(q, "variant");
-    gsap.set(variants, { attr: { "data-picked": "false" } });
-    gsap.set(k(q, "dropHint"), { autoAlpha: 1 });
+  reminders(tl, q, gsap) {
+    const time = k(q, "remTime");
+    const send = k(q, "remSend");
+    gsap.set(time, { attr: { "data-time": "now" } });
+    gsap.set(send, { attr: { "data-state": "idle" } });
 
-    tl.fromTo(
-        k(q, "file"),
-        { autoAlpha: 1, x: 190, y: -150, rotate: 12, scale: 1 },
-        { x: 0, y: 0, rotate: -2, duration: 1, ease: "power3.out" },
-        0.15,
-      )
-      .to(k(q, "file"), { rotate: 0, scale: 0.94, duration: 0.18, ease: "power2.in" })
-      .fromTo(k(q, "drop"), { scale: 1 }, { scale: 1.015, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, "<")
-      .to(k(q, "file"), { autoAlpha: 0, scale: 0.7, duration: 0.3, ease: "power2.in" })
-      .to(k(q, "dropHint"), { autoAlpha: 0, duration: 0.2, ease: "power1.out" }, "<")
-      .from(k(q, "card"), { autoAlpha: 0, y: 12, scale: 0.97, duration: 0.6 }, "-=0.05")
-      .from(k(q, "bar"), { scaleX: 0, transformOrigin: "0% 50%", stagger: 0.12, duration: 0.8 }, "-=0.3")
-      .set(variants[1] ?? [], { attr: { "data-picked": "true" } }, "+=0.2")
-      .from(k(q, "added"), { y: 10, autoAlpha: 0, duration: 0.5 }, "+=0.3");
+    tl.from(k(q, "remPrompt"), { y: 64, scale: 0.94, autoAlpha: 0, transformOrigin: "100% 100%", duration: 0.75 })
+      .from(k(q, "remAnswer"), { y: 12, autoAlpha: 0, duration: 0.5 }, "+=0.35")
+      .from(k(q, "remClock"), { y: 10, autoAlpha: 0, duration: 0.45 }, "+=0.3")
+      .set(time, { attr: { "data-time": "due" } }, "+=1.1")
+      // The reminder arrives from the screen edge, the way a Windows notification does.
+      .from(k(q, "remToast"), { x: 70, autoAlpha: 0, duration: 0.7, ease: "power3.out" }, "+=0.15");
   },
 
-  access(tl, q, gsap) {
-    const root = k(q, "access");
-    const drums = k(q, "drum") as HTMLElement[];
-    const verdictsFor = (mode: number) => (drum: HTMLElement) => drum.dataset.verdicts?.split(" ")[mode] ?? "allow";
-    gsap.set(root, { attr: { "data-mode": "0" } });
-    drums.forEach((drum) => gsap.set(drum, { attr: { "data-verdict": verdictsFor(0)(drum) } }));
-
-    [1, 2, 1].forEach((mode, index) => {
-      const at = 1.1 + index * 1.15;
-      tl.set(root, { attr: { "data-mode": String(mode) } }, at);
-      drums.forEach((drum) => tl.set(drum, { attr: { "data-verdict": verdictsFor(mode)(drum) } }, at));
+  downloads(tl, q, gsap) {
+    const rows = k(q, "dlRow");
+    gsap.set(rows, { attr: { "data-state": "idle" } });
+    rows.forEach((row, index) => {
+      const bar = row.querySelector('[data-k="dlBar"]');
+      tl.set(row, { attr: { "data-state": "loading" } }, index === 0 ? 0.6 : "+=0.15")
+        .fromTo(bar, { scaleX: 0 }, { scaleX: 1, transformOrigin: "0% 50%", duration: index === 0 ? 1.4 : 0.9, ease: "power1.inOut" })
+        .set(row, { attr: { "data-state": "done" } });
     });
-    tl.from(k(q, "reason"), { y: 26, autoAlpha: 0, duration: 0.7 }, "+=0.6");
+    tl.from(k(q, "dlNote"), { y: 10, autoAlpha: 0, duration: 0.5 }, "+=0.3");
   },
 
   coder(tl, q, gsap) {

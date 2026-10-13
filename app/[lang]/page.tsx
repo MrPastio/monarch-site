@@ -3,12 +3,10 @@ import { Hero } from "@/components/scenes/hero/hero";
 import { Release } from "@/components/scenes/release/release";
 import { Hardware } from "@/components/scenes/hardware/hardware";
 import { Abilities } from "@/components/scenes/abilities/abilities";
-import { PathMap } from "@/components/scenes/path-map/path-map";
 import { NightBand } from "@/components/scenes/night-band";
 import { Safe } from "@/components/scenes/safe/safe";
 import { Guard } from "@/components/scenes/guard/guard";
 import { Max } from "@/components/scenes/max/max";
-import { Facts } from "@/components/scenes/facts/facts";
 import { Download } from "@/components/scenes/download/download";
 import { Faq } from "@/components/scenes/faq/faq";
 import { getDict } from "@/content/dictionary";
@@ -32,16 +30,14 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Hero locale={lang} hero={dict.hero} journey={dict.journey} ui={dict.ui} release={release} />
-      <Release copy={dict.release} access={dict.access} lanes={dict.journey.lanes} />
+      <Release copy={dict.release} />
       <Abilities copy={dict.abilities} />
-      <PathMap copy={dict.journey} verdicts={dict.pages.security.verdicts} access={dict.access} />
       <Hardware copy={dict.hardware} />
       <NightBand id="protection">
         <Safe copy={dict.safe} agent={dict.ui.agent} />
         <Guard copy={dict.guard} events={dict.ui.events} />
       </NightBand>
       <Max copy={dict.max} />
-      <Facts copy={dict.facts} locale={localeMeta[lang].intl} />
       <Download copy={dict.download} locale={lang} crestLabel={dict.hero.crestLabel} steps={dict.hero.after.steps} />
       <Faq copy={dict.faq} />
     </>

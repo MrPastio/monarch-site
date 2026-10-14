@@ -238,7 +238,7 @@ export type ClaimId = keyof typeof claims;
 export const forbiddenWording: { pattern: RegExp; because: string }[] = [
   {
     pattern: /подписанн?(ое|ый|о)\s+приложени|подписанн?ый\s+установщик/i,
-    because: "Authenticode у установщика 0.2.5.0 отсутствует (NotSigned).",
+    because: "Authenticode у установщика 0.3.0.97 отсутствует (NotSigned).",
   },
   {
     // A denial ("не заменяет антивирус") is exactly what we want to keep,

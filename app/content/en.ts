@@ -516,7 +516,7 @@ export const en: Dict = {
         { title: "Compute SHA-256", text: "Open PowerShell in your Downloads folder and run:" },
         { title: "Compare", text: "The result must match the SHA-256 on this page character for character. If it doesn’t, don’t run the file." },
       ],
-      command: "Get-FileHash .\\Monarch-Setup-0.2.5.0.exe -Algorithm SHA256",
+      command: "Get-FileHash .\\Monarch-Setup-0.3.0.97.exe -Algorithm SHA256",
       archiveTitle: "Version archive",
       archiveLede: "Every published installer. For everyday use we recommend the latest: older versions don’t receive fixes.",
       stateCurrent: "Current",

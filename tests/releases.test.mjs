@@ -27,7 +27,10 @@ test("the built-in snapshot only points at official, hashed installers", () => {
 
 test("every published installer has release notes", () => {
   for (const release of snapshot.releases) {
-    assert.ok(noteVersions.has(release.version) || noteVersions.has(display(release.version)), `no notes for ${release.version}`);
+    // A 0.3 build ships as 0.3.0.N; its notes are written once, for the line (findProductUpdate).
+    const line = release.version.split(".").slice(0, 3).join(".");
+    assert.ok(noteVersions.has(release.version) || noteVersions.has(display(release.version)) || noteVersions.has(line),
+      `no notes for ${release.version}`);
   }
 });
 

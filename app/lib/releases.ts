@@ -21,6 +21,16 @@ export type CatalogEntry = {
   asset: ReleaseAsset | null;
   state: "current" | "archive" | "revoked" | "history";
   notes: ProductUpdate | null;
+  /**
+   * Every published build of this version, newest first. A patch (0.3.0.97 →
+   * 0.3.0.98) does not get its own entry: the version quietly points at the
+   * newest build, and the older ones stay installable from the Patches tab.
+   */
+  patches: PatchBuild[];
+};
+
+export type PatchBuild = Pick<CatalogEntry, "version" | "display" | "publishedAt" | "releaseUrl" | "asset"> & {
+  state: "current" | "archive" | "revoked";
 };
 
 export type ReleaseCatalog = {
@@ -121,17 +131,8 @@ export const getReleaseCatalog = cache(async (): Promise<ReleaseCatalog> => {
   const currentVersion = stable.status === "ready" ? stable.manifest.version : null;
 
   const entries = new Map<string, CatalogEntry>();
-  for (const release of releases) {
-    const isRevoked = revoked.includes(release.version);
-    entries.set(release.version, {
-      version: release.version,
-      display: displayVersion(release.version),
-      publishedAt: release.publishedAt || null,
-      releaseUrl: release.releaseUrl || null,
-      asset: release.asset,
-      state: isRevoked ? "revoked" : release.version === currentVersion ? "current" : "archive",
-      notes: findProductUpdate(release.version),
-    });
+  for (const group of groupBuilds(releases, revoked, currentVersion)) {
+    entries.set(group.version, group);
   }
 
   // Older versions that shipped before the public release channel existed.
@@ -148,6 +149,7 @@ export const getReleaseCatalog = cache(async (): Promise<ReleaseCatalog> => {
       asset: null,
       state: "history",
       notes: update,
+      patches: [],
     });
   }
 
@@ -161,10 +163,58 @@ export const getReleaseCatalog = cache(async (): Promise<ReleaseCatalog> => {
   return { current, stable, entries: sorted, source, revoked };
 });
 
+/**
+ * One catalog entry per version line: builds that share release notes (the
+ * 0.3.0.N patches) collapse into the newest usable one. Builds without notes
+ * stay separate, exactly as before.
+ */
+export function groupBuilds(
+  releases: readonly SnapshotRelease[],
+  revoked: readonly string[],
+  currentVersion: string | null,
+): CatalogEntry[] {
+  const groups = new Map<string, PatchBuild[]>();
+  const notesByKey = new Map<string, ProductUpdate | null>();
+  for (const release of releases) {
+    const notes = findProductUpdate(release.version);
+    const key = notes ? `notes:${notes.version}` : `build:${release.version}`;
+    const build: PatchBuild = {
+      version: release.version,
+      display: displayVersion(release.version),
+      publishedAt: release.publishedAt || null,
+      releaseUrl: release.releaseUrl || null,
+      asset: release.asset,
+      state: revoked.includes(release.version) ? "revoked" : release.version === currentVersion ? "current" : "archive",
+    };
+    groups.set(key, [...(groups.get(key) ?? []), build]);
+    notesByKey.set(key, notes);
+  }
+  const out: CatalogEntry[] = [];
+  for (const [key, builds] of groups) {
+    const patches = [...builds].sort((a, b) => compareVersions(b.version, a.version));
+    // The version points at the build the channel serves, else the newest usable one.
+    const lead =
+      patches.find((build) => build.state === "current") ??
+      patches.find((build) => build.state !== "revoked" && build.asset) ??
+      patches[0]!;
+    out.push({
+      ...lead,
+      notes: notesByKey.get(key) ?? null,
+      patches: patches.length > 1 ? patches : [],
+    });
+  }
+  return out;
+}
+
 export function findCatalogEntry(catalog: ReleaseCatalog, slug: string): CatalogEntry | null {
   return (
     catalog.entries.find((entry) => entry.version === slug) ??
     catalog.entries.find((entry) => entry.display === slug) ??
+    // An older patch link still opens its version.
+    catalog.entries.find((entry) => entry.patches.some((build) => build.version === slug || build.display === slug)) ??
+    // The line itself (0.3 or 0.3.0) opens its newest build.
+    catalog.entries.find((entry) => entry.notes
+      && (entry.notes.version === slug || entry.notes.version.replace(/\.0$/, "") === slug)) ??
     null
   );
 }

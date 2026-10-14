@@ -8,6 +8,8 @@ import { productUpdates } from "@/content/release-notes";
 import { formatBytes, formatDate } from "@/lib/format";
 import { PageHero } from "@/components/page/page-hero";
 import { Reveal } from "@/components/motion/reveal";
+import { ArchiveList } from "@/components/page/archive-list";
+import { VersionTabs } from "@/components/page/version-tabs";
 import styles from "./version.module.css";
 
 export const revalidate = 900;
@@ -44,37 +46,10 @@ export default async function VersionPage({ params }: { params: Promise<{ lang: 
   if (!entry?.notes) notFound();
   const notes = entry.notes;
   const intl = localeMeta[lang].intl;
+  const patchRows = entry.patches.map((build) => ({ ...build, title: null, reason: null }));
 
-  return (
+  const notesBody = (
     <>
-      <PageHero kicker={`Monarch ${entry.display}`} title={notes.title} lede={notes.summary}>
-        <div className={styles.facts}>
-          {entry.publishedAt && (
-            <p>
-              <span>{copy.published}</span>
-              {formatDate(entry.publishedAt, intl)}
-            </p>
-          )}
-          <p>
-            <span>{copy.audience}</span>
-            {notes.audience}
-          </p>
-          {entry.asset && entry.state !== "revoked" && (
-            <a className="btn btn-primary" href={entry.asset.url} download>
-              {dl.download} {entry.display} · {formatBytes(entry.asset.size, intl)}
-            </a>
-          )}
-          {entry.state === "revoked" && (
-            <Link className="btn btn-glass" href={`${localePath(lang, "download")}#archive`}>
-              {dl.stateRevoked} — {dl.archiveTitle}
-            </Link>
-          )}
-        </div>
-      </PageHero>
-
-      <Reveal as="section" className={styles.section}>
-        <div className={`shell ${styles.grid}`}>
-          <div className={styles.main}>
             {notes.status === "withdrawn" && (
               <div className={styles.withdrawn} data-reveal>
                 <p className="kicker">{copy.withdrawnTitle}</p>
@@ -115,6 +90,65 @@ export default async function VersionPage({ params }: { params: Promise<{ lang: 
                   ))}
                 </div>
               </div>
+            )}
+    </>
+  );
+
+  return (
+    <>
+      <PageHero kicker={`Monarch ${entry.display}`} title={notes.title} lede={notes.summary}>
+        <div className={styles.facts}>
+          {entry.publishedAt && (
+            <p>
+              <span>{copy.published}</span>
+              {formatDate(entry.publishedAt, intl)}
+            </p>
+          )}
+          <p>
+            <span>{copy.audience}</span>
+            {notes.audience}
+          </p>
+          {entry.asset && entry.state !== "revoked" && (
+            <a className="btn btn-primary" href={entry.asset.url} download>
+              {dl.download} {entry.display} · {formatBytes(entry.asset.size, intl)}
+            </a>
+          )}
+          {entry.state === "revoked" && (
+            <Link className="btn btn-glass" href={`${localePath(lang, "download")}#archive`}>
+              {dl.stateRevoked} — {dl.archiveTitle}
+            </Link>
+          )}
+        </div>
+      </PageHero>
+
+      <Reveal as="section" className={styles.section}>
+        <div className={`shell ${styles.grid}`}>
+          <div className={styles.main}>
+            {entry.patches.length > 1 ? (
+              <VersionTabs
+                label={`Monarch ${entry.display}`}
+                tabs={[
+                  { id: "notes", label: copy.tabNotes, panel: <div className={styles.main}>{notesBody}</div> },
+                  {
+                    id: "patches",
+                    label: copy.tabPatches,
+                    panel: (
+                      <div className={styles.main}>
+                        <p className={styles.patchesLede}>{copy.patchesLede}</p>
+                        <ArchiveList
+                          rows={patchRows}
+                          copy={dl}
+                          intl={intl}
+                          updatesHref={localePath(lang, "updates")}
+                          copyLabels={{ copy: dict.download.copy, copied: dict.download.copied }}
+                        />
+                      </div>
+                    ),
+                  },
+                ]}
+              />
+            ) : (
+              notesBody
             )}
           </div>
 

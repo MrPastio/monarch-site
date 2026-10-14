@@ -1,0 +1,73 @@
+.tabs {
+  display: grid;
+  gap: var(--s-6);
+}
+
+.list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--tab-count), minmax(0, max-content));
+  justify-self: start;
+  padding: 4px;
+  border: 1px solid var(--glass-line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.marker {
+  position: absolute;
+  inset: 4px auto 4px 4px;
+  width: calc((100% - 8px) / var(--tab-count));
+  border-radius: 999px;
+  background: var(--ink);
+  transform: translateX(calc(100% * var(--tab-index)));
+  transition: transform var(--dur-move) var(--ease-settle);
+}
+
+.tab {
+  position: relative;
+  z-index: 1;
+  min-width: 9rem;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--dur-press) linear;
+}
+
+.tab[aria-selected="true"] {
+  color: rgb(var(--paper-rgb));
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.panel[data-from="right"] {
+  animation: from-right var(--dur-move) var(--ease-settle) both;
+}
+
+.panel[data-from="left"] {
+  animation: from-left var(--dur-move) var(--ease-settle) both;
+}
+
+@keyframes from-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes from-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker { transition: none; }
+  .panel[data-from] { animation: none; }
+}

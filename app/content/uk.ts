@@ -516,7 +516,7 @@ export const uk: Dict = {
         { title: "Порахуй SHA-256", text: "Відкрий PowerShell у теці завантажень і виконай команду:" },
         { title: "Порівняй", text: "Результат має збігтися з SHA-256 на цій сторінці літера в літеру. Якщо не збігся — не запускай файл." },
       ],
-      command: "Get-FileHash .\\Monarch-Setup-0.3.0.97.exe -Algorithm SHA256",
+      command: "Get-FileHash .\\Monarch-Setup-0.3.0.98.exe -Algorithm SHA256",
       archiveTitle: "Архів версій",
       archiveLede: "Усі опубліковані інсталятори. Для роботи радимо останню версію: старі не отримують виправлень.",
       stateCurrent: "Актуальна",
@@ -550,6 +550,9 @@ export const uk: Dict = {
       allVersions: "Усі версії",
       filterAll: "Усі",
       filterLabel: "Показати",
+      tabNotes: "Що нового",
+      tabPatches: "Патчі",
+      patchesLede: "Невеликі виправлення цієї версії. Зазвичай потрібна остання збірка — саме вона завантажується головною кнопкою. Старішу можна встановити, якщо з новою щось пішло не так.",
     },
     how: {
       kicker: "Як працює",

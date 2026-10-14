@@ -3,6 +3,18 @@
   "releases": [
     {
       "asset": {
+        "fileName": "Monarch-Setup-0.3.0.98.exe",
+        "sha256": "0539853e2f8f0c5ce0f17063af82d870f88b65dc2e2f0b4ed074b0bf8080bcd4",
+        "size": 726147812,
+        "url": "https://github.com/MrPastio/monarch-releases/releases/download/v0.3.0.98/Monarch-Setup-0.3.0.98.exe"
+      },
+      "publishedAt": "2026-10-14T13:51:18Z",
+      "releaseUrl": "https://github.com/MrPastio/monarch-releases/releases/tag/v0.3.0.98",
+      "tag": "v0.3.0.98",
+      "version": "0.3.0.98"
+    },
+    {
+      "asset": {
         "fileName": "Monarch-Setup-0.3.0.97.exe",
         "sha256": "781a93a3a29590a2799422e66c50c614f9909c8a94e5f30f6b952c32ac7bc266",
         "size": 726154982,

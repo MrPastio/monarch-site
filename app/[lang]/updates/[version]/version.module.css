@@ -180,3 +180,9 @@
     position: static;
   }
 }
+
+.patchesLede {
+  max-width: 62ch;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}

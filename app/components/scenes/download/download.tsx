@@ -5,7 +5,7 @@ import { localePath, type Locale } from "@/lib/i18n";
 import { ChapterHead } from "@/components/scenes/chapter";
 import { Reveal } from "@/components/motion/reveal";
 import { ReleaseCard } from "./release-card";
-import { CrestStage } from "./crest-stage";
+import { MarkStage } from "./mark-stage";
 import { NightBand } from "@/components/scenes/night-band";
 import styles from "./download.module.css";
 
@@ -31,7 +31,7 @@ export async function Download({
     <NightBand>
       <Reveal as="section" className={styles.section} labelledBy="download-title" id="download">
         <div className="shell">
-          <CrestStage label={crestLabel} />
+          <MarkStage label={crestLabel} />
           <ChapterHead id="download-title" index={copy.index} kicker={copy.kicker} title={copy.title} lede={copy.lede} align="center" />
         </div>
         <div className={`shell ${styles.grid}`}>

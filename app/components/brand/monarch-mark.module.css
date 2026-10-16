@@ -1,6 +1,35 @@
+/* Mark colours follow the ground: paper by default, the `.night` sheet turns
+   them over. `data-variant` pins one for a fixed ground (the icon tile). */
 .mark {
+  --mark-line: #3a3934;
+  --mark-glass-a: #dcdbd6;
+  --mark-glass-b: #cbcac5;
+  --mark-glass-edge: #ecebe7;
+  --mark-stroke: 2px;
   flex: none;
   overflow: visible;
+}
+
+:global(.night) .mark[data-variant="auto"],
+.mark[data-variant="dark"] {
+  --mark-line: #e2e2e0;
+  --mark-glass-a: #4a4a4a;
+  --mark-glass-b: #303030;
+  --mark-glass-edge: #5c5c5c;
+}
+
+.contour {
+  fill: none;
+  stroke: var(--mark-line);
+  stroke-width: var(--mark-stroke);
+  stroke-linejoin: miter;
+}
+
+.edge {
+  fill: none;
+  stroke: var(--mark-glass-edge);
+  stroke-width: calc(var(--mark-stroke) * 0.75);
+  stroke-linejoin: miter;
 }
 
 .wordmark {
@@ -15,5 +44,5 @@
   display: inline-grid;
   flex: none;
   place-items: center;
-  background: #0b0b0b;
+  background: #0c0d0f;
 }

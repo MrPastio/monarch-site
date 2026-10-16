@@ -65,11 +65,10 @@ To enable automatic deploys, connect the GitHub account with write access to
 - `app/components/page/*` — inner-page parts: architecture map, module grid
   with filters, principle demos, 404 view (also used by
   `app/global-not-found.tsx` for unmatched addresses).
-- `app/components/scenes/hero/crest-*` — the live 3D crest (shown on the
-  download stage, `download/crest-stage.tsx`). Geometry comes from
-  the owner-approved 1:1 trace (`scripts/source/crest-paths.grok.json`),
-  refined by `scripts/build-crest-assets.mjs` → `app/assets/crest-paths.json`
-  and the 2D mark in `app/components/brand/crest-paths.ts`.
+- `app/components/brand/monarch-mark.tsx` — the Monarch mark (owner, 2026-10-16):
+  two bands on a 49u x 26u grid, inner contour left, glass right; the same
+  geometry as the app's `brand-mark.js`. `download/mark-stage.tsx` assembles it
+  on the download stage the way the app's startup does.
 - `app/components/illustration/*` — code-drawn illustrations (isometric board,
   process stack).
 - `app/content/{ru,uk,en,bg}.ts` — copy; Russian is the reference, the other

@@ -1,0 +1,53 @@
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: clamp(220px, 26vw, 360px);
+}
+
+.box {
+  position: relative;
+  width: clamp(200px, 30vw, 380px);
+  aspect-ratio: 49 / 26;
+}
+
+.band {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+}
+
+.band svg {
+  width: 100%;
+  height: 100%;
+  --mark-stroke: 3px;
+}
+
+/* Each layer draws one band of the same mark. */
+.line :global(path:nth-of-type(n + 2)) { display: none; }
+.glass :global(path:first-of-type) { display: none; }
+
+.sheenClip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: polygon(69.388% 0, 100% 0, 65.306% 100%, 34.694% 100%);
+}
+
+.sheen {
+  position: absolute;
+  top: -30%;
+  left: 0;
+  width: 7%;
+  height: 160%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14) 34%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.14) 66%, transparent);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.stage[data-state="waiting"] .band { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stage[data-state="waiting"] .band { opacity: 1; }
+}

@@ -1,62 +1,74 @@
-import { crestCrown, crestShield, crestTrunk, crestViewBox, crestAspect } from "./crest-paths";
+"use client";
+
+import { useId } from "react";
 import { asset } from "@/lib/asset";
 import styles from "./monarch-mark.module.css";
 
 /**
- * The official Monarch crest, drawn from the 1:1 trace of the owner's artwork.
- * `dark` is the primary variant (white shield, gold crown — for dark grounds);
- * `light` is its twin for light grounds (navy shield, muted gold crown).
+ * The Monarch mark (owner, 2026-10-16): two equal bands mirrored about the
+ * axis on a grid u = 1/26 of the height — W 49u, H 26u, slope 17u : 26u,
+ * shared base 15u. The left band is an inner contour; the right one is glass
+ * laid on top, so the contour never shows through it. The same geometry draws
+ * the app's icons (Monarch src/ui/public/modules/brand-mark.js).
  */
-const palettes = {
-  dark: { shield: "#fefefe", crown: "#e1ad33" },
-  light: { shield: "#172234", crown: "#bf9a65" },
-} as const;
+export const MARK_LEFT_BAND = "M0 0H15L32 26H17Z";
+export const MARK_RIGHT_BAND = "M34 0H49L32 26H17Z";
+export const MARK_ASPECT = 26 / 49;
 
 /**
- * The app icon as PaperPixel shows it: the primary crest (white shield, gold
- * crown) on an ink tile. On paper the logo always sits on its tile; the gold
- * of the crown is the only colour on the site.
+ * `auto` follows the ground it sits on (paper, or a `.night` sheet); `dark`
+ * and `light` pin the variant for a fixed ground such as the app icon tile.
  */
-export function MonarchTile({ size = 32, title, className }: { size?: number; title?: string; className?: string }) {
-  return (
-    <span
-      className={[styles.tile, className].filter(Boolean).join(" ")}
-      style={{ width: size, height: size, borderRadius: Math.round(size * 0.27) }}
-      role={title ? "img" : undefined}
-      aria-label={title}
-      aria-hidden={title ? undefined : true}
-    >
-      <MonarchMark size={Math.round(size * 0.47)} variant="dark" />
-    </span>
-  );
-}
-
 export function MonarchMark({
   size = 32,
-  variant = "dark",
+  variant = "auto",
   title,
   className,
 }: {
   size?: number;
-  variant?: keyof typeof palettes;
+  variant?: "auto" | "dark" | "light";
   title?: string;
   className?: string;
 }) {
-  const colors = palettes[variant];
+  const id = `mm${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
   return (
     <svg
       className={[styles.mark, className].filter(Boolean).join(" ")}
+      data-variant={variant}
       width={size}
-      height={Math.round(size * crestAspect)}
-      viewBox={crestViewBox}
+      height={Math.round(size * MARK_ASPECT)}
+      viewBox="0 0 49 26"
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
       aria-label={title}
     >
-      <path d={crestCrown} fill={colors.crown} fillRule="evenodd" />
-      <path d={crestShield} fill={colors.shield} fillRule="evenodd" />
-      <path d={crestTrunk} fill={colors.shield} fillRule="evenodd" />
+      <defs>
+        <clipPath id={`${id}l`}><path d={MARK_LEFT_BAND} /></clipPath>
+        <clipPath id={`${id}r`}><path d={MARK_RIGHT_BAND} /></clipPath>
+        <linearGradient id={`${id}g`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style={{ stopColor: "var(--mark-glass-a)" }} />
+          <stop offset="1" style={{ stopColor: "var(--mark-glass-b)" }} />
+        </linearGradient>
+      </defs>
+      <path d={MARK_LEFT_BAND} clipPath={`url(#${id}l)`} className={styles.contour} vectorEffect="non-scaling-stroke" />
+      <path d={MARK_RIGHT_BAND} style={{ fill: `url(#${id}g)` }} />
+      <path d={MARK_RIGHT_BAND} clipPath={`url(#${id}r)`} className={styles.edge} vectorEffect="non-scaling-stroke" />
     </svg>
+  );
+}
+
+/** The app icon: the mark on its ink tile, as on the Windows taskbar. */
+export function MonarchTile({ size = 32, title, className }: { size?: number; title?: string; className?: string }) {
+  return (
+    <span
+      className={[styles.tile, className].filter(Boolean).join(" ")}
+      style={{ width: size, height: size, borderRadius: Math.round(size * 0.22) }}
+      role={title ? "img" : undefined}
+      aria-label={title}
+      aria-hidden={title ? undefined : true}
+    >
+      <MonarchMark size={Math.round(size * (size <= 24 ? 0.86 : 0.74))} variant="dark" />
+    </span>
   );
 }
 

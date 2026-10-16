@@ -9,16 +9,16 @@ export const releaseConfig = {
     "https://api.github.com/repos/MrPastio/monarch-releases/releases?per_page=30",
   /** Last release confirmed by hand; used only if GitHub is unreachable. */
   knownRelease: {
-    version: "0.3.0.98",
-    publishedAt: "2026-10-14T13:51:18Z",
-    confirmedAt: "2026-10-14T00:00:00Z",
-    url: "https://github.com/MrPastio/monarch-releases/releases/tag/v0.3.0.98",
+    version: "0.3.0.99",
+    publishedAt: "2026-10-16T14:42:14Z",
+    confirmedAt: "2026-10-16T00:00:00Z",
+    url: "https://github.com/MrPastio/monarch-releases/releases/tag/v0.3.0.99",
     assetUrl:
-      "https://github.com/MrPastio/monarch-releases/releases/download/v0.3.0.98/Monarch-Setup-0.3.0.98.exe",
-    assetSize: 726_147_812,
+      "https://github.com/MrPastio/monarch-releases/releases/download/v0.3.0.99/Monarch-Setup-0.3.0.99.exe",
+    assetSize: 724_933_985,
     assetSha256:
-      "0539853e2f8f0c5ce0f17063af82d870f88b65dc2e2f0b4ed074b0bf8080bcd4",
-    fileName: "Monarch-Setup-0.3.0.98.exe",
+      "19398712c92f4af55b6672e94ce529c9c51b5cd0c4f805860132fdf34e22e3a6",
+    fileName: "Monarch-Setup-0.3.0.99.exe",
   },
   /** Revoked by the stable channel; used if the signed manifest is unreachable. */
   knownRevoked: ["0.2.3.2", "0.2.3.3", "0.2.3.5"],

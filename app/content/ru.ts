@@ -530,7 +530,7 @@ export const ru = {
         { title: "Посчитай SHA-256", text: "Открой PowerShell в папке загрузок и выполни команду:" },
         { title: "Сравни", text: "Результат должен совпасть с SHA-256 на этой странице буква в букву. Если не совпал — не запускай файл." },
       ],
-      command: "Get-FileHash .\\Monarch-Setup-0.3.0.98.exe -Algorithm SHA256",
+      command: "Get-FileHash .\\Monarch-Setup-0.3.0.99.exe -Algorithm SHA256",
       archiveTitle: "Архив версий",
       archiveLede: "Все опубликованные установщики. Для работы советуем последнюю версию: старые не получают исправлений.",
       stateCurrent: "Актуальная",

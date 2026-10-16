@@ -516,7 +516,7 @@ export const bg: Dict = {
         { title: "Изчисли SHA-256", text: "Отвори PowerShell в папката за изтегляния и изпълни:" },
         { title: "Сравни", text: "Резултатът трябва да съвпада със SHA-256 на тази страница знак по знак. Ако не съвпада — не стартирай файла." },
       ],
-      command: "Get-FileHash .\\Monarch-Setup-0.3.0.98.exe -Algorithm SHA256",
+      command: "Get-FileHash .\\Monarch-Setup-0.3.0.99.exe -Algorithm SHA256",
       archiveTitle: "Архив на версиите",
       archiveLede: "Всички публикувани инсталатори. За работа препоръчваме последната версия: старите не получават поправки.",
       stateCurrent: "Актуална",
